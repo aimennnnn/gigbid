@@ -41,7 +41,8 @@ Updated 14 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
   must run on a sample, or on Ollama (Kaggle GPU), and the report must say which.
 - OpenRouter model names in config use `:free` variants and are not yet confirmed.
 - The simulated client in GigSim is a fixed rule, not an LLM.
-- Writer/verifier fix (prompt v2, critic sends evidence-free drafts back) is not yet confirmed on the real model.
+- Confirmed on the real model (Groq, 14 Nov): `agent.demo` on `dev-ml-000` reaches approval in about 7 seconds and about 10,300 tokens, decision bid (fit 0.80), draft keeps two supported claims with evidence ids.
+- Only one job has been run on the real model so far. No evaluation numbers exist yet.
 - The change-request "platform policy update" file has not been received; `gigsim/seed/policy.json` is version 1.
 
 ## Rules we are keeping
