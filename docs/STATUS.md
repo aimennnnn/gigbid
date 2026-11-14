@@ -65,8 +65,9 @@ Updated 14 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
 - Only one job has been run on the real model so far. No evaluation numbers exist yet.
 - Part B was built in a sandbox that cannot download models, so the real embedding model (nomic-embed-text-v1.5),
   the real reranker (ms-marco-MiniLM-L-12-v2) and Ollama have not been run with this code yet. First real run = step 1.
-- The reranker in config is the small MiniLM one, chosen for laptop CPU speed, not by measurement. `BAAI/bge-reranker-v2-m3`
-  can be put in `profiles.*.reranker` to compare.
+- Reranker: first real run on Kaggle (CPU, 4 cores) with `ms-marco-MiniLM-L-12-v2` took more than 13 minutes for one
+  reranking variant (about 12,600 query-item pairs) and was stopped. Switched to the 6-layer `ms-marco-MiniLM-L-6-v2` and
+  600 characters per item. This was a speed decision, not a quality measurement; the two models were not compared.
 - `rag.corrective.min_score` (0.3) and `rag.outcome_boost` (0.3) are starting guesses until the sweep and ablation are run.
 - In the outcome eval the script approves proposals in place of the human. It refuses to run unless the marketplace is GigSim.
 - Ollama timeouts are 6x the hosted ones (`timeout_scale`); if Kaggle still times out, raise it in config.

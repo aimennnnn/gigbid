@@ -59,7 +59,9 @@ def evaluate(variant: str, rows: list[dict], timing: int = 30) -> dict:
     embed.use_cache = v3_rerank.use_cache = True
     # 2. quality on every job
     done = []
-    for r in rows:
+    for n, r in enumerate(rows, start=1):
+        if n % 100 == 0:
+            print(f"  {variant}: {n}/{len(rows)} jobs")
         ranked = [item["id"] for item, _ in retriever.retrieve(r["persona"], r["job"], 10, variant)]
         style = "named_skills" if r["job"]["skills"] else "vague_post"
         done.append({"persona": r["persona"], "kind": r["kind"], "style": style, "gold": r["gold_evidence"], "ranked": ranked}

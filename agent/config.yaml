@@ -33,7 +33,7 @@ profiles:
         extra: {reasoning_effort: low}
         models: {small: "gpt-oss:20b", strong: "gpt-oss:20b", fallback: "gpt-oss:20b"}
     embeddings: nomic-ai/nomic-embed-text-v1.5   # open, runs on CPU
-    reranker: Xenova/ms-marco-MiniLM-L-12-v2     # open, 0.12 GB, fast on a laptop CPU (BAAI/bge-reranker-v2-m3 is 2.27 GB)
+    reranker: Xenova/ms-marco-MiniLM-L-6-v2      # open, 0.08 GB. The 12-layer version was too slow on Kaggle's CPU (see docs/STATUS.md)
 
   # Optional profile: any API model, only where it beats "open" enough to pay for.
   paid:
@@ -47,7 +47,7 @@ profiles:
     tpm_limit: 0
     extra: {}
     embeddings: nomic-ai/nomic-embed-text-v1.5   # embeddings stay open in both profiles
-    reranker: Xenova/ms-marco-MiniLM-L-12-v2
+    reranker: Xenova/ms-marco-MiniLM-L-6-v2
 
 # Route by node: each agent names a model size, the profile decides the real model.
 nodes:
@@ -70,7 +70,7 @@ rag:
   evidence_types: [case, repo, review]    # what counts as proof of past work (not the CV, not old proposals)
   batch: 8                                # texts per model call for embedding and reranking. Small on purpose: memory grows with it
   threads: 4                              # CPU threads the embedding and reranker models may use
-  rerank_chars: 800                       # how much of each item the reranker reads (a whole case study or review fits)
+  rerank_chars: 600                       # how much of each item the reranker reads: title, problem and the skills used
   chunk_words: 120                        # V0: fixed chunk size in words
   chunk_overlap: 20
   candidates: 20                          # how many items the first search stage passes on

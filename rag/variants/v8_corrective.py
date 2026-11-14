@@ -4,7 +4,7 @@
                   \\--(weak or none)--> retrieve again, a different way
 
 - grade: the reranker scores every hit against the query; hits under corrective.min_score are dropped.
-- re-query: try 1 searches by exact keywords (BM25), try 2 searches a wider pool of candidates.
+- re-query: try 1 searches by exact keywords (BM25), try 2 searches a pool of candidates twice as wide.
 - refuse: if nothing passes after the last try, the answer is an empty list. Empty means
   "the portfolio does not prove this", so the writer has nothing to build a claim on.
 """

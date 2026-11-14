@@ -44,7 +44,7 @@ def _once(persona: str, query: str, todo: list[str], filters: dict, how: str = "
         hits = v2_hybrid.search(persona, query)
     else:
         hits = v0_naive.search(persona, query)
-    n = get_settings()["rag"]["candidates"] * (3 if how == "wide" else 1)
+    n = get_settings()["rag"]["candidates"] * (2 if how == "wide" else 1)
     hits = [h for h in hits if _keep(h[0], filters)][:n]
     if "rerank" in todo:
         hits = v3_rerank.rerank(query, hits)
