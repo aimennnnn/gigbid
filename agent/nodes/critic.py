@@ -9,6 +9,12 @@ async def run(deps: Deps, state: dict, config: dict) -> dict:
     draft = state["drafts"][-1]
     critique, tokens = await ask("critic", {"job_post": state["job"], "draft": draft.model_dump(),
                                             "word_limits": get_settings()["rules"]["proposal"]}, Critique, untrusted=("job_post",))
+    # rule on top of the model: a letter left with no proven past work goes back to the writer
+    cut = state.get("removed_claims", [])
+    if not draft.claims and cut and len(state.get("critiques", [])) < get_settings()["limits"]["critic_max_revisions"]:
+        critique.approved = critique.grounding_ok = False
+        critique.comments.append("Your sentences about past work were removed because they added details that are not in the "
+                                 "evidence. Write them again using only facts stated in the evidence text: " + " | ".join(cut[-2:]))
     return {"critiques": [critique], "tokens_used": tokens}
 
 

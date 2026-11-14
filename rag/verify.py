@@ -13,13 +13,19 @@ from agent.guards import sentences
 from agent.handoffs import Claim, VerifiedClaims
 from agent.llm import ask
 
-EXPERIENCE = re.compile(r"\b(i|my|we)\b.*\b(built|delivered|led|designed|trained|migrated|worked|experience|years|clients?)\b|\d+ ?%|\bon a similar project\b", re.I)
+EXPERIENCE = re.compile(r"\b(i|my|we)\b.*\b(built|delivered|led|designed|trained|migrated|implemented|worked|experience|years|clients?)\b"
+                        r"|\d+ ?%|\bon a similar project\b|\bproven\b", re.I)
 
 
 def split_claims(letter: str, listed: list[Claim]) -> list[Claim]:
-    known = " ".join(c.text for c in listed)
-    extra = [Claim(text=s) for s in sentences(letter) if EXPERIENCE.search(s) and s not in known and not s.endswith("?")]
-    return list(listed) + extra
+    # a claim only counts if its text really is in the letter; the ids the writer cited become
+    # candidates for every other sentence about past work, and the verifier decides
+    in_letter = [c for c in listed if c.text.strip() and c.text.strip() in letter]
+    hints = sorted({i for c in listed for i in c.evidence_ids})
+    known = " ".join(c.text for c in in_letter)
+    extra = [Claim(text=s, evidence_ids=hints) for s in sentences(letter)
+             if EXPERIENCE.search(s) and s not in known and not s.endswith("?")]
+    return in_letter + extra
 
 
 async def verify(claims: list[Claim], evidence: list[dict]) -> tuple[list[Claim], int]:
