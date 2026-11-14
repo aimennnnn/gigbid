@@ -16,11 +16,13 @@ async def run(deps: Deps, state: dict, config: dict) -> dict:
     job, rows, evidence = state["job"], [], {}
     for req in requirements_of(job):
         r = await deps.toolbox.call("matcher", "portfolio", "search_evidence",
-                                    {"requirement": req[:500], "k": 4, "persona": state["persona"],
+                                    {"requirement": req[:500], "k": 3, "persona": state["persona"],
                                      "filters": {"types": ["case", "repo", "review"]}}, **ids(state, config))
-        rows.append({"requirement": req, "evidence": r["items"]})
+        rows.append({"requirement": req, "candidate_ids": [i["id"] for i in r["items"]]})
         evidence.update({i["id"]: i for i in r["items"]})
-    fit, tokens = await ask("matcher", {"job_id": state["job_id"], "requirements": rows}, FitReport)
+    # each evidence item is sent once, shortened: keeps the request small and cheap
+    short = [{"id": e["id"], "type": e["type"], "title": e["title"], "skills": e["skills"], "text": e["text"][:350]} for e in evidence.values()]
+    fit, tokens = await ask("matcher", {"job_id": state["job_id"], "requirements": rows, "evidence": short}, FitReport)
     fit.job_id = state["job_id"]
     for m in fit.matches:                               # drop any evidence id the model made up
         m.evidence_ids = [i for i in m.evidence_ids if i in evidence]

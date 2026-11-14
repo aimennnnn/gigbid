@@ -9,7 +9,8 @@ from agent.settings import get_settings
 async def run(deps: Deps, state: dict, config: dict) -> dict:
     user, spec = state.get("user_id", "local"), state["job_spec"]
     proven = {i for m in state["fit"].matches if m.status == "supported" for i in m.evidence_ids}
-    evidence = [e.model_dump() for e in state["evidence"] if e.id in proven] or [e.model_dump() for e in state["evidence"][:4]]
+    picked = [e for e in state["evidence"] if e.id in proven] or state["evidence"][:4]
+    evidence = [{"id": e.id, "type": e.type, "title": e.title, "skills": e.skills, "text": e.text[:700]} for e in picked[:5]]
     last = state["critiques"][-1].comments if state.get("critiques") else []
     out, tokens = await ask("writer", {
         "job_post": state["job"], "job_spec": spec.model_dump(), "evidence": evidence,

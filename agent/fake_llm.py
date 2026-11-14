@@ -37,11 +37,12 @@ def risk(v: dict) -> dict:
 
 
 def matcher(v: dict) -> dict:
-    matches = []
+    matches, by_id = [], {e["id"]: e for e in v["evidence"]}
     for r in v["requirements"]:
         want = _words(r["requirement"]) - {"experience", "with", "want"}
-        good = [e["id"] for e in r["evidence"] if e["type"] != "proposal" and len(want & _words(e["text"] + " " + " ".join(e.get("skills", [])))) >= max(1, len(want) // 2)]
-        status = "supported" if len(good) >= 1 and r["evidence"] else "unsupported"
+        cands = [by_id[i] for i in r["candidate_ids"]]
+        good = [e["id"] for e in cands if e["type"] != "proposal" and len(want & _words(e["title"] + " " + e["text"] + " " + " ".join(e.get("skills", [])))) >= max(1, len(want) // 2)]
+        status = "supported" if good else "unsupported"
         matches.append({"requirement": r["requirement"], "evidence_ids": good[:3], "status": status,
                         "reason": f"{len(good)} evidence item(s) mention this"})
     done = sum(m["status"] == "supported" for m in matches)
