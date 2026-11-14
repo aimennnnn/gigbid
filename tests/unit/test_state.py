@@ -7,7 +7,7 @@ from agent.state import BidState, merge_evidence
 
 
 def ev(i):
-    return EvidenceItem(id=i, type="case_study", source="x.md", text="t")
+    return EvidenceItem(id=i, type="case", source="x.md", text="t")
 
 
 def test_merge_evidence_drops_duplicates():

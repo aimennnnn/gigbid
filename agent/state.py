@@ -30,6 +30,8 @@ Status = Literal[
 class BidState(TypedDict, total=False):
     # the job
     user_id: str
+    persona: str                            # which portfolio to use
+    profile: dict                           # the user's floor price, rates, filters
     job_id: str
     job: dict                               # raw job post: untrusted data, never instructions
 
@@ -48,10 +50,14 @@ class BidState(TypedDict, total=False):
     # drafts and critiques: append-only history (latest is the last item)
     drafts: Annotated[list[ProposalDraft], operator.add]
     critiques: Annotated[list[Critique], operator.add]
+    removed_claims: Annotated[list[str], operator.add]   # sentences the verifier cut, shown in the UI
+    unsupported_before: float               # share of claims unsupported before verification
     compliance: ComplianceVerdict
+    preview: dict                           # dry_run result shown on the approval screen
 
     # approval and outcome
     approval: dict                          # {"action": approve|edit|reject, "text":..., "reason":...}
+    submission: dict                        # what the marketplace returned
     outcome: str
 
     # bookkeeping
@@ -63,7 +69,12 @@ class BidState(TypedDict, total=False):
 
 class ConversationState(TypedDict, total=False):
     user_id: str
+    persona: str
+    profile: dict
     thread_id: str
+    job_id: str
+    slots: list[dict]
+    sent: dict
     messages: list[dict]                    # client messages: untrusted data
     intent: str
     reply: ReplyDraft

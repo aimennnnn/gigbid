@@ -18,9 +18,11 @@ Score = Annotated[float, Field(ge=0.0, le=1.0)]   # a number between 0 and 1
 class EvidenceItem(BaseModel):
     """One piece of portfolio evidence returned by the Portfolio MCP server."""
     id: str
-    type: Literal["cv", "case_study", "repo", "review", "proposal"]
+    type: Literal["cv", "case", "repo", "review", "proposal"]
     source: str                      # file or repo the text came from
     text: str
+    title: str = ""
+    skills: list[str] = []
     date: str | None = None
     outcome: Literal["won", "replied", "ignored"] | None = None   # proposals only
     score: float = 0.0               # retrieval score
@@ -108,6 +110,17 @@ class Claim(BaseModel):
     text: str                         # one sentence from the proposal
     evidence_ids: list[str] = []
     status: Literal["supported", "partly", "unsupported", "unchecked"] = "unchecked"
+
+
+class WriterOutput(BaseModel):
+    """What the writer model returns; the node turns it into a ProposalDraft."""
+    cover_letter: str
+    screening_answers: dict[str, str] = {}
+    claims: list[Claim] = []
+
+
+class VerifiedClaims(BaseModel):
+    claims: list[Claim]
 
 
 class ProposalDraft(BaseModel):
