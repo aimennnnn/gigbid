@@ -27,6 +27,12 @@ Status = Literal[
 ]
 
 
+def merge_status(old: str | None, new: str) -> str:
+    """Reducer: the newest status wins, except that "dead_letter" sticks. Needed because the three
+    parallel analysis branches can all fail in the same step, and each one reports dead_letter."""
+    return "dead_letter" if old == "dead_letter" and new != "analysing" else new
+
+
 class BidState(TypedDict, total=False):
     # the job
     user_id: str
@@ -61,7 +67,7 @@ class BidState(TypedDict, total=False):
     outcome: str
 
     # bookkeeping
-    status: Status
+    status: Annotated[Status, merge_status]
     errors: Annotated[list[str], operator.add]      # parallel branches may all report errors
     steps_used: Annotated[int, operator.add]
     tokens_used: Annotated[int, operator.add]
@@ -80,7 +86,7 @@ class ConversationState(TypedDict, total=False):
     reply: ReplyDraft
     compliance: ComplianceVerdict
     approval: dict
-    status: Status
+    status: Annotated[Status, merge_status]
     errors: Annotated[list[str], operator.add]
     steps_used: Annotated[int, operator.add]
     tokens_used: Annotated[int, operator.add]

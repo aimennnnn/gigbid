@@ -119,3 +119,17 @@ async def test_agents_cannot_call_tools_outside_their_allowlist(system):
         await system.deps.toolbox.call("writer", "marketplace", "submit_proposal", {})
     with pytest.raises(PermissionError):
         await system.deps.toolbox.call("risk", "portfolio", "search_evidence", {})
+
+
+async def test_two_analysis_agents_failing_at_once_dead_letters_the_job_instead_of_crashing(system, monkeypatch):
+    """Found on Kaggle: with the model down, analyst, risk and matcher all failed in the same step and the graph crashed."""
+    from agent import fake_llm
+    from agent.llm import LLMError
+
+    def down(_):
+        raise LLMError("model not reachable")
+    monkeypatch.setattr(fake_llm, "analyst", down)
+    monkeypatch.setattr(fake_llm, "risk", down)
+    out, snap = await run_to_pause(system, pick("fit", "bid"), "t-down")
+    assert out["status"] == "dead_letter" and not snap.next
+    assert sum("model not reachable" in e for e in out["errors"]) == 2 and not out.get("drafts")
