@@ -54,6 +54,10 @@ async def main(job_id: str, persona: str) -> None:
         print("\nCLAIMS   :", *[f"{c['status']}: {c['text'][:90]} {c['evidence_ids']}" for c in p["claims"]], sep="\n  ")
         print("REMOVED  :", p["removed_claims"] or "none")
         print("DRY RUN  :", p["dry_run"]["connects_cost"], "Connects, balance after", p["dry_run"]["connects_balance_after"])
+    if s.get("status") == "needs_attention" and s.get("drafts"):
+        print("\nBLOCKED DRAFT:\n", s["drafts"][-1].cover_letter)
+        if s.get("compliance"):
+            print("VIOLATIONS:", s["compliance"].violations)
     print(f"\nstatus={s.get('status')}  tokens={s.get('tokens_used', 0)}  seconds={time.time() - t0:.1f}")
 
 
