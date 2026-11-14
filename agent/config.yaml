@@ -1,0 +1,79 @@
+# GigBid configuration. Everything that might change lives here, not in code:
+# which model each agent uses, the budgets, the bid/skip thresholds and the
+# marketplace rules. A "platform policy update" should only need edits in this file.
+
+profile: open            # open | paid   (override with env GIGBID_PROFILE)
+marketplace: gigsim      # gigsim | upwork (override with env GIGBID_MARKETPLACE)
+
+profiles:
+  # Required profile: open-weight models only. The deployed link runs on this one.
+  open:
+    provider: groq                       # hosted open-model provider (free tier)
+    base_url: https://api.groq.com/openai/v1
+    api_key_env: GROQ_API_KEY
+    models:
+      small: openai/gpt-oss-20b          # cheap, frequent nodes
+      strong: openai/gpt-oss-120b        # writer, critic, liaison
+      fallback: openai/gpt-oss-20b       # used when a cheap node's model fails
+    embeddings: nomic-ai/nomic-embed-text-v1.5   # open, runs on CPU
+    reranker: BAAI/bge-reranker-v2-m3            # open, runs on CPU
+
+  # Optional profile: any API model, only where it beats "open" enough to pay for.
+  paid:
+    provider: anthropic
+    base_url: https://api.anthropic.com/v1
+    api_key_env: ANTHROPIC_API_KEY
+    models:
+      small: openai/gpt-oss-20b          # cheap nodes stay on the open model
+      strong: claude-sonnet-5-5
+      fallback: openai/gpt-oss-20b
+    embeddings: nomic-ai/nomic-embed-text-v1.5   # embeddings stay open in both profiles
+    reranker: BAAI/bge-reranker-v2-m3
+
+# Route by node: each agent names a model size, the profile decides the real model.
+nodes:
+  scout:       {model: small,  timeout_s: 20, retries: 2}
+  analyst:     {model: small,  timeout_s: 30, retries: 2}
+  risk:        {model: small,  timeout_s: 30, retries: 2}
+  matcher:     {model: small,  timeout_s: 30, retries: 2}
+  pricing:     {model: small,  timeout_s: 30, retries: 2}
+  writer:      {model: strong, timeout_s: 60, retries: 1}
+  verifier:    {model: small,  timeout_s: 45, retries: 2}
+  critic:      {model: strong, timeout_s: 60, retries: 1}
+  compliance:  {model: small,  timeout_s: 30, retries: 2}
+  liaison:     {model: strong, timeout_s: 60, retries: 1}
+
+# Decision thresholds used by the "bid or skip?" node.
+thresholds:
+  fit_bid: 0.65          # fit score at or above this -> bid
+  fit_watch: 0.45        # between watch and bid -> watch
+  risk_block: 0.70       # risk score at or above this -> always skip
+  min_evidence_items: 2  # fewer supported requirements than this -> skip
+
+# Loop limits and per-thread budgets (exceeding either -> "needs attention").
+limits:
+  critic_max_revisions: 2
+  step_budget: 40
+  token_budget: 60000
+
+# Declared budgets (reported against measured values in the R&D report).
+budgets:
+  p95_latency_s: {job_analysed: 20, proposal: 90}
+  cost_usd: {job_analysed: 0.002, proposal: 0.02}
+
+# Marketplace rules. The change request ("platform policy update") lands here.
+rules:
+  connects:
+    weekly_budget_default: 60
+    cost_per_proposal_default: 4     # used only if the marketplace does not say
+    max_cost_per_proposal: 16        # never spend more than this on one job
+  proposal:
+    max_words: 250
+    min_words: 80
+  policy_pack_dir: data/policy_pack
+  banned_phrases: ["guarantee", "100% satisfaction", "whatsapp", "telegram", "pay outside"]
+
+# Autonomy: may auto-skip low-fit jobs, can never auto-send.
+autonomy:
+  auto_skip_low_fit: true
+  auto_send: false       # must stay false; the code refuses to start if true

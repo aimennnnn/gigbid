@@ -1,0 +1,21 @@
+[project]
+name = "gigbid"
+version = "0.1.0"
+description = "GigBid: a multi-agent freelancer copilot (AI-4016 R&D assignment)"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic==2.14.3",
+    "pyyaml==6.0.3",
+    "langgraph==1.2.22",
+]
+
+[dependency-groups]
+dev = ["pytest==9.0.2", "ruff==0.15.4"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests", "mcp_servers"]
+
+[tool.ruff]
+line-length = 110
+extend-exclude = ["gigsim", "data"]
