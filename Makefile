@@ -20,6 +20,6 @@ gigsim:
 	uv run uvicorn gigsim.app:app --port 8081
 
 demo:
-	@echo "added in the web step"
+	uv run python -m agent.demo
 
 .PHONY: dev test lint eval seed demo snapshot gigsim
