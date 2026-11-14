@@ -1,25 +1,25 @@
 """Fit Matcher: every requirement -> portfolio evidence -> fit score with reasons."""
-from agent.guards import sentences
 from agent.handoffs import EvidenceItem, FitReport
 from agent.llm import ask
 from agent.nodes.base import Deps, ids
-
-
-def requirements_of(job: dict) -> list[str]:
-    """Runs in parallel with the Analyst, so it reads requirements straight from the post."""
-    if job.get("skills"):
-        return [f"Experience with {s}" for s in job["skills"]] + [job["title"]]
-    return [job["title"]] + [s for s in sentences(job["description"]) if "want" in s.lower()][:2]
+from agent.settings import get_settings
+from rag import retriever
+from rag.variants.v1_decompose import requirements
 
 
 async def run(deps: Deps, state: dict, config: dict) -> dict:
-    job, rows, evidence = state["job"], [], {}
-    for req in requirements_of(job):
+    job, found, evidence = state["job"], {}, {}
+    # Runs in parallel with the Analyst, so requirements are read straight from the post.
+    # The RAG variant in config decides the queries: one per requirement, or the whole post.
+    asked = retriever.queries(job)
+    for q in asked:
         r = await deps.toolbox.call("matcher", "portfolio", "search_evidence",
-                                    {"requirement": req[:500], "k": 3, "persona": state["persona"],
-                                     "filters": {"types": ["case", "repo", "review"]}}, **ids(state, config))
-        rows.append({"requirement": req, "candidate_ids": [i["id"] for i in r["items"]]})
+                                    {"requirement": q, "k": 3 if len(asked) > 1 else 5, "persona": state["persona"],
+                                     "filters": {"types": get_settings()["rag"]["evidence_types"]}}, **ids(state, config))
+        found[q] = [i["id"] for i in r["items"]]
         evidence.update({i["id"]: i for i in r["items"]})
+    # a requirement that had its own search keeps its own candidates; otherwise it shares everything found
+    rows = [{"requirement": req, "candidate_ids": found.get(req, list(evidence))} for req in requirements(job)]
     # each evidence item is sent once, shortened: keeps the request small and cheap
     short = [{"id": e["id"], "type": e["type"], "title": e["title"], "skills": e["skills"], "text": e["text"][:650]} for e in evidence.values()]
     fit, tokens = await ask("matcher", {"job_id": state["job_id"], "requirements": rows, "evidence": short}, FitReport)
