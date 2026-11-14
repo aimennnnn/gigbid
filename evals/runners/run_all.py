@@ -4,6 +4,7 @@
     uv run python -m evals.runners.run_all --only rag     retrieval + ablation only (no LLM)
     uv run python -m evals.runners.run_all --only agent   decisions + proposals only (needs an LLM)
     uv run python -m evals.runners.run_all --smoke        30 jobs, stand-in models, no network (CI)
+    uv run python -m evals.runners.run_all --resume       carry on after a stopped run (checkpoints in evals/results/)
 
 --smoke writes to evals/results/smoke/, so stand-in numbers can never overwrite real ones.
 """
@@ -22,7 +23,7 @@ def main() -> None:
     ap.add_argument("--only", choices=["rag", "agent"])
     ap.add_argument("--jobs", type=int, default=10, help="proposal jobs per persona (agent part)")
     ap.add_argument("--decisions", type=int, default=20, help="decision jobs per persona (agent part)")
-    ap.add_argument("--resume", action="store_true", help="carry on a proposal run that stopped half way")
+    ap.add_argument("--resume", action="store_true", help="carry on a run that stopped half way: finished parts are not redone")
     a = ap.parse_args()
     load_dotenv()
     if a.smoke:
@@ -33,12 +34,13 @@ def main() -> None:
         limit = []
     # imported after the environment is set, because they read it
     from evals.runners import ablation, decision_eval, gigsim_outcomes, judge_calibration, rag_eval, results_table
+    again = ["--resume"] if a.resume else []
     if a.only != "agent":
-        rag_eval.main(limit)
-        ablation.main(limit)
+        rag_eval.main(limit + again)
+        ablation.main(limit + again)
     if a.only != "rag":
         decision_eval.main(["--limit", str(a.decisions)])
-        gigsim_outcomes.main(["--jobs", str(a.jobs)] + (["--resume"] if a.resume else []))
+        gigsim_outcomes.main(["--jobs", str(a.jobs)] + again)
         judge_calibration.main([])
     results_table.main([] if a.smoke else ["--readme"])
 

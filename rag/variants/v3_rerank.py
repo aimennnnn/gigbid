@@ -59,6 +59,8 @@ def scores(query: str, items: list[dict]) -> list[float]:
         _model()                                             # also loads the scores saved by earlier runs
     todo = [i for i in items if not use_cache or (query, i["id"]) not in _seen]
     if todo:
+        if _new // 2000 != (_new + len(todo)) // 2000:
+            _save()                                          # checkpoint: a stopped run keeps the scores it already paid for
         _new += len(todo)
         texts = [f"{i['title']}. {i['text']}"[:get_settings()["rag"]["rerank_chars"]] for i in todo]
         new = [_overlap(query, t) for t in texts] if fake() else [1 / (1 + math.exp(-x)) for x in _model().rerank(query, texts, batch_size=get_settings()["rag"]["batch"])]

@@ -69,6 +69,23 @@ def save(name: str, data: dict) -> Path:
     return path
 
 
+def settings_used() -> dict:
+    """The settings a retrieval result depends on. A saved result is only reused if these are unchanged."""
+    s = get_settings()
+    return {"rag": s["rag"], "embeddings": s.profile["embeddings"], "reranker": s.profile["reranker"],
+            "stand_in_models": os.getenv("GIGBID_RAG_MODELS", "")}
+
+
+def saved(name: str, jobs: int) -> dict:
+    """Checkpoint: the finished parts of an earlier, interrupted run of the same eval with the same settings and jobs."""
+    path = out_dir() / f"{name}.json"
+    if not path.exists():
+        return {}
+    old = json.loads(path.read_text(encoding="utf-8"))
+    same = old.get("settings") == json.loads(json.dumps(settings_used())) and old.get("jobs") == jobs
+    return old.get("done", {}) if same else {}
+
+
 def cost_usd(usage: list[dict]) -> float:
     """List-price cost of some model calls (rows from agent.llm.USAGE). Unlisted models cost 0."""
     prices = get_settings()["prices_usd_per_mtok"]

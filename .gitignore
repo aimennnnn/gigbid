@@ -14,3 +14,4 @@ gigsim/*.db
 data/processed/
 !data/processed/.gitkeep
 evals/results/smoke/
+evals/results/*_progress.json

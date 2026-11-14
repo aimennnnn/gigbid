@@ -3,6 +3,7 @@
     uv run python -m evals.runners.rag_eval                      all variants, all 600 dev jobs
     uv run python -m evals.runners.rag_eval --variants v0_naive,best --limit 10
     uv run python -m evals.runners.rag_eval --sweep              try corrective.min_score values for V8
+    uv run python -m evals.runners.rag_eval --resume             carry on after a stopped run (same settings only)
 
 Per variant, on jobs that HAVE gold evidence:
   recall_at_5   share of the gold items found in the top 5
@@ -21,7 +22,7 @@ import math
 import time
 
 from agent.settings import get_settings
-from evals.runners.common import dev_rows, mean, percentile, save
+from evals.runners.common import dev_rows, mean, percentile, save, saved, settings_used
 from rag import retriever
 from rag.index import embed
 from rag.variants import v3_rerank
@@ -104,15 +105,19 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--limit", type=int, default=None, help="first N jobs per persona")
     ap.add_argument("--timing", type=int, default=30, help="jobs used to measure latency")
     ap.add_argument("--sweep", action="store_true")
+    ap.add_argument("--resume", action="store_true", help="skip variants an interrupted run already finished")
     a = ap.parse_args(argv)
     rows = dev_rows(a.limit)
     if a.sweep:
         return sweep(rows)
     names = a.variants.split(",") if a.variants else list(get_settings()["rag"]["variants"])
+    # checkpoint: each finished variant is saved at once; --resume picks up after the last finished one
+    done = saved("rag_eval_progress", len(rows)) if a.resume else {}
     results = {}
     for name in names:
-        results[name] = evaluate(name, rows, a.timing)
-        show(name, results[name]["overall"])
+        results[name] = done[name] if name in done else evaluate(name, rows, a.timing)
+        show(name + (" (saved)" if name in done else ""), results[name]["overall"])
+        save("rag_eval_progress", {"jobs": len(rows), "settings": settings_used(), "done": results})
     save("rag_eval", {"jobs": len(rows), "timing_jobs": min(a.timing, len(rows)), "variants": results})
 
 
