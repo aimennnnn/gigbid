@@ -37,6 +37,7 @@ class RateLimited(LLMError):
 
 
 _used: dict[str, list[tuple[float, int]]] = {}       # model -> (time, tokens) for the last minute
+USAGE: list[dict] = []     # one row per model call: node, provider, model, tokens in and out, seconds. Read by the evals.
 
 
 async def _pace(provider: dict, model: str, need: int) -> None:
@@ -78,7 +79,7 @@ def providers() -> list[dict]:
     return [p for p in found if p["name"] == forced] if forced else found
 
 
-async def _chat(provider: dict, model: str, system: str, user: str, timeout: float) -> tuple[str, int]:
+async def _chat(provider: dict, model: str, system: str, user: str, timeout: float) -> tuple[str, dict]:
     await _pace(provider, model, (len(system) + len(user)) // 4 + 600)   # rough size: 4 characters per token, plus the reply
     async with httpx.AsyncClient(timeout=timeout) as http:
         r = await http.post(f"{provider['base_url']}/chat/completions", headers={"Authorization": f"Bearer {provider['key']}"},
@@ -93,7 +94,7 @@ async def _chat(provider: dict, model: str, system: str, user: str, timeout: flo
         raise LLMError(f"{provider['name']} call failed ({r.status_code}): {r.text[:200]}")
     body = r.json()
     text = body["choices"][0]["message"]["content"] or ""
-    return text[text.find("{"):text.rfind("}") + 1], body.get("usage", {}).get("total_tokens", 0)   # tolerate ```json fences
+    return text[text.find("{"):text.rfind("}") + 1], body.get("usage") or {}   # tolerate ```json fences
 
 
 async def ask(node: str, variables: dict, schema: type[T], untrusted: tuple[str, ...] = ()) -> tuple[T, int]:
@@ -115,8 +116,11 @@ async def ask(node: str, variables: dict, schema: type[T], untrusted: tuple[str,
         provider = usable[pi]
         model = provider["models"][sizes[attempt]]
         try:
+            started = time.monotonic()
             text, used = await asyncio.wait_for(_chat(provider, model, system, user, cfg["timeout_s"]), cfg["timeout_s"] + 65)
-            tokens += used
+            tokens += used.get("total_tokens", 0)
+            USAGE.append({"node": node, "provider": provider["name"], "model": model, "seconds": round(time.monotonic() - started, 2),
+                          "tokens_in": used.get("prompt_tokens", 0), "tokens_out": used.get("completion_tokens", 0)})
             return schema.model_validate_json(text), tokens
         except RateLimited as e:                     # not a failure: use the next provider, or wait as told
             if e.wait > 2 and pi + 1 < len(usable):

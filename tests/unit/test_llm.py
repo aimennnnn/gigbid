@@ -32,7 +32,7 @@ async def test_rate_limited_provider_hands_over_to_the_next_one(monkeypatch):
         calls.append(provider["name"])
         if provider["name"] == "groq":
             raise llm.RateLimited(30)
-        return '{"ok": true}', 42
+        return '{"ok": true}', {"total_tokens": 42}
     monkeypatch.setattr(llm, "_chat", chat)
     out, tokens = await llm.ask("risk", {"job_post": {"a": 1}}, Out, untrusted=("job_post",))
     assert out.ok and tokens == 42 and calls == ["groq", "openrouter"]
@@ -59,7 +59,7 @@ async def test_broken_backup_provider_is_dropped_and_the_main_one_is_used(monkey
             raise llm.LLMError("openrouter call failed (402): no credit")
         if calls.count("groq") == 1:
             raise llm.RateLimited(30)
-        return '{"ok": true}', 7
+        return '{"ok": true}', {"total_tokens": 7}
     monkeypatch.setattr(llm, "_chat", chat)
     monkeypatch.setattr(llm.asyncio, "sleep", no_sleep)
     out, _ = await llm.ask("risk", {"job_post": {}}, Out)

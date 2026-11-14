@@ -74,7 +74,7 @@ rag:
   corrective: {min_score: 0.3, min_keep: 1, max_requeries: 2}    # V8: grade evidence, re-query, refuse
   embed_prefix: {query: "search_query: ", document: "search_document: "}   # nomic models expect these; use "" for others
   variants:
-    keyword:       [bm25]                 # keyword search only: what the app used before Part B
+    keyword:       [decompose, bm25]      # keyword search per requirement: what the app used before Part B
     v0_naive:      []                     # baseline: dense, fixed chunks, whole job post as the query
     v1_decompose:  [decompose]            # one search per requirement, then merge
     v2_hybrid:     [hybrid]               # BM25 + dense, reciprocal rank fusion
@@ -98,6 +98,13 @@ tools:
   liaison:    {marketplace: [list_messages, list_events], workspace: [get_free_slots]}
   sender:     {marketplace: [create_proposal_draft, submit_proposal, send_message], workspace: [create_interview_hold]}
 tool_call: {timeout_s: 15, retries: 2, backoff_s: 0.5}
+
+# List prices in USD per 1 million tokens, [input, output], checked November 2026. Used only to
+# report cost. A model that is not listed costs 0 (free tier variants, local Ollama).
+prices_usd_per_mtok:
+  groq:
+    openai/gpt-oss-20b: [0.075, 0.30]
+    openai/gpt-oss-120b: [0.15, 0.60]
 
 # Long-term memory promotion rules (R7).
 memory:
