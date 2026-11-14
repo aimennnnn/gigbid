@@ -12,7 +12,8 @@ from rag.variants import v1_decompose, v2_hybrid, v4_outcome
 JOBS = {j["job_id"]: j for j in json.load(open("gigsim/seed/jobs_dev.json", encoding="utf-8"))}
 DEV = [json.loads(line) for line in open("evals/datasets/dev_ml.jsonl", encoding="utf-8")]
 FIT = next(JOBS[r["job_id"]] for r in DEV if r["kind"] == "fit" and JOBS[r["job_id"]]["skills"])
-VARIANTS = ["keyword", "v0_naive", "v1_decompose", "v2_hybrid", "v3_rerank", "v4_outcome", "v8_corrective", "best"]
+VARIANTS = ["keyword", "v0_naive", "v1_decompose", "v2_hybrid", "v3_rerank", "v4_outcome", "v8_corrective",
+            "hybrid_corrective", "all_steps", "best"]
 
 
 def item(text="one two three four five six seven eight nine ten"):

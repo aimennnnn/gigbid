@@ -66,7 +66,7 @@ nodes:
 # Retrieval (Part B). The app uses rag.variant; `make eval` compares all of them.
 # Each variant is a list of steps. The code for each step is one file in rag/variants/.
 rag:
-  variant: keyword                        # the one the app uses (env GIGBID_RAG_VARIANT overrides). Set to the winner after `make eval`.
+  variant: v2_hybrid                      # the one the app uses (env GIGBID_RAG_VARIANT overrides). Chosen by `make eval`: best Recall@5 and nDCG@10.
   evidence_types: [case, repo, review]    # what counts as proof of past work (not the CV, not old proposals)
   batch: 8                                # texts per model call for embedding and reranking. Small on purpose: memory grows with it
   threads: 4                              # CPU threads the embedding and reranker models may use
@@ -76,7 +76,7 @@ rag:
   candidates: 20                          # how many items the first search stage passes on
   rrf_k: 60                               # reciprocal rank fusion constant (V1 merge, V2 hybrid)
   outcome_boost: 0.3                      # V4: how much a project's past win/reply rate lifts its evidence
-  corrective: {min_score: 0.3, min_keep: 1, max_requeries: 2}    # V8: grade evidence, re-query, refuse
+  corrective: {min_score: 0.6, min_keep: 1, max_requeries: 2}    # V8: grade evidence, re-query, refuse. 0.6 came from `make tune`
   embed_prefix: {query: "search_query: ", document: "search_document: "}   # nomic models expect these; use "" for others
   variants:
     keyword:       [decompose, bm25]      # keyword search per requirement: what the app used before Part B
@@ -86,7 +86,9 @@ rag:
     v3_rerank:     [rerank]               # cross-encoder reorders the candidates
     v4_outcome:    [outcome]              # boost evidence from projects whose proposals won or got replies
     v8_corrective: [corrective]           # LangGraph loop: grade, re-query when weak, refuse when none
-    best:          [decompose, hybrid, rerank, outcome, corrective]   # the ablation removes one step at a time
+    hybrid_corrective: [hybrid, corrective]   # the winner plus the refusal loop: fewer, surer items
+    all_steps:     [decompose, hybrid, rerank, outcome, corrective]   # every step stacked. Measured worse than hybrid alone
+    best:          [hybrid]               # what the evals picked. The ablation removes one step at a time from best and from all_steps
 
 # Per-agent tool allowlists (A6): an agent can only call the tools named here.
 # "sender" is not an agent: it is the step that runs only after a human approved.
