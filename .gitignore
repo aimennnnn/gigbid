@@ -13,3 +13,4 @@ evals/datasets/hidden*
 gigsim/*.db
 data/processed/
 !data/processed/.gitkeep
+evals/results/smoke/
