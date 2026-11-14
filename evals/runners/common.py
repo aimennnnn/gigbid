@@ -6,11 +6,13 @@ import logging
 import os
 import platform
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 from agent.settings import get_settings
 
+sys.stdout.reconfigure(line_buffering=True)      # show each progress line at once, also inside a notebook
 ROOT = Path(__file__).resolve().parents[2]
 PERSONAS = ["ml", "web", "data"]
 
