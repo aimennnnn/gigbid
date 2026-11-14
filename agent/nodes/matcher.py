@@ -28,6 +28,16 @@ async def run(deps: Deps, state: dict, config: dict) -> dict:
         m.evidence_ids = [i for i in m.evidence_ids if i in evidence]
         if not m.evidence_ids and m.status == "supported":
             m.status = "unsupported"
+    # rule on top of the model: a named skill that is literally in a candidate's skills list or text is
+    # supported, whatever the model said. The model can add support, it cannot take this away.
+    cands = {r["requirement"]: r["candidate_ids"] for r in rows}
+    for m in fit.matches:
+        if m.requirement.startswith("Experience with "):
+            skill = m.requirement.removeprefix("Experience with ").lower()
+            proof = [i for i in cands.get(m.requirement, [])
+                     if skill in [s.lower() for s in evidence[i]["skills"]] or skill in evidence[i]["text"].lower()]
+            if proof:
+                m.status, m.evidence_ids = "supported", proof
     # the score is worked out here, not taken from the model, so the thresholds mean the same thing every run
     points = sum({"supported": 1.0, "partly": 0.5}.get(m.status, 0.0) for m in fit.matches)
     fit.fit_score = round(points / len(fit.matches), 2) if fit.matches else 0.0

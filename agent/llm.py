@@ -82,7 +82,7 @@ async def _chat(provider: dict, model: str, system: str, user: str, timeout: flo
     await _pace(provider, model, (len(system) + len(user)) // 4 + 600)   # rough size: 4 characters per token, plus the reply
     async with httpx.AsyncClient(timeout=timeout) as http:
         r = await http.post(f"{provider['base_url']}/chat/completions", headers={"Authorization": f"Bearer {provider['key']}"},
-                            json={"model": model, "temperature": 0.2, "response_format": {"type": "json_object"},
+                            json={"model": model, "temperature": 0, "response_format": {"type": "json_object"},
                                   "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
                                   **provider.get("extra", {})})
     if r.status_code == 429:
