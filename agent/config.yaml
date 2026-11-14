@@ -25,7 +25,7 @@ profiles:
         api_key_env: OPENROUTER_API_KEY
         tpm_limit: 0
         extra: {}
-        models: {small: openai/gpt-oss-20b, strong: openai/gpt-oss-120b, fallback: openai/gpt-oss-20b}
+        models: {small: "openai/gpt-oss-20b:free", strong: "openai/gpt-oss-120b:free", fallback: "openai/gpt-oss-20b:free"}   # ":free" = no credit needed
       - name: ollama                     # a local model, or a free Colab/Kaggle GPU: no key, no rate limit
         base_url_env: OLLAMA_URL         # e.g. http://localhost:11434/v1
         tpm_limit: 0

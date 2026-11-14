@@ -133,6 +133,10 @@ async def ask(node: str, variables: dict, schema: type[T], untrusted: tuple[str,
             attempt += 1
         except (LLMError, httpx.HTTPError, asyncio.TimeoutError, KeyError) as e:
             last = f"{type(e).__name__}: {e}"
+            if pi > 0:                               # a backup provider failed (no credit, unknown model): drop it
+                usable.pop(pi)
+                pi = 0
+                continue
             await asyncio.sleep(min(2 ** attempt, 8))
             attempt += 1
     raise LLMError(f"{node}: no valid answer after {len(sizes)} attempts ({last})")
