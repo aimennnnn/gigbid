@@ -8,7 +8,7 @@ marketplace: gigsim      # gigsim | upwork (override with env GIGBID_MARKETPLACE
 profiles:
   # Required profile: open-weight models only. The deployed link runs on this one.
   open:
-    provider: groq                       # hosted open-model provider (free tier)
+    name: groq                           # hosted open-model provider (free tier)
     base_url: https://api.groq.com/openai/v1
     api_key_env: GROQ_API_KEY
     models:
@@ -17,12 +17,26 @@ profiles:
       fallback: openai/gpt-oss-20b       # used when a cheap node's model fails
     tpm_limit: 8000                    # provider's tokens-per-minute cap per model (Groq free tier); 0 = no pacing
     extra: {reasoning_effort: low}     # sent with every request: less hidden reasoning, fewer tokens
+    # More open-model capacity. Tried in order when the provider above is rate limited.
+    # A provider whose key (or URL) is not set in .env is skipped.
+    backup_providers:
+      - name: openrouter
+        base_url: https://openrouter.ai/api/v1
+        api_key_env: OPENROUTER_API_KEY
+        tpm_limit: 0
+        extra: {}
+        models: {small: openai/gpt-oss-20b, strong: openai/gpt-oss-120b, fallback: openai/gpt-oss-20b}
+      - name: ollama                     # a local model, or a free Colab/Kaggle GPU: no key, no rate limit
+        base_url_env: OLLAMA_URL         # e.g. http://localhost:11434/v1
+        tpm_limit: 0
+        extra: {}
+        models: {small: "gpt-oss:20b", strong: "gpt-oss:20b", fallback: "gpt-oss:20b"}
     embeddings: nomic-ai/nomic-embed-text-v1.5   # open, runs on CPU
     reranker: BAAI/bge-reranker-v2-m3            # open, runs on CPU
 
   # Optional profile: any API model, only where it beats "open" enough to pay for.
   paid:
-    provider: anthropic
+    name: anthropic
     base_url: https://api.anthropic.com/v1
     api_key_env: ANTHROPIC_API_KEY
     models:
