@@ -79,6 +79,11 @@ def providers() -> list[dict]:
     return [p for p in found if p["name"] == forced] if forced else found
 
 
+def timeout_scale() -> float:
+    """A local model is slower than a hosted one: its provider can stretch every timeout (timeout_scale in config)."""
+    return max((p.get("timeout_scale", 1) for p in providers()), default=1)
+
+
 async def _chat(provider: dict, model: str, system: str, user: str, timeout: float) -> tuple[str, dict]:
     await _pace(provider, model, (len(system) + len(user)) // 4 + 600)   # rough size: 4 characters per token, plus the reply
     async with httpx.AsyncClient(timeout=timeout) as http:
@@ -117,7 +122,8 @@ async def ask(node: str, variables: dict, schema: type[T], untrusted: tuple[str,
         model = provider["models"][sizes[attempt]]
         try:
             started = time.monotonic()
-            text, used = await asyncio.wait_for(_chat(provider, model, system, user, cfg["timeout_s"]), cfg["timeout_s"] + 65)
+            limit = cfg["timeout_s"] * provider.get("timeout_scale", 1)
+            text, used = await asyncio.wait_for(_chat(provider, model, system, user, limit), limit + 65)
             tokens += used.get("total_tokens", 0)
             USAGE.append({"node": node, "provider": provider["name"], "model": model, "seconds": round(time.monotonic() - started, 2),
                           "tokens_in": used.get("prompt_tokens", 0), "tokens_out": used.get("completion_tokens", 0)})

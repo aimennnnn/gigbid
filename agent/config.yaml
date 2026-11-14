@@ -29,7 +29,8 @@ profiles:
       - name: ollama                     # a local model, or a free Colab/Kaggle GPU: no key, no rate limit
         base_url_env: OLLAMA_URL         # e.g. http://localhost:11434/v1
         tpm_limit: 0
-        extra: {}
+        timeout_scale: 6                 # one GPU answers one call at a time, so every timeout is 6x longer
+        extra: {reasoning_effort: low}
         models: {small: "gpt-oss:20b", strong: "gpt-oss:20b", fallback: "gpt-oss:20b"}
     embeddings: nomic-ai/nomic-embed-text-v1.5   # open, runs on CPU
     reranker: Xenova/ms-marco-MiniLM-L-12-v2     # open, 0.12 GB, fast on a laptop CPU (BAAI/bge-reranker-v2-m3 is 2.27 GB)
@@ -60,6 +61,7 @@ nodes:
   critic:      {model: strong, timeout_s: 60, retries: 1}
   compliance:  {model: small,  timeout_s: 30, retries: 2}
   liaison:     {model: strong, timeout_s: 60, retries: 1}
+  judge:       {model: strong, timeout_s: 60, retries: 1}   # evals only: scores finished proposals against a rubric
 
 # Retrieval (Part B). The app uses rag.variant; `make eval` compares all of them.
 # Each variant is a list of steps. The code for each step is one file in rag/variants/.

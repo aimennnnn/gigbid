@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from langchain_core.runnables import RunnableConfig
 from langgraph.store.base import BaseStore
 
-from agent.llm import LLMError
+from agent.llm import LLMError, timeout_scale
 from agent.mcp_client import ToolBox, ToolRejected, ToolUnavailable
 from agent.settings import get_settings
 
@@ -28,7 +28,7 @@ def ids(state: dict, config: dict) -> dict:
 def node(name: str, fn, deps: Deps, critical: bool = False):
     """Wrap a node function. A failure never crashes the graph: it is written into state.
     If the node is critical (the job cannot continue without it) the job is dead-lettered."""
-    timeout = get_settings()["nodes"].get(name, {}).get("timeout_s", 30) * 4
+    timeout = get_settings()["nodes"].get(name, {}).get("timeout_s", 30) * 4 * timeout_scale()
 
     async def wrapped(state: dict, config: RunnableConfig) -> dict:
         try:
