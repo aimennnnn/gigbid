@@ -22,7 +22,7 @@ _seen: dict[tuple[str, str], float] = {}         # (query, item id) -> score, so
 @lru_cache
 def _model():
     from fastembed.rerank.cross_encoder import TextCrossEncoder     # downloads the model the first time
-    return TextCrossEncoder(get_settings().profile["reranker"])
+    return TextCrossEncoder(get_settings().profile["reranker"], threads=get_settings()["rag"]["threads"])
 
 
 def _overlap(query: str, text: str) -> float:
@@ -36,7 +36,7 @@ def scores(query: str, items: list[dict]) -> list[float]:
     todo = [i for i in items if not use_cache or (query, i["id"]) not in _seen]
     if todo:
         texts = [f"{i['title']}. {i['text']}"[:1500] for i in todo]
-        new = [_overlap(query, t) for t in texts] if fake() else [1 / (1 + math.exp(-x)) for x in _model().rerank(query, texts)]
+        new = [_overlap(query, t) for t in texts] if fake() else [1 / (1 + math.exp(-x)) for x in _model().rerank(query, texts, batch_size=get_settings()["rag"]["batch"])]
         _seen.update({(query, i["id"]): s for i, s in zip(todo, new)})
     return [_seen[(query, i["id"])] for i in items]
 

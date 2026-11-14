@@ -68,6 +68,8 @@ nodes:
 rag:
   variant: keyword                        # the one the app uses (env GIGBID_RAG_VARIANT overrides). Set to the winner after `make eval`.
   evidence_types: [case, repo, review]    # what counts as proof of past work (not the CV, not old proposals)
+  batch: 8                                # texts per model call for embedding and reranking. Small on purpose: memory grows with it
+  threads: 4                              # CPU threads the embedding and reranker models may use
   chunk_words: 120                        # V0: fixed chunk size in words
   chunk_overlap: 20
   candidates: 20                          # how many items the first search stage passes on

@@ -51,23 +51,27 @@ class Embedder:
         if fake():
             vecs = _hash_vectors(texts)
         else:
+            cfg = get_settings()["rag"]
             if self.model is None:
                 from fastembed import TextEmbedding      # downloads the model the first time
-                self.model = TextEmbedding(self.name)
-            prefix = get_settings()["rag"]["embed_prefix"][kind]
-            vecs = np.array(list(self.model.embed([prefix + t for t in texts])), dtype=np.float32)
+                self.model = TextEmbedding(self.name, threads=cfg["threads"])
+            prefix = cfg["embed_prefix"][kind]
+            # small batches on purpose: memory grows with batch size, and a big batch can freeze an 8 GB laptop
+            vecs = np.array(list(self.model.embed([prefix + t for t in texts], batch_size=cfg["batch"])), dtype=np.float32)
         return vecs / np.maximum(np.linalg.norm(vecs, axis=1, keepdims=True), 1e-9)    # length 1, so dot product = cosine
 
     def embed(self, texts: list[str], kind: str = "document") -> np.ndarray:
         """kind is "document" (portfolio chunks) or "query" (a job post or one requirement)."""
         keys = [hashlib.sha1(f"{kind}\n{t}".encode()).hexdigest() for t in texts]
         todo = [i for i, k in enumerate(keys) if k not in self.saved or (kind == "query" and not use_cache)]
-        if todo:
-            for i, v in zip(todo, self._run([texts[i] for i in todo], kind)):
+        for start in range(0, len(todo), 64):               # 64 texts at a time, saved as it goes: a crash loses little
+            part = todo[start:start + 64]
+            for i, v in zip(part, self._run([texts[i] for i in part], kind)):
                 self.saved[keys[i]] = v
             if kind == "document" and not fake():
                 self.file.parent.mkdir(parents=True, exist_ok=True)
                 np.savez(self.file, keys=np.array(list(self.saved)), vecs=np.stack(list(self.saved.values())))
+                print(f"embedded {min(start + 64, len(todo))}/{len(todo)} new chunks", flush=True)
         return np.stack([self.saved[k] for k in keys])
 
 
