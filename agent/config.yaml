@@ -70,6 +70,7 @@ rag:
   evidence_types: [case, repo, review]    # what counts as proof of past work (not the CV, not old proposals)
   batch: 8                                # texts per model call for embedding and reranking. Small on purpose: memory grows with it
   threads: 4                              # CPU threads the embedding and reranker models may use
+  rerank_chars: 800                       # how much of each item the reranker reads (a whole case study or review fits)
   chunk_words: 120                        # V0: fixed chunk size in words
   chunk_overlap: 20
   candidates: 20                          # how many items the first search stage passes on

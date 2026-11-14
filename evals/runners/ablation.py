@@ -20,13 +20,13 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--limit", type=int, default=None, help="first N jobs per persona")
     a = ap.parse_args(argv)
     rows, variants = dev_rows(a.limit), get_settings()["rag"]["variants"]
-    full = evaluate("best", rows)
+    full = evaluate("best", rows, timing=0)                # latency is already measured per variant in rag_eval
     show("best", full["overall"])
     out = {}
     for step in variants["best"]:
         name = f"best without {step}"
         variants[name] = [s for s in variants["best"] if s != step]       # a temporary variant, only in memory
-        out[step] = evaluate(name, rows)
+        out[step] = evaluate(name, rows, timing=0)
         out[step]["change_vs_best"] = {m: round(out[step]["overall"][m] - full["overall"][m], 4)
                                        for m in ("recall_at_5", "mrr", "ndcg_at_10", "refused_no_evidence")}
         show(name, out[step]["overall"])
