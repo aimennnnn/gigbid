@@ -42,6 +42,8 @@ async def main(job_id: str, persona: str) -> None:
         print("ERRORS   :", *s["errors"], sep="\n  ")
     if s.get("decision"):
         print("DECISION :", s["decision"].action, "-", "; ".join(s["decision"].reasons))
+    if s.get("fit"):
+        print("FIT      :", s["fit"].fit_score, *[f"{m.status:11} {m.requirement[:60]} {m.evidence_ids}" for m in s["fit"].matches], sep="\n  ")
     if s.get("risk"):
         print("RISK     :", s["risk"].risk_score, s["risk"].flags)
     if s.get("price"):
