@@ -10,3 +10,6 @@ data/processed/*
 !data/processed/.gitkeep
 evals/datasets/hidden*
 *.log
+gigsim/*.db
+data/processed/
+!data/processed/.gitkeep

@@ -1,0 +1,146 @@
+[
+ {
+  "id": "forecasting-fintech",
+  "project": "forecasting-fintech",
+  "rating": 5,
+  "client_industry": "fintech",
+  "date": "2026-01-25",
+  "text": "We needed someone to predict how much stock we need each week. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work cut weekly forecast error (MAPE) from 24% to 13%. Would hire again."
+ },
+ {
+  "id": "object-detection-retail",
+  "project": "object-detection-retail",
+  "rating": 5,
+  "client_industry": "retail",
+  "date": "2025-04-10",
+  "text": "We needed someone to spot defects in photos from the production line. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work detected 96% of defects at 30 frames per second on an edge device. Would hire again."
+ },
+ {
+  "id": "agent-saas",
+  "project": "agent-saas",
+  "rating": 5,
+  "client_industry": "SaaS",
+  "date": "2026-03-12",
+  "text": "We needed someone to have AI agents handle a multi-step back-office task. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work automated 70% of refund cases with human approval on the rest. Would hire again."
+ },
+ {
+  "id": "llm-finetune-saas",
+  "project": "llm-finetune-saas",
+  "rating": 5,
+  "client_industry": "SaaS",
+  "date": "2023-11-22",
+  "text": "We needed someone to make an AI model write in our house style. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work improved blind human preference over the base model from 31% to 68%. Would hire again."
+ },
+ {
+  "id": "semantic-search-fintech",
+  "project": "semantic-search-fintech",
+  "rating": 5,
+  "client_industry": "fintech",
+  "date": "2025-07-30",
+  "text": "We needed someone to let people search by meaning instead of exact words. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work reduced zero-result searches from 18% to 5%. Would hire again."
+ },
+ {
+  "id": "ner-e-commerce",
+  "project": "ner-e-commerce",
+  "rating": 5,
+  "client_industry": "e-commerce",
+  "date": "2023-07-03",
+  "text": "We needed someone to pull names, dates and amounts out of contracts. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work extracted 14 entity types at 92% F1 and halved review time. Would hire again."
+ },
+ {
+  "id": "pricing-opt-fintech",
+  "project": "pricing-opt-fintech",
+  "rating": 5,
+  "client_industry": "fintech",
+  "date": "2026-05-26",
+  "text": "We needed someone to work out the best price for each product. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work added 6% gross margin in a four-week holdout test. Would hire again."
+ },
+ {
+  "id": "ocr-healthcare",
+  "project": "ocr-healthcare",
+  "rating": 4,
+  "client_industry": "healthcare",
+  "date": "2023-12-08",
+  "text": "We needed someone to read scanned invoices and pull out the numbers. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work extracted line items with 97% field accuracy on 5,000 invoices. Would hire again."
+ },
+ {
+  "id": "doc-classify-fintech",
+  "project": "doc-classify-fintech",
+  "rating": 5,
+  "client_industry": "fintech",
+  "date": "2023-06-19",
+  "text": "We needed someone to sort incoming documents into the right queue automatically. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work reached 94% macro-F1 across 11 document classes. Would hire again."
+ },
+ {
+  "id": "mlops-healthcare",
+  "project": "mlops-healthcare",
+  "rating": 4,
+  "client_industry": "healthcare",
+  "date": "2026-03-22",
+  "text": "We needed someone to get our model out of the notebook and running reliably. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work took release time from two weeks to under one hour. Would hire again."
+ },
+ {
+  "id": "fraud-edtech",
+  "project": "fraud-edtech",
+  "rating": 4,
+  "client_industry": "edtech",
+  "date": "2024-08-06",
+  "text": "We needed someone to catch suspicious transactions before they go through. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work caught 81% of fraudulent transactions with a 0.4% false-positive rate. Would hire again."
+ },
+ {
+  "id": "churn-logistics",
+  "project": "churn-logistics",
+  "rating": 4,
+  "client_industry": "logistics",
+  "date": "2025-08-18",
+  "text": "We needed someone to figure out which customers are about to leave. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work lifted recall on churning accounts from 41% to 73% at the same precision. Would hire again."
+ },
+ {
+  "id": "rag-chatbot-retail",
+  "project": "rag-chatbot-retail",
+  "rating": 5,
+  "client_industry": "retail",
+  "date": "2026-03-04",
+  "text": "We needed someone to a bot that answers customer questions from our help articles. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work deflected 38% of tier-1 support tickets in the first month. Would hire again."
+ },
+ {
+  "id": "anomaly-saas",
+  "project": "anomaly-saas",
+  "rating": 5,
+  "client_industry": "SaaS",
+  "date": "2024-10-18",
+  "text": "We needed someone to warn us when a machine starts behaving oddly. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work flagged 9 of 10 real failures a median of 14 hours early. Would hire again."
+ },
+ {
+  "id": "forecasting-telecom",
+  "project": "forecasting-telecom",
+  "rating": 5,
+  "client_industry": "telecom",
+  "date": "2025-03-08",
+  "text": "We needed someone to predict how much stock we need each week. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work cut weekly forecast error (MAPE) from 24% to 13%. Would hire again."
+ },
+ {
+  "id": "object-detection-fintech",
+  "project": "object-detection-fintech",
+  "rating": 4,
+  "client_industry": "fintech",
+  "date": "2024-04-29",
+  "text": "We needed someone to spot defects in photos from the production line. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work detected 96% of defects at 30 frames per second on an edge device. Would hire again."
+ },
+ {
+  "id": "agent-fintech",
+  "project": "agent-fintech",
+  "rating": 5,
+  "client_industry": "fintech",
+  "date": "2023-05-29",
+  "text": "We needed someone to have AI agents handle a multi-step back-office task. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work automated 70% of refund cases with human approval on the rest. Would hire again."
+ },
+ {
+  "id": "llm-finetune-real-estate",
+  "project": "llm-finetune-real-estate",
+  "rating": 5,
+  "client_industry": "real estate",
+  "date": "2026-04-13",
+  "text": "We needed someone to make an AI model write in our house style. Sana understood the brief quickly, kept us updated every week and delivered on time. In the end the work improved blind human preference over the base model from 31% to 68%. Would hire again."
+ }
+]

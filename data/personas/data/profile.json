@@ -1,0 +1,153 @@
+{
+ "domain": "data",
+ "name": "Hira Qureshi (synthetic)",
+ "headline": "Data Analyst",
+ "hourly_rate": 30,
+ "min_budget": 250,
+ "years": 4,
+ "projects": [
+  {
+   "id": "forecast-telecom",
+   "task": "forecast",
+   "industry": "telecom",
+   "date": "2023-09-29",
+   "has_repo": false
+  },
+  {
+   "id": "looker-insurance",
+   "task": "looker",
+   "industry": "insurance",
+   "date": "2025-01-29",
+   "has_repo": true
+  },
+  {
+   "id": "cohort-e-commerce",
+   "task": "cohort",
+   "industry": "e-commerce",
+   "date": "2026-05-18",
+   "has_repo": false
+  },
+  {
+   "id": "kpi-healthcare",
+   "task": "kpi",
+   "industry": "healthcare",
+   "date": "2024-08-09",
+   "has_repo": false
+  },
+  {
+   "id": "ga4-e-commerce",
+   "task": "ga4",
+   "industry": "e-commerce",
+   "date": "2025-03-25",
+   "has_repo": false
+  },
+  {
+   "id": "segmentation-fintech",
+   "task": "segmentation",
+   "industry": "fintech",
+   "date": "2025-04-19",
+   "has_repo": false
+  },
+  {
+   "id": "abtest-real-estate",
+   "task": "abtest",
+   "industry": "real estate",
+   "date": "2024-10-26",
+   "has_repo": true
+  },
+  {
+   "id": "churn-analysis-insurance",
+   "task": "churn-analysis",
+   "industry": "insurance",
+   "date": "2023-12-31",
+   "has_repo": true
+  },
+  {
+   "id": "supply-insurance",
+   "task": "supply",
+   "industry": "insurance",
+   "date": "2024-03-13",
+   "has_repo": true
+  },
+  {
+   "id": "pricing-insurance",
+   "task": "pricing",
+   "industry": "insurance",
+   "date": "2023-11-22",
+   "has_repo": true
+  },
+  {
+   "id": "survey-real-estate",
+   "task": "survey",
+   "industry": "real estate",
+   "date": "2024-02-14",
+   "has_repo": false
+  },
+  {
+   "id": "cleaning-saas",
+   "task": "cleaning",
+   "industry": "SaaS",
+   "date": "2024-09-22",
+   "has_repo": false
+  },
+  {
+   "id": "etl-telecom",
+   "task": "etl",
+   "industry": "telecom",
+   "date": "2024-04-21",
+   "has_repo": false
+  },
+  {
+   "id": "attribution-retail",
+   "task": "attribution",
+   "industry": "retail",
+   "date": "2026-02-12",
+   "has_repo": true
+  },
+  {
+   "id": "forecast-saas",
+   "task": "forecast",
+   "industry": "SaaS",
+   "date": "2025-07-21",
+   "has_repo": false
+  },
+  {
+   "id": "looker-fintech",
+   "task": "looker",
+   "industry": "fintech",
+   "date": "2024-07-21",
+   "has_repo": true
+  },
+  {
+   "id": "cohort-telecom",
+   "task": "cohort",
+   "industry": "telecom",
+   "date": "2023-09-20",
+   "has_repo": false
+  },
+  {
+   "id": "kpi-telecom",
+   "task": "kpi",
+   "industry": "telecom",
+   "date": "2026-03-08",
+   "has_repo": true
+  }
+ ],
+ "covered": [
+  "forecast",
+  "looker",
+  "cohort",
+  "kpi",
+  "ga4",
+  "segmentation",
+  "abtest",
+  "churn-analysis",
+  "supply",
+  "pricing",
+  "survey",
+  "cleaning",
+  "etl",
+  "attribution"
+ ],
+ "synthetic": true
+}

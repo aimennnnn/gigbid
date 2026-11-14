@@ -1,0 +1,146 @@
+[
+ {
+  "id": "forecast-telecom",
+  "project": "forecast-telecom",
+  "rating": 5,
+  "client_industry": "telecom",
+  "date": "2023-09-29",
+  "text": "We needed someone to estimate next quarter's sales. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work landed within 4% of actual revenue for two quarters. Would hire again."
+ },
+ {
+  "id": "looker-insurance",
+  "project": "looker-insurance",
+  "rating": 5,
+  "client_industry": "insurance",
+  "date": "2025-01-29",
+  "text": "We needed someone to simple shareable reports for our clients. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work rolled out to 25 client accounts from one template. Would hire again."
+ },
+ {
+  "id": "cohort-e-commerce",
+  "project": "cohort-e-commerce",
+  "rating": 4,
+  "client_industry": "e-commerce",
+  "date": "2026-05-18",
+  "text": "We needed someone to see how long customers stick around. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work showed month-3 retention differed by 19 points between channels. Would hire again."
+ },
+ {
+  "id": "kpi-healthcare",
+  "project": "kpi-healthcare",
+  "rating": 5,
+  "client_industry": "healthcare",
+  "date": "2024-08-09",
+  "text": "We needed someone to agree what we measure and how. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work aligned 4 teams on 12 shared metric definitions. Would hire again."
+ },
+ {
+  "id": "ga4-e-commerce",
+  "project": "ga4-e-commerce",
+  "rating": 5,
+  "client_industry": "e-commerce",
+  "date": "2025-03-25",
+  "text": "We needed someone to understand what visitors do on our site. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work found a checkout step losing 41% of mobile users. Would hire again."
+ },
+ {
+  "id": "segmentation-fintech",
+  "project": "segmentation-fintech",
+  "rating": 5,
+  "client_industry": "fintech",
+  "date": "2025-04-19",
+  "text": "We needed someone to group our customers so we can market to them differently. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work identified 5 segments; the top one drove 46% of revenue. Would hire again."
+ },
+ {
+  "id": "abtest-real-estate",
+  "project": "abtest-real-estate",
+  "rating": 5,
+  "client_industry": "real estate",
+  "date": "2024-10-26",
+  "text": "We needed someone to tell us whether the new checkout actually works better. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work found the variant won by 3.1% with 95% confidence. Would hire again."
+ },
+ {
+  "id": "churn-analysis-insurance",
+  "project": "churn-analysis-insurance",
+  "rating": 5,
+  "client_industry": "insurance",
+  "date": "2023-12-31",
+  "text": "We needed someone to explain why customers cancel. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work showed onboarding delay explained most early churn. Would hire again."
+ },
+ {
+  "id": "supply-insurance",
+  "project": "supply-insurance",
+  "rating": 5,
+  "client_industry": "insurance",
+  "date": "2024-03-13",
+  "text": "We needed someone to track deliveries and stock in one report. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work reduced late-shipment reporting lag from 5 days to 1. Would hire again."
+ },
+ {
+  "id": "pricing-insurance",
+  "project": "pricing-insurance",
+  "rating": 4,
+  "client_industry": "insurance",
+  "date": "2023-11-22",
+  "text": "We needed someone to see where we are losing margin. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work identified 60 SKUs sold below cost. Would hire again."
+ },
+ {
+  "id": "survey-real-estate",
+  "project": "survey-real-estate",
+  "rating": 5,
+  "client_industry": "real estate",
+  "date": "2024-02-14",
+  "text": "We needed someone to make sense of our customer survey. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work weighted 4,200 responses and found three drivers of satisfaction. Would hire again."
+ },
+ {
+  "id": "cleaning-saas",
+  "project": "cleaning-saas",
+  "rating": 5,
+  "client_industry": "SaaS",
+  "date": "2024-09-22",
+  "text": "We needed someone to tidy up our messy customer list. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work merged 38,000 duplicate customer records. Would hire again."
+ },
+ {
+  "id": "etl-telecom",
+  "project": "etl-telecom",
+  "rating": 4,
+  "client_industry": "telecom",
+  "date": "2024-04-21",
+  "text": "We needed someone to get data from our tools into one place every night. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work loaded 14 sources nightly with tested models. Would hire again."
+ },
+ {
+  "id": "attribution-retail",
+  "project": "attribution-retail",
+  "rating": 5,
+  "client_industry": "retail",
+  "date": "2026-02-12",
+  "text": "We needed someone to work out which ads actually bring sales. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work moved 30% of spend and lowered cost per acquisition by 17%. Would hire again."
+ },
+ {
+  "id": "forecast-saas",
+  "project": "forecast-saas",
+  "rating": 5,
+  "client_industry": "SaaS",
+  "date": "2025-07-21",
+  "text": "We needed someone to estimate next quarter's sales. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work landed within 4% of actual revenue for two quarters. Would hire again."
+ },
+ {
+  "id": "looker-fintech",
+  "project": "looker-fintech",
+  "rating": 5,
+  "client_industry": "fintech",
+  "date": "2024-07-21",
+  "text": "We needed someone to simple shareable reports for our clients. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work rolled out to 25 client accounts from one template. Would hire again."
+ },
+ {
+  "id": "cohort-telecom",
+  "project": "cohort-telecom",
+  "rating": 5,
+  "client_industry": "telecom",
+  "date": "2023-09-20",
+  "text": "We needed someone to see how long customers stick around. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work showed month-3 retention differed by 19 points between channels. Would hire again."
+ },
+ {
+  "id": "kpi-telecom",
+  "project": "kpi-telecom",
+  "rating": 5,
+  "client_industry": "telecom",
+  "date": "2026-03-08",
+  "text": "We needed someone to agree what we measure and how. Hira understood the brief quickly, kept us updated every week and delivered on time. In the end the work aligned 4 teams on 12 shared metric definitions. Would hire again."
+ }
+]

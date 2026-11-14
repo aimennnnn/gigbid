@@ -1,0 +1,146 @@
+[
+ {
+  "id": "realtime-chat-logistics",
+  "project": "realtime-chat-logistics",
+  "rating": 5,
+  "client_industry": "logistics",
+  "date": "2024-10-16",
+  "text": "We needed someone to let users message each other live inside the app. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work held 5,000 concurrent connections on one small server. Would hire again."
+ },
+ {
+  "id": "storefront-edtech",
+  "project": "storefront-edtech",
+  "rating": 4,
+  "client_industry": "edtech",
+  "date": "2026-06-04",
+  "text": "We needed someone to an online shop where people can pay by card. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work raised checkout conversion from 1.9% to 2.8%. Would hire again."
+ },
+ {
+  "id": "multitenant-edtech",
+  "project": "multitenant-edtech",
+  "rating": 5,
+  "client_industry": "edtech",
+  "date": "2025-11-09",
+  "text": "We needed someone to one system that keeps each customer's data separate. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work onboarded 120 tenants with row-level isolation. Would hire again."
+ },
+ {
+  "id": "cicd-e-commerce",
+  "project": "cicd-e-commerce",
+  "rating": 5,
+  "client_industry": "e-commerce",
+  "date": "2024-06-07",
+  "text": "We needed someone to deploy without someone copying files by hand. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work went from monthly to daily releases with one-click rollback. Would hire again."
+ },
+ {
+  "id": "graphql-insurance",
+  "project": "graphql-insurance",
+  "rating": 5,
+  "client_industry": "insurance",
+  "date": "2025-05-20",
+  "text": "We needed someone to one API our web and mobile apps can both use. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work cut mobile payload size by 58%. Would hire again."
+ },
+ {
+  "id": "pwa-telecom",
+  "project": "pwa-telecom",
+  "rating": 5,
+  "client_industry": "telecom",
+  "date": "2023-06-11",
+  "text": "We needed someone to an app that still works when the signal drops. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work let field staff complete 100% of forms offline. Would hire again."
+ },
+ {
+  "id": "inventory-insurance",
+  "project": "inventory-insurance",
+  "rating": 5,
+  "client_industry": "insurance",
+  "date": "2024-10-01",
+  "text": "We needed someone to track stock across our warehouses. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work reduced stock-count discrepancies by 72%. Would hire again."
+ },
+ {
+  "id": "extension-saas",
+  "project": "extension-saas",
+  "rating": 5,
+  "client_industry": "SaaS",
+  "date": "2023-03-30",
+  "text": "We needed someone to a browser add-on that saves our team clicks. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work saved each recruiter about 45 minutes a day. Would hire again."
+ },
+ {
+  "id": "saas-dashboard-e-commerce",
+  "project": "saas-dashboard-e-commerce",
+  "rating": 5,
+  "client_industry": "e-commerce",
+  "date": "2026-01-16",
+  "text": "We needed someone to a dashboard our customers log into to see their numbers. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work served 3,000 daily users with a 400 ms median load. Would hire again."
+ },
+ {
+  "id": "marketplace-real-estate",
+  "project": "marketplace-real-estate",
+  "rating": 5,
+  "client_industry": "real estate",
+  "date": "2023-06-25",
+  "text": "We needed someone to a site where sellers list and buyers pay, and we take a cut. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work processed $410k in payouts in the first quarter. Would hire again."
+ },
+ {
+  "id": "booking-insurance",
+  "project": "booking-insurance",
+  "rating": 5,
+  "client_industry": "insurance",
+  "date": "2025-03-31",
+  "text": "We needed someone to let clients book and reschedule appointments online. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work cut phone bookings by 60% in two months. Would hire again."
+ },
+ {
+  "id": "cms-e-commerce",
+  "project": "cms-e-commerce",
+  "rating": 4,
+  "client_industry": "e-commerce",
+  "date": "2025-01-01",
+  "text": "We needed someone to move our blog off the old site builder without losing rankings. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work kept 100% of indexed URLs and halved page weight. Would hire again."
+ },
+ {
+  "id": "auth-saas",
+  "project": "auth-saas",
+  "rating": 5,
+  "client_industry": "SaaS",
+  "date": "2024-09-09",
+  "text": "We needed someone to let staff sign in with their company account. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work removed 300 password-reset tickets a month. Would hire again."
+ },
+ {
+  "id": "payments-fintech",
+  "project": "payments-fintech",
+  "rating": 5,
+  "client_industry": "fintech",
+  "date": "2024-05-06",
+  "text": "We needed someone to take monthly payments and handle failed cards. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work recovered 23% of failed renewals with retry logic. Would hire again."
+ },
+ {
+  "id": "realtime-chat-insurance",
+  "project": "realtime-chat-insurance",
+  "rating": 5,
+  "client_industry": "insurance",
+  "date": "2024-01-12",
+  "text": "We needed someone to let users message each other live inside the app. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work held 5,000 concurrent connections on one small server. Would hire again."
+ },
+ {
+  "id": "storefront-telecom",
+  "project": "storefront-telecom",
+  "rating": 5,
+  "client_industry": "telecom",
+  "date": "2024-02-19",
+  "text": "We needed someone to an online shop where people can pay by card. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work raised checkout conversion from 1.9% to 2.8%. Would hire again."
+ },
+ {
+  "id": "multitenant-insurance",
+  "project": "multitenant-insurance",
+  "rating": 4,
+  "client_industry": "insurance",
+  "date": "2025-04-17",
+  "text": "We needed someone to one system that keeps each customer's data separate. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work onboarded 120 tenants with row-level isolation. Would hire again."
+ },
+ {
+  "id": "cicd-healthcare",
+  "project": "cicd-healthcare",
+  "rating": 4,
+  "client_industry": "healthcare",
+  "date": "2025-12-30",
+  "text": "We needed someone to deploy without someone copying files by hand. Daniyal understood the brief quickly, kept us updated every week and delivered on time. In the end the work went from monthly to daily releases with one-click rollback. Would hire again."
+ }
+]

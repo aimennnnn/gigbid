@@ -1,0 +1,153 @@
+{
+ "domain": "ml",
+ "name": "Sana Mirza (synthetic)",
+ "headline": "AI/ML Engineer",
+ "hourly_rate": 45,
+ "min_budget": 400,
+ "years": 5,
+ "projects": [
+  {
+   "id": "forecasting-fintech",
+   "task": "forecasting",
+   "industry": "fintech",
+   "date": "2026-01-25",
+   "has_repo": true
+  },
+  {
+   "id": "object-detection-retail",
+   "task": "object-detection",
+   "industry": "retail",
+   "date": "2025-04-10",
+   "has_repo": false
+  },
+  {
+   "id": "agent-saas",
+   "task": "agent",
+   "industry": "SaaS",
+   "date": "2026-03-12",
+   "has_repo": true
+  },
+  {
+   "id": "llm-finetune-saas",
+   "task": "llm-finetune",
+   "industry": "SaaS",
+   "date": "2023-11-22",
+   "has_repo": true
+  },
+  {
+   "id": "semantic-search-fintech",
+   "task": "semantic-search",
+   "industry": "fintech",
+   "date": "2025-07-30",
+   "has_repo": false
+  },
+  {
+   "id": "ner-e-commerce",
+   "task": "ner",
+   "industry": "e-commerce",
+   "date": "2023-07-03",
+   "has_repo": true
+  },
+  {
+   "id": "pricing-opt-fintech",
+   "task": "pricing-opt",
+   "industry": "fintech",
+   "date": "2026-05-26",
+   "has_repo": false
+  },
+  {
+   "id": "ocr-healthcare",
+   "task": "ocr",
+   "industry": "healthcare",
+   "date": "2023-12-08",
+   "has_repo": false
+  },
+  {
+   "id": "doc-classify-fintech",
+   "task": "doc-classify",
+   "industry": "fintech",
+   "date": "2023-06-19",
+   "has_repo": false
+  },
+  {
+   "id": "mlops-healthcare",
+   "task": "mlops",
+   "industry": "healthcare",
+   "date": "2026-03-22",
+   "has_repo": false
+  },
+  {
+   "id": "fraud-edtech",
+   "task": "fraud",
+   "industry": "edtech",
+   "date": "2024-08-06",
+   "has_repo": false
+  },
+  {
+   "id": "churn-logistics",
+   "task": "churn",
+   "industry": "logistics",
+   "date": "2025-08-18",
+   "has_repo": false
+  },
+  {
+   "id": "rag-chatbot-retail",
+   "task": "rag-chatbot",
+   "industry": "retail",
+   "date": "2026-03-04",
+   "has_repo": false
+  },
+  {
+   "id": "anomaly-saas",
+   "task": "anomaly",
+   "industry": "SaaS",
+   "date": "2024-10-18",
+   "has_repo": true
+  },
+  {
+   "id": "forecasting-telecom",
+   "task": "forecasting",
+   "industry": "telecom",
+   "date": "2025-03-08",
+   "has_repo": true
+  },
+  {
+   "id": "object-detection-fintech",
+   "task": "object-detection",
+   "industry": "fintech",
+   "date": "2024-04-29",
+   "has_repo": true
+  },
+  {
+   "id": "agent-fintech",
+   "task": "agent",
+   "industry": "fintech",
+   "date": "2023-05-29",
+   "has_repo": false
+  },
+  {
+   "id": "llm-finetune-real-estate",
+   "task": "llm-finetune",
+   "industry": "real estate",
+   "date": "2026-04-13",
+   "has_repo": true
+  }
+ ],
+ "covered": [
+  "forecasting",
+  "object-detection",
+  "agent",
+  "llm-finetune",
+  "semantic-search",
+  "ner",
+  "pricing-opt",
+  "ocr",
+  "doc-classify",
+  "mlops",
+  "fraud",
+  "churn",
+  "rag-chatbot",
+  "anomaly"
+ ],
+ "synthetic": true
+}

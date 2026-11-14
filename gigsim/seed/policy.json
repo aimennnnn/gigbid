@@ -1,0 +1,12 @@
+{
+ "version": 1,
+ "rate_limit_per_minute": 60,
+ "connects": {"weekly_grant": 120},
+ "proposal": {"max_words": 300},
+ "rules": [
+  "No off-platform contact or payment.",
+  "No unpaid work presented as a trial.",
+  "No fabricated experience and no guaranteed results.",
+  "Automation may draft; a human must confirm every proposal and message."
+ ]
+}

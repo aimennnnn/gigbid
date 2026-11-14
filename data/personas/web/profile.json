@@ -1,0 +1,153 @@
+{
+ "domain": "web",
+ "name": "Daniyal Raza (synthetic)",
+ "headline": "Full-Stack Web Developer",
+ "hourly_rate": 38,
+ "min_budget": 350,
+ "years": 6,
+ "projects": [
+  {
+   "id": "realtime-chat-logistics",
+   "task": "realtime-chat",
+   "industry": "logistics",
+   "date": "2024-10-16",
+   "has_repo": false
+  },
+  {
+   "id": "storefront-edtech",
+   "task": "storefront",
+   "industry": "edtech",
+   "date": "2026-06-04",
+   "has_repo": false
+  },
+  {
+   "id": "multitenant-edtech",
+   "task": "multitenant",
+   "industry": "edtech",
+   "date": "2025-11-09",
+   "has_repo": false
+  },
+  {
+   "id": "cicd-e-commerce",
+   "task": "cicd",
+   "industry": "e-commerce",
+   "date": "2024-06-07",
+   "has_repo": false
+  },
+  {
+   "id": "graphql-insurance",
+   "task": "graphql",
+   "industry": "insurance",
+   "date": "2025-05-20",
+   "has_repo": false
+  },
+  {
+   "id": "pwa-telecom",
+   "task": "pwa",
+   "industry": "telecom",
+   "date": "2023-06-11",
+   "has_repo": true
+  },
+  {
+   "id": "inventory-insurance",
+   "task": "inventory",
+   "industry": "insurance",
+   "date": "2024-10-01",
+   "has_repo": true
+  },
+  {
+   "id": "extension-saas",
+   "task": "extension",
+   "industry": "SaaS",
+   "date": "2023-03-30",
+   "has_repo": true
+  },
+  {
+   "id": "saas-dashboard-e-commerce",
+   "task": "saas-dashboard",
+   "industry": "e-commerce",
+   "date": "2026-01-16",
+   "has_repo": false
+  },
+  {
+   "id": "marketplace-real-estate",
+   "task": "marketplace",
+   "industry": "real estate",
+   "date": "2023-06-25",
+   "has_repo": false
+  },
+  {
+   "id": "booking-insurance",
+   "task": "booking",
+   "industry": "insurance",
+   "date": "2025-03-31",
+   "has_repo": true
+  },
+  {
+   "id": "cms-e-commerce",
+   "task": "cms",
+   "industry": "e-commerce",
+   "date": "2025-01-01",
+   "has_repo": true
+  },
+  {
+   "id": "auth-saas",
+   "task": "auth",
+   "industry": "SaaS",
+   "date": "2024-09-09",
+   "has_repo": true
+  },
+  {
+   "id": "payments-fintech",
+   "task": "payments",
+   "industry": "fintech",
+   "date": "2024-05-06",
+   "has_repo": false
+  },
+  {
+   "id": "realtime-chat-insurance",
+   "task": "realtime-chat",
+   "industry": "insurance",
+   "date": "2024-01-12",
+   "has_repo": false
+  },
+  {
+   "id": "storefront-telecom",
+   "task": "storefront",
+   "industry": "telecom",
+   "date": "2024-02-19",
+   "has_repo": true
+  },
+  {
+   "id": "multitenant-insurance",
+   "task": "multitenant",
+   "industry": "insurance",
+   "date": "2025-04-17",
+   "has_repo": true
+  },
+  {
+   "id": "cicd-healthcare",
+   "task": "cicd",
+   "industry": "healthcare",
+   "date": "2025-12-30",
+   "has_repo": false
+  }
+ ],
+ "covered": [
+  "realtime-chat",
+  "storefront",
+  "multitenant",
+  "cicd",
+  "graphql",
+  "pwa",
+  "inventory",
+  "extension",
+  "saas-dashboard",
+  "marketplace",
+  "booking",
+  "cms",
+  "auth",
+  "payments"
+ ],
+ "synthetic": true
+}
