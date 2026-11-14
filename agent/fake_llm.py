@@ -114,3 +114,13 @@ def liaison(v: dict) -> dict:
         intent, text = "other", "Thanks for the update. Let me know how you would like to proceed."
     return {"thread_id": v["thread_id"], "intent": intent, "text": text,
             "interview_slots": [s["start"] for s in v.get("slots", [])[:3]] if intent == "interview_request" else []}
+
+
+def judge(v: dict) -> dict:
+    """Stand-in for the LLM judge: one point each for a number, the client's own words, a non-generic opening and a closing question."""
+    letter = v["proposal"]
+    checks = {"cites a measured result": bool(re.search(r"\d", letter)),
+              "uses the client's words": len(_words(v["job_post"]["title"]) & _words(letter)) >= 2,
+              "opening is not generic": not letter.lower().lstrip().startswith(("dear", "hello sir", "i am a passionate", "i hope")),
+              "ends with a question": letter.rstrip().endswith("?")}
+    return {"score": 1 + sum(checks.values()), "reasons": [name for name, ok in checks.items() if not ok] or ["meets every check"]}
