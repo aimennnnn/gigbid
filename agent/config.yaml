@@ -32,7 +32,7 @@ profiles:
         extra: {}
         models: {small: "gpt-oss:20b", strong: "gpt-oss:20b", fallback: "gpt-oss:20b"}
     embeddings: nomic-ai/nomic-embed-text-v1.5   # open, runs on CPU
-    reranker: BAAI/bge-reranker-v2-m3            # open, runs on CPU
+    reranker: Xenova/ms-marco-MiniLM-L-12-v2     # open, 0.12 GB, fast on a laptop CPU (BAAI/bge-reranker-v2-m3 is 2.27 GB)
 
   # Optional profile: any API model, only where it beats "open" enough to pay for.
   paid:
@@ -46,7 +46,7 @@ profiles:
     tpm_limit: 0
     extra: {}
     embeddings: nomic-ai/nomic-embed-text-v1.5   # embeddings stay open in both profiles
-    reranker: BAAI/bge-reranker-v2-m3
+    reranker: Xenova/ms-marco-MiniLM-L-12-v2
 
 # Route by node: each agent names a model size, the profile decides the real model.
 nodes:
@@ -60,6 +60,28 @@ nodes:
   critic:      {model: strong, timeout_s: 60, retries: 1}
   compliance:  {model: small,  timeout_s: 30, retries: 2}
   liaison:     {model: strong, timeout_s: 60, retries: 1}
+
+# Retrieval (Part B). The app uses rag.variant; `make eval` compares all of them.
+# Each variant is a list of steps. The code for each step is one file in rag/variants/.
+rag:
+  variant: keyword                        # the one the app uses (env GIGBID_RAG_VARIANT overrides). Set to the winner after `make eval`.
+  evidence_types: [case, repo, review]    # what counts as proof of past work (not the CV, not old proposals)
+  chunk_words: 120                        # V0: fixed chunk size in words
+  chunk_overlap: 20
+  candidates: 20                          # how many items the first search stage passes on
+  rrf_k: 60                               # reciprocal rank fusion constant (V1 merge, V2 hybrid)
+  outcome_boost: 0.3                      # V4: how much a project's past win/reply rate lifts its evidence
+  corrective: {min_score: 0.3, min_keep: 1, max_requeries: 2}    # V8: grade evidence, re-query, refuse
+  embed_prefix: {query: "search_query: ", document: "search_document: "}   # nomic models expect these; use "" for others
+  variants:
+    keyword:       [bm25]                 # keyword search only: what the app used before Part B
+    v0_naive:      []                     # baseline: dense, fixed chunks, whole job post as the query
+    v1_decompose:  [decompose]            # one search per requirement, then merge
+    v2_hybrid:     [hybrid]               # BM25 + dense, reciprocal rank fusion
+    v3_rerank:     [rerank]               # cross-encoder reorders the candidates
+    v4_outcome:    [outcome]              # boost evidence from projects whose proposals won or got replies
+    v8_corrective: [corrective]           # LangGraph loop: grade, re-query when weak, refuse when none
+    best:          [decompose, hybrid, rerank, outcome, corrective]   # the ablation removes one step at a time
 
 # Per-agent tool allowlists (A6): an agent can only call the tools named here.
 # "sender" is not an agent: it is the step that runs only after a human approved.
