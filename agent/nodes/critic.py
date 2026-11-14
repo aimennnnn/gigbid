@@ -1,0 +1,21 @@
+"""Critic: grounding, personalisation, length. Can send a draft back at most twice (C4)."""
+from agent.handoffs import Critique
+from agent.llm import ask
+from agent.nodes.base import Deps
+from agent.settings import get_settings
+
+
+async def run(deps: Deps, state: dict, config: dict) -> dict:
+    draft = state["drafts"][-1]
+    critique, tokens = await ask("critic", {"job_post": state["job"], "draft": draft.model_dump(),
+                                            "word_limits": get_settings()["rules"]["proposal"]}, Critique, untrusted=("job_post",))
+    return {"critiques": [critique], "tokens_used": tokens}
+
+
+def after_critic(state: dict) -> str:
+    limits = get_settings()["limits"]
+    if state.get("steps_used", 0) > limits["step_budget"] or state.get("tokens_used", 0) > limits["token_budget"]:
+        return "needs_attention"
+    if state["critiques"][-1].approved or len(state["critiques"]) > limits["critic_max_revisions"]:
+        return "compliance"
+    return "writer"
