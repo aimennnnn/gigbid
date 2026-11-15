@@ -14,7 +14,7 @@ from mcp.server.fastmcp import Context
 from starlette.responses import JSONResponse
 
 EMAIL = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
-PHONE = re.compile(r"(?<![\w-])\+?\d[\d\s().-]{7,}\d(?![\w-])")
+PHONE = re.compile(r"(?<![\w-])(?!\d{4}-\d{2}-\d{2})\+?\d[\d\s().-]{7,}\d(?![\w-])")   # a date such as 2026-11-16 14:00 is not a phone number
 CARD = re.compile(r"\b(?:\d[ -]?){13,19}\b")
 
 

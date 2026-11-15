@@ -29,3 +29,12 @@ def test_wrapper_tags_around_a_letter_are_removed():
     from agent.guards import strip_markup
     assert strip_markup("<text>\nYou need a model that spots fraud.\n</text>") == "You need a model that spots fraud."
     assert strip_markup("Costs are < 5% and > 1%.") == "Costs are < 5% and > 1%.", "ordinary text is left alone"
+
+
+def test_a_date_and_time_is_not_masked_as_a_phone_number():
+    from agent.guards import scan_text
+    from mcp_servers.common import mask_pii
+    reply = "Happy to talk. I am free at: 2026-11-16 14:00; 2026-11-16 16:00 (Pakistan time). Which suits you?"
+    assert mask_pii(reply) == reply and "2026-11-16 14:00" in scan_text(reply)["cleaned"]
+    assert mask_pii("call me on +92 336 4205111 or 0336-4205111") == "call me on [phone] or [phone]"
+    assert scan_text("Reach me on +1 555 0100 today.")["violations"], "a real phone number is still caught"
