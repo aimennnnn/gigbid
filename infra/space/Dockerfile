@@ -1,5 +1,5 @@
-# GigBid in ONE container, for a free host that gives you one port (Hugging Face Spaces: Docker SDK, port 7860).
-# It builds from the public GitHub repo, so the Space itself only holds this file and a README.
+# GigBid in ONE container, for a free host that gives you one port (Render free web service: it sets $PORT).
+# It builds from the public GitHub repo: the clone below, not the build context, is what runs.
 FROM node:22-bookworm-slim
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
