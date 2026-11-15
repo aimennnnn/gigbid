@@ -2,7 +2,9 @@
 import type { components } from "./api/schema";
 
 export type S = components["schemas"];
-export const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+// "same-origin" = the web app proxies /api to the API (one-container deployment, see next.config)
+const configured = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+export const API = configured === "same-origin" ? "" : configured;
 const KEY = "gigbid_session";
 
 export class ApiError extends Error {
