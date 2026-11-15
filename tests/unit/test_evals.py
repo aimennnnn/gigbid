@@ -46,3 +46,23 @@ def test_gate_fails_on_a_missed_threshold_and_on_a_missing_result():
 def test_gate_passes_on_the_committed_results():
     from evals.runners.gate import main
     assert main([]) == 0
+
+
+def test_ab_test_statistics_match_known_values():
+    from evals.runners.ab_test import fisher_exact, jobs_needed, mcnemar_exact, wilson
+    assert fisher_exact(1, 9, 11, 3) == pytest.approx(0.002759, abs=1e-6)       # a textbook 2x2 table
+    assert fisher_exact(5, 5, 5, 5) == 1.0
+    assert mcnemar_exact(5, 3) == pytest.approx(186 / 256)                      # 2 * (1 + 8 + 28 + 56) / 2^8
+    assert mcnemar_exact(0, 0) == 1.0 and mcnemar_exact(10, 0) == pytest.approx(2 / 1024)
+    low, high = wilson(25, 30)
+    assert 0.66 < low < 0.67 and 0.92 < high < 0.93
+    assert jobs_needed(0.5, 0.5) is None and jobs_needed(0.8, 0.6) < jobs_needed(0.8, 0.75)
+
+
+def test_ab_test_counts_pairs_on_the_same_jobs():
+    from evals.runners.ab_test import compare
+    a = [{"job_id": j, "letter": "x", "events": e} for j, e in (("1", ["replied"]), ("2", ["replied"]), ("3", []))]
+    b = [{"job_id": j, "letter": "x", "events": e} for j, e in (("1", ["replied"]), ("2", []), ("3", ["replied"]))]
+    t = compare(a, b, "replied")
+    assert t["paired"] == {"jobs": 3, "only_a": 1, "only_b": 1, "both": 1, "neither": 0, "mcnemar_exact_p": 1.0}
+    assert t["difference_b_minus_a"] == 0 and t["significant_at_0.05"] is False

@@ -1,0 +1,92 @@
+{
+ "meta": {
+  "date": "2026-11-15T15:30:15+00:00",
+  "git_commit": "3ae9465",
+  "embeddings": "nomic-ai/nomic-embed-text-v1.5",
+  "reranker": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "llm": "fake (rule-based stand-in, no model)",
+  "machine": "Linux x86_64, 2 CPU cores, x86_64"
+ },
+ "strategy_a": "v0_naive",
+ "strategy_b": "best",
+ "proposals_from": {
+  "date": "2026-11-14T23:13:41+00:00",
+  "git_commit": "2ba4e4d",
+  "embeddings": "nomic-ai/nomic-embed-text-v1.5",
+  "reranker": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "llm": "ollama: gpt-oss:20b / gpt-oss:20b",
+  "machine": "Linux x86_64, 4 CPU cores, x86_64"
+ },
+ "tests": [
+  {
+   "event": "replied",
+   "a": {
+    "proposals": 30,
+    "yes": 25,
+    "rate": 0.8333,
+    "ci95": [
+     0.6644,
+     0.9266
+    ]
+   },
+   "b": {
+    "proposals": 30,
+    "yes": 23,
+    "rate": 0.7667,
+    "ci95": [
+     0.5907,
+     0.8821
+    ]
+   },
+   "difference_b_minus_a": -0.0667,
+   "paired": {
+    "jobs": 30,
+    "only_a": 5,
+    "only_b": 3,
+    "both": 20,
+    "neither": 2,
+    "mcnemar_exact_p": 0.7266
+   },
+   "unpaired": {
+    "fisher_exact_p": 0.748
+   },
+   "significant_at_0.05": false,
+   "jobs_per_strategy_to_detect_this_difference": 562
+  },
+  {
+   "event": "hired",
+   "a": {
+    "proposals": 30,
+    "yes": 6,
+    "rate": 0.2,
+    "ci95": [
+     0.0951,
+     0.3731
+    ]
+   },
+   "b": {
+    "proposals": 30,
+    "yes": 6,
+    "rate": 0.2,
+    "ci95": [
+     0.0951,
+     0.3731
+    ]
+   },
+   "difference_b_minus_a": 0.0,
+   "paired": {
+    "jobs": 30,
+    "only_a": 4,
+    "only_b": 4,
+    "both": 2,
+    "neither": 20,
+    "mcnemar_exact_p": 1.0
+   },
+   "unpaired": {
+    "fisher_exact_p": 1.0
+   },
+   "significant_at_0.05": false,
+   "jobs_per_strategy_to_detect_this_difference": null
+  }
+ ]
+}
