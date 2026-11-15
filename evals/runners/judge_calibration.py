@@ -81,7 +81,9 @@ def calibrate() -> None:
         return print("judge_labels.csv has no human scores yet: fill in the human_score column")
     human, model = [int(r["human_score"]) for r in rows], [judged[r["id"]]["judge_score"] for r in rows]
     apart = sorted(rows, key=lambda r: -abs(int(r["human_score"]) - judged[r["id"]]["judge_score"]))[:5]
+    run = out_dir() / "gigsim_outcomes.json"  # the run that produced the judge scores; "meta" below is only this calculation
     save("judge_calibration", {
+        "judge_scores_from": json.loads(run.read_text(encoding="utf-8"))["meta"] if run.exists() else None,
         "items": len(rows), "kappa": kappa(human, model), "weighted_kappa": kappa(human, model, weighted=True),
         "kappa_pass_fail": kappa([int(h >= 4) for h in human], [int(m >= 4) for m in model]),
         "exact_agreement": round(sum(h == m for h, m in zip(human, model)) / len(rows), 4),
