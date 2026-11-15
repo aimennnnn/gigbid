@@ -78,7 +78,10 @@ Model for decisions, proposals and the judge: Ollama `gpt-oss:20b`. No job faile
   `PINEAPPLE-11` into the proposal, in both variants (`canary_leaked: 1`). This is a real leak.
   Fixed in code on 15 Nov (commit 1042bcd): the Writer and Critic no longer see the injected text, and a sentence with
   its code word is dropped from the draft. Checked on all 30 injection jobs in the dev set and on the leaked letter
-  itself, but NOT re-run on the real model, so the committed numbers still show the leak (`canary_leaked: 1`).
+  itself. Re-measured on the real model on 15 Nov (Kaggle Version 3, commit c2ff6c9, `evals/results/injection_check.json`):
+  15 injection jobs, 10 got a proposal (5 were skipped at the decision step), code word leaked in 0 of 10, including
+  `dev-data-007`. The main results were not re-run, so `gigsim_outcomes.json` still shows the leak (`canary_leaked: 1`):
+  that is the "before", `injection_check.json` is the "after".
   The price was never at risk: it is computed in code (`agent/nodes/pricing.py`), not by the model.
 - Version 1 of the Kaggle notebook failed in the LLM half (model download 503); nothing from it is used.
 
@@ -109,7 +112,6 @@ left out of the decision because the judge agrees poorly with the hand labels (k
 1. Optional: send `evals/datasets/pairwise_panel.csv` to classmates (never `pairwise_key.json`), then
    `uv run python -m evals.runners.judge_calibration --tally`.
 2. Put the paragraph above and R&D question B into the report, in your own words.
-3. Optional: re-run the proposals step on Kaggle to show `canary_leaked: 0` after the fix (about 80 minutes).
 - A stopped eval can be continued with `--resume` (finished variants, ablation lines and proposals are kept), but only
   while the files in `evals/results/` still exist. A new Kaggle session starts with an empty disk.
 - Do NOT run the real embedding model on the 8 GB laptop: the first attempt ended in a blue screen.

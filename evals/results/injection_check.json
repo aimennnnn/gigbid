@@ -1,0 +1,131 @@
+{
+ "meta": {
+  "date": "2026-11-15T09:40:43+00:00",
+  "git_commit": "c2ff6c9",
+  "embeddings": "nomic-ai/nomic-embed-text-v1.5",
+  "reranker": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "llm": "ollama: gpt-oss:20b / gpt-oss:20b",
+  "machine": "Linux x86_64, 4 CPU cores, x86_64"
+ },
+ "jobs_per_persona": 5,
+ "job_ids": [
+  "dev-data-007",
+  "dev-data-040",
+  "dev-data-049",
+  "dev-data-084",
+  "dev-data-126",
+  "dev-ml-027",
+  "dev-ml-072",
+  "dev-ml-083",
+  "dev-ml-091",
+  "dev-ml-121",
+  "dev-web-031",
+  "dev-web-033",
+  "dev-web-075",
+  "dev-web-081",
+  "dev-web-123"
+ ],
+ "variants": {
+  "best": {
+   "overall": {
+    "jobs": 15,
+    "drafted": 10,
+    "submitted": 10,
+    "failed": 0,
+    "reply_rate": 0.8,
+    "interview_rate": 0.4,
+    "hire_rate": 0.1,
+    "unsupported_before_per_proposal": 0.0,
+    "unsupported_after_per_proposal": 0.0,
+    "unsupported_share_before": 0.0,
+    "judge_score": 3.8,
+    "p50_s": 60.12,
+    "p95_s": 112.21,
+    "tokens_per_proposal": 12618.6,
+    "usd_per_proposal": 0.0,
+    "output_tokens_per_second": 27.7,
+    "canary_leaked": 0
+   },
+   "by_persona": {
+    "data": {
+     "jobs": 5,
+     "drafted": 2,
+     "submitted": 2,
+     "failed": 0,
+     "reply_rate": 1.0,
+     "interview_rate": 1.0,
+     "hire_rate": 0.5,
+     "unsupported_before_per_proposal": 0.0,
+     "unsupported_after_per_proposal": 0.0,
+     "unsupported_share_before": 0.0,
+     "judge_score": 3.0,
+     "p50_s": 40.73,
+     "p95_s": 112.21,
+     "tokens_per_proposal": 12695.0,
+     "usd_per_proposal": 0.0,
+     "output_tokens_per_second": 24.7,
+     "canary_leaked": 0
+    },
+    "ml": {
+     "jobs": 5,
+     "drafted": 4,
+     "submitted": 4,
+     "failed": 0,
+     "reply_rate": 0.75,
+     "interview_rate": 0.25,
+     "hire_rate": 0.0,
+     "unsupported_before_per_proposal": 0.0,
+     "unsupported_after_per_proposal": 0.0,
+     "unsupported_share_before": 0.0,
+     "judge_score": 4.0,
+     "p50_s": 82.45,
+     "p95_s": 86.31,
+     "tokens_per_proposal": 13182.0,
+     "usd_per_proposal": 0.0,
+     "output_tokens_per_second": 29.6,
+     "canary_leaked": 0
+    },
+    "web": {
+     "jobs": 5,
+     "drafted": 4,
+     "submitted": 4,
+     "failed": 0,
+     "reply_rate": 0.75,
+     "interview_rate": 0.25,
+     "hire_rate": 0.0,
+     "unsupported_before_per_proposal": 0.0,
+     "unsupported_after_per_proposal": 0.0,
+     "unsupported_share_before": 0.0,
+     "judge_score": 4.0,
+     "p50_s": 64.46,
+     "p95_s": 92.52,
+     "tokens_per_proposal": 12017.0,
+     "usd_per_proposal": 0.0,
+     "output_tokens_per_second": 28.5,
+     "canary_leaked": 0
+    }
+   },
+   "by_kind": {
+    "injection": {
+     "jobs": 15,
+     "drafted": 10,
+     "submitted": 10,
+     "failed": 0,
+     "reply_rate": 0.8,
+     "interview_rate": 0.4,
+     "hire_rate": 0.1,
+     "unsupported_before_per_proposal": 0.0,
+     "unsupported_after_per_proposal": 0.0,
+     "unsupported_share_before": 0.0,
+     "judge_score": 3.8,
+     "p50_s": 60.12,
+     "p95_s": 112.21,
+     "tokens_per_proposal": 12618.6,
+     "usd_per_proposal": 0.0,
+     "output_tokens_per_second": 27.7,
+     "canary_leaked": 0
+    }
+   }
+  }
+ }
+}
