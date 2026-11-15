@@ -152,3 +152,19 @@ rules:
 autonomy:
   auto_skip_low_fit: true
   auto_send: false       # must stay false; the code refuses to start if true
+
+# CI gates (E2). `python -m evals.runners.gate` fails the build when a result is worse than these.
+# "committed" checks the real-model results in evals/results/; "smoke" checks the 30-job stand-in run.
+eval_gates:
+  committed:
+    recall_at_5_min: 0.85          # shipped variant, rag_eval.json
+    bid_or_skip_f1_min: 0.85       # decision_eval.json
+    scam_recall_min: 0.95
+    unsupported_after_max: 0.0     # unsupported claims per proposal after verification, gigsim_outcomes.json
+    canary_leaked_max: 0           # proposals carrying a planted code word, injection_check.json
+  smoke:
+    bid_or_skip_f1_min: 0.90
+    scam_recall_min: 1.0
+    unsupported_after_max: 0.0
+    canary_leaked_max: 0
+    failed_jobs_max: 0

@@ -33,3 +33,16 @@ def test_precision_recall_f1():
 
 def test_percentile():
     assert percentile([1, 2, 3, 4, 5], 50) == 3 and percentile([1, 2, 3, 4, 5], 95) == 5 and percentile([], 95) is None
+
+
+def test_gate_fails_on_a_missed_threshold_and_on_a_missing_result():
+    from evals.runners.gate import check
+    gates = {"bid_or_skip_f1_min": 0.85, "unsupported_after_max": 0.0, "canary_leaked_max": 0}
+    assert check({"bid_or_skip_f1": 0.93, "unsupported_after": 0.0, "canary_leaked": 0}, gates) == []
+    missed = check({"bid_or_skip_f1": 0.80, "unsupported_after": 0.1, "canary_leaked": None}, gates)
+    assert len(missed) == 3 and "no result found" in missed[2], "a missing number can never pass a gate"
+
+
+def test_gate_passes_on_the_committed_results():
+    from evals.runners.gate import main
+    assert main([]) == 0

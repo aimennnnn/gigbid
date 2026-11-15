@@ -1,0 +1,31 @@
+# Runs on every pull request and on every push to main.
+# No API key and no network model: GIGBID_LLM=fake and GIGBID_RAG_MODELS=fake use the stand-ins.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  python:
+    name: lint, tests, smoke eval, eval gates
+    runs-on: ubuntu-latest
+    env:
+      GIGBID_LLM: fake
+      GIGBID_RAG_MODELS: fake
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Install (same versions as uv.lock)
+        run: uv sync --frozen
+      - name: Lint
+        run: uv run ruff check .
+      - name: Unit, integration and MCP contract tests
+        run: uv run pytest -q
+      - name: 30-job smoke eval (stand-in models)
+        run: uv run python -m evals.runners.run_all --smoke
+      - name: Gate on the smoke eval (bid-or-skip F1, unsupported claims, leaked code words, failed jobs)
+        run: uv run python -m evals.runners.gate --smoke
+      - name: Gate on the committed real-model results
+        run: uv run python -m evals.runners.gate

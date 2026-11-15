@@ -23,6 +23,11 @@ eval-agent:
 eval-smoke:
 	uv run python -m evals.runners.run_all --smoke
 
+# what CI checks after the smoke eval: fails if a threshold in agent/config.yaml (eval_gates) is missed
+gate:
+	uv run python -m evals.runners.gate --smoke
+	uv run python -m evals.runners.gate
+
 # try values of rag.corrective.min_score for V8
 tune:
 	uv run python -m evals.runners.rag_eval --sweep
@@ -39,4 +44,4 @@ gigsim:
 demo:
 	uv run python -m agent.demo
 
-.PHONY: dev test lint eval eval-rag eval-agent eval-smoke tune seed demo snapshot gigsim
+.PHONY: dev test lint eval eval-rag eval-agent eval-smoke gate tune seed demo snapshot gigsim
