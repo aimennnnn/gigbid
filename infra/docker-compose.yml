@@ -1,0 +1,45 @@
+# GigBid in two containers:  make dev   (= docker compose -f infra/docker-compose.yml up --build)
+#   web  http://localhost:3000   sign in as reviewer / reviewer
+#   api  http://localhost:8000/docs
+# With no settings it starts on the stand-in models: no API key, no model download.
+# For the real models put GROQ_API_KEY in .env and start with:  GIGBID_LLM=real GIGBID_RAG_MODELS=real make dev
+#   (anything other than "fake" means: use the provider in agent/config.yaml; the embedding model is downloaded on first use)
+# Not here: Postgres, Redis worker, Langfuse. State is SQLite files in the app-state volume.
+name: gigbid
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: infra/docker/api.Dockerfile
+    env_file:
+      - path: ../.env            # your keys, if the file exists; never copied into the image
+        required: false
+    environment:
+      GIGBID_LLM: ${GIGBID_LLM:-fake}
+      GIGBID_RAG_MODELS: ${GIGBID_RAG_MODELS:-fake}
+      GIGBID_STATE_DIR: /state   # checkpoints, memory, GigSim's world, accounts: kept across restarts
+      GIGBID_WEB_ORIGIN: http://localhost:3000,http://127.0.0.1:3000
+    volumes:
+      - app-state:/state
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    restart: unless-stopped
+  web:
+    build:
+      context: ..
+      dockerfile: infra/docker/web.Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+volumes:
+  app-state:

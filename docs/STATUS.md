@@ -43,9 +43,26 @@ Updated 15 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
   after pushing.
 - Run it: see "Run the app" in the README. On the 8 GB laptop use the stand-in models, or a real LLM with
   `GIGBID_RAG_VARIANT=keyword` (no embedding model).
-- Honest limits: only ever run with stand-in models; in-memory checkpointer and store (a pending approval survives a
-  refresh, not an API restart); no worker/Redis, no Postgres, no Docker Compose, no deployment, no Langfuse; no live
-  Upwork/OAuth, no portfolio upload, no "regenerate one paragraph"; saved searches have no schedule.
+- State on disk (15 Nov, evening): graph checkpoints (`AsyncSqliteSaver`), long-term memory (`AsyncSqliteStore`),
+  GigSim's world, the run list and sessions live in files under `data/processed/app/`. A waiting draft survives an API
+  restart and approving it submits once: `test_a_pending_approval_survives_an_api_restart`, and checked by hand on a
+  real uvicorn server (stand-in models). `GIGBID_PERSIST=0` = memory only.
+- Docker: `infra/docker-compose.yml` + `infra/docker/api.Dockerfile` + `web.Dockerfile`, started with `make dev`.
+  WRITTEN, NOT RUN: no Docker daemon was available, only `docker compose config` passes. Try it once before the viva.
+- Demo recording: `docs/demo/inbox-to-reply.mp4` (57 s, stand-in models), made by `apps/web/tests/demo/record-demo.mjs`.
+- Honest limits: only ever run with stand-in models; SQLite, not Postgres; no worker/Redis, no deployment, no
+  Langfuse; no live Upwork/OAuth, no portfolio upload, no "regenerate one paragraph"; saved searches have no schedule.
+
+## Extension and R&D question A (15 Nov, evening)
+- X2 (signature extension): `evals/runners/ab_test.py` -> `evals/results/ab_test.json`, written up in
+  `docs/EXTENSION.md`. Real data from the Kaggle run: replies 25/30 (dense) vs 23/30 (hybrid), McNemar exact p = 0.73,
+  not significant; about 562 jobs per strategy would be needed to detect a gap this size.
+- R&D question A (tool granularity): harness, 40 tasks, hypothesis and Kaggle notebook are committed
+  (`evals/runners/tool_study.py`, `evals/datasets/tool_tasks.jsonl`, `evals/kaggle_tool_study.ipynb`).
+  NO REAL RESULT YET. It needs one Kaggle GPU run (about 20 minutes) after the repo is pushed; until
+  `evals/results/tool_study.json` exists the report must say "not run".
+- Found while recording the demo: the compliance check masked dates like `2026-11-15 10:00` as phone numbers. Fixed in
+  `mcp_servers/common.py` with a unit test.
 
 ## Part B: first real retrieval run (14 Nov, Kaggle CPU, commit 2f0cab8, 600 dev jobs)
 Read off the notebook output; the result files of that run were not kept. The committed numbers come from the final run below.
@@ -144,13 +161,14 @@ Found while writing it: 11 of the 60 real proposals were submitted with a litera
 Fixed in the Writer (`strip_markup` in `agent/guards.py`), with a unit test, not re-measured on the real model.
 
 ## Not done, in priority order
-1. Part E: Postgres checkpointer and store, Redis worker with scheduled scouting, Docker Compose, tracing (Langfuse),
-   deploy to a public host with a reviewer login. Without a live URL the hidden test run cannot reach the system.
-2. Part A leftovers: live Upwork adapter (`adapters/upwork_live.py`), GitHub MCP, MCP Inspector screenshots,
-   tool-granularity study (R&D question A).
+1. Part E: Postgres checkpointer and store (SQLite is used instead), Redis worker with scheduled scouting, running
+   the Docker Compose file once, tracing (Langfuse), deploy to a public host with a reviewer login. Without a live URL
+   the hidden test run cannot reach the system.
+2. Part A leftovers: live Upwork adapter (`adapters/upwork_live.py`), GitHub MCP, MCP Inspector screenshots, the real
+   run of the tool-granularity study (R&D question A).
 3. Part C leftovers: single ReAct agent and `langgraph-supervisor` baselines (R&D question C), trace links.
-4. Part D leftovers: portfolio upload, regenerate one paragraph, the screen recording.
-5. ARCHITECTURE.md, RUNBOOK.md, EXTENSION.md (signature extension), demo video, the change request (never received).
+4. Part D leftovers: portfolio upload, regenerate one paragraph.
+5. ARCHITECTURE.md, RUNBOOK.md, the change request (never received).
 
 ## Known issues
 - Groq free tier allows 8,000 tokens per minute per model; one proposal is about 10,000 tokens. Real-model evals

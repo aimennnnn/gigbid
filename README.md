@@ -23,9 +23,18 @@ Sign in as `reviewer` / `reviewer` (ML persona preloaded), or create an account.
 ![Job inbox](docs/images/ui/01-inbox.jpg)
 ![Proposal studio: every claim shows its evidence on hover](docs/images/ui/03-studio.jpg)
 
+State is kept on disk (SQLite files under `data/processed/app/`): graph checkpoints, long-term memory, GigSim's
+world, the run list and sessions. Stop the API while a draft is waiting, start it again, and the draft is still
+waiting; approving it submits once (`tests/integration/test_api.py::test_a_pending_approval_survives_an_api_restart`).
+
+Or both in containers: `make dev` (= `docker compose -f infra/docker-compose.yml up --build`), then
+http://localhost:3000. It starts on the stand-in models unless you set `GIGBID_LLM=real GIGBID_RAG_MODELS=real`.
+**The compose file and the two Dockerfiles are written but not run:** neither machine I worked on had a Docker
+daemon, so only `docker compose config` (the file parses) is checked.
+
 What is not built: live Upwork (OAuth), portfolio upload, "regenerate one paragraph", the Redis worker, Postgres
-(state is in memory, so a pending approval survives a page refresh but not an API restart), tracing in Langfuse
-(the run viewer shows the MCP audit trail by trace id instead), Docker Compose and a public deployment.
+(SQLite instead), tracing in Langfuse (the run viewer shows the MCP audit trail by trace id instead) and a public
+deployment.
 
 ## Run the tests
 
