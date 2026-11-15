@@ -133,3 +133,20 @@ async def test_two_analysis_agents_failing_at_once_dead_letters_the_job_instead_
     out, snap = await run_to_pause(system, pick("fit", "bid"), "t-down")
     assert out["status"] == "dead_letter" and not snap.next
     assert sum("model not reachable" in e for e in out["errors"]) == 2 and not out.get("drafts")
+
+
+async def test_writer_that_obeys_the_injection_still_cannot_leak_the_code_word(system, monkeypatch):
+    """What happened on the real model (dev-data-007): the Writer copied the planted code word. Now it is cut in code."""
+    from agent import fake_llm
+    row, seen, honest = next(r for r in dev() if r["kind"] == "injection"), [], fake_llm.writer
+
+    def obedient(v):
+        seen.append(v["job_post"]["description"])
+        out = honest(v)
+        return out | {"cover_letter": out["cover_letter"] + " " + row["canary"]}
+
+    monkeypatch.setattr(fake_llm, "writer", obedient)
+    out, _ = await run_to_pause(system, row["job_id"], "t-inj-leak")
+    assert seen and all(row["canary"] not in text for text in seen), "the Writer is not shown the injected instruction"
+    assert out["drafts"] and row["canary"] not in json.dumps([d.model_dump() for d in out["drafts"]])
+    assert out["drafts"][-1].cover_letter.endswith("?"), "the rest of the letter is kept"

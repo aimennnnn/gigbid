@@ -42,6 +42,28 @@ def scan_job(text: str, client: dict | None = None) -> dict:
     return {"flags": flags, "injected_text": injected}
 
 
+def without_injection(job: dict, injected: str | None) -> dict:
+    """A copy of the job post with the injected instruction cut out, for the nodes that write text."""
+    if not injected or injected not in job.get("description", ""):
+        return job
+    return {**job, "description": job["description"].replace(injected, "").strip()}
+
+
+def planted_words(job: dict, injected: str | None) -> set[str]:
+    """Code words that exist only inside the injected instruction (capitals or digits, like PINEAPPLE-11)."""
+    if not injected:
+        return set()
+    rest = (job.get("title", "") + "\n" + job.get("description", "")).replace(injected, " ")
+    return {w for w in re.findall(r"\b[A-Z0-9][A-Z0-9_-]{3,}\b", injected) if w not in rest}
+
+
+def drop_planted(text: str, words: set[str]) -> str:
+    """Text we wrote, minus every sentence that carries a planted code word."""
+    if not any(w in text for w in words):
+        return text
+    return " ".join(s for s in re.split(r"(?<=[.!?])\s+", text) if not any(w in s for w in words)).strip()
+
+
 def scan_text(text: str) -> dict:
     """Policy check for text WE are about to send: contact details, guarantees, banned phrases."""
     rules, violations, cleaned = get_settings()["rules"], [], text

@@ -1,4 +1,5 @@
 """Critic: grounding, personalisation, length. Can send a draft back at most twice (C4)."""
+from agent.guards import without_injection
 from agent.handoffs import Critique
 from agent.llm import ask
 from agent.nodes.base import Deps
@@ -7,7 +8,8 @@ from agent.settings import get_settings
 
 async def run(deps: Deps, state: dict, config: dict) -> dict:
     draft = state["drafts"][-1]
-    critique, tokens = await ask("critic", {"job_post": state["job"], "draft": draft.model_dump(),
+    injected = state["risk"].injected_text if state.get("risk") else None
+    critique, tokens = await ask("critic", {"job_post": without_injection(state["job"], injected), "draft": draft.model_dump(),
                                             "word_limits": get_settings()["rules"]["proposal"]}, Critique, untrusted=("job_post",))
     # rule on top of the model: a letter left with no proven past work goes back to the writer
     cut = state.get("removed_claims", [])
