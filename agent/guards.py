@@ -64,6 +64,11 @@ def drop_planted(text: str, words: set[str]) -> str:
     return " ".join(s for s in re.split(r"(?<=[.!?])\s+", text) if not any(w in s for w in words)).strip()
 
 
+def strip_markup(text: str) -> str:
+    """Remove wrapper tags a model sometimes leaves around its answer (<text>...</text>). Seen in 11 of 60 real proposals."""
+    return re.sub(r"</?(text|cover_letter|proposal|letter|untrusted_\w+)>", "", text).strip()
+
+
 def scan_text(text: str) -> dict:
     """Policy check for text WE are about to send: contact details, guarantees, banned phrases."""
     rules, violations, cleaned = get_settings()["rules"], [], text

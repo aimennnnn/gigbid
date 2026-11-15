@@ -1,5 +1,5 @@
 """Proposal Writer: cover letter and screening answers, every claim tied to evidence ids."""
-from agent.guards import drop_planted, planted_words, without_injection
+from agent.guards import drop_planted, planted_words, strip_markup, without_injection
 from agent.handoffs import ProposalDraft, WriterOutput
 from agent.llm import ask
 from agent.memory.store import outcome_notes, style_rules
@@ -22,6 +22,7 @@ async def run(deps: Deps, state: dict, config: dict) -> dict:
         "outcome_notes": await outcome_notes(deps.store, user, state["job"]["category"]),
         "critic_comments": last}, WriterOutput, untrusted=("job_post",))
     known = {e["id"] for e in evidence}
+    out.cover_letter = strip_markup(out.cover_letter)        # the model sometimes wraps its letter in <text> tags
     for c in out.claims:
         c.evidence_ids = [i for i in c.evidence_ids if i in known]
     # rule on top of the model: a code word that exists only in the injected instruction never leaves this node

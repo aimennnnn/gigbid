@@ -23,3 +23,9 @@ def test_price_must_be_positive():
 def test_unknown_risk_flag_rejected():
     with pytest.raises(ValidationError):
         RiskReport(job_id="j1", risk_score=0.2, client_quality=0.5, flags=["weird"])
+
+
+def test_wrapper_tags_around_a_letter_are_removed():
+    from agent.guards import strip_markup
+    assert strip_markup("<text>\nYou need a model that spots fraud.\n</text>") == "You need a model that spots fraud."
+    assert strip_markup("Costs are < 5% and > 1%.") == "Costs are < 5% and > 1%.", "ordinary text is left alone"
