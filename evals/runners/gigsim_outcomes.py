@@ -52,7 +52,7 @@ async def one(system: System, row: dict, variant: str) -> dict:
     again, _ = await verify.verify(verify.split_claims(pay["draft"], [Claim(**c) for c in pay["claims"]]), evidence)
     mark_given, _ = await judge(s["job"], pay["draft"], evidence)
     cut = len(first.get("removed_claims", [])) if first else 0
-    out |= {"letter": pay["draft"], "evidence": [f"{e['title']}: {e['text'][:300]}" for e in evidence],
+    out |= {"letter": pay["draft"], "evidence": [f"{e['title']}: {e['text']}" for e in evidence],
             "claims_first_draft": cut + (len(first["drafts"][0].claims) if first else 0), "unsupported_before": cut,
             "unsupported_after": sum(c.status != "supported" for c in again),
             "judge_score": mark_given.score, "judge_reasons": mark_given.reasons,
