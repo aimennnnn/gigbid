@@ -153,8 +153,8 @@ left out of the decision because the judge agrees poorly with the hand labels (k
   server (Part A leftover), V5/V6/V7/V9 (optional), the CI job that fails on eval thresholds (Part E).
 
 ## Report
-`docs/report/GigBid_RnD_Report.docx` (and a PDF made from it): 10 pages of main report plus Appendix A (Part B in
-detail). Sections 3, 5, 6, 7 and 10 say plainly that the work was not done. Read it before submitting; it is written
+`docs/report/GigBid_RnD_Report.docx` (and a PDF made from it): 9 pages of main report plus Appendix A (Part B in
+detail). Section 7 is the X2 extension. Section 3 says the tool study is built but not run; sections 5, 6 and 10 say plainly that the work was not done. Read it before submitting; it is written
 in the first person and you have to be able to defend every line in the viva.
 
 Found while writing it: 11 of the 60 real proposals were submitted with a literal `<text>` tag around the letter.
