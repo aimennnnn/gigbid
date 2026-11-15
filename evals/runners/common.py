@@ -132,6 +132,7 @@ class System:
                              "portfolio": portfolio(audit_path=f"{tmp}/p.jsonl"),
                              "workspace": workspace(store_path=f"{tmp}/w.json", audit_path=f"{tmp}/w.jsonl")}), InMemoryStore())
         saver = InMemorySaver()
+        self.bid_deps = deps
         self.bid, self.talk = build_bid_graph(deps, saver), build_conversation_graph(deps, saver)
 
     @staticmethod
