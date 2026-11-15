@@ -1,0 +1,40 @@
+{"id": "t01", "task": "Find new jobs about fraud detection in the ML category.", "server": "marketplace", "tool": "search_jobs", "arguments": {"query~": "fraud detection", "category": "ml"}}
+{"id": "t02", "task": "Look for web jobs that mention Stripe payments. At most 5 results.", "server": "marketplace", "tool": "search_jobs", "arguments": {"query~": "stripe", "category": "web", "limit": 5}}
+{"id": "t03", "task": "Search the marketplace for dashboard jobs in the data category.", "server": "marketplace", "tool": "search_jobs", "arguments": {"query~": "dashboard", "category": "data"}}
+{"id": "t04", "task": "Are there any jobs asking for Next.js? Web category only.", "server": "marketplace", "tool": "search_jobs", "arguments": {"query~": "next.js", "category": "web"}}
+{"id": "t05", "task": "Open the full post for job s-006.", "server": "marketplace", "tool": "get_job", "arguments": {"job_id": "s-006"}}
+{"id": "t06", "task": "I need the details of job dev-ml-015.", "server": "marketplace", "tool": "get_job", "arguments": {"job_id": "dev-ml-015"}}
+{"id": "t07", "task": "What does the post for job s-dup-01 say?", "server": "marketplace", "tool": "get_job", "arguments": {"job_id": "s-dup-01"}}
+{"id": "t08", "task": "How has client c-s-006 behaved in the past: hires, payment verification?", "server": "marketplace", "tool": "get_client_history", "arguments": {"client_id": "c-s-006"}}
+{"id": "t09", "task": "Check the track record of client c-s-041 before I bid.", "server": "marketplace", "tool": "get_client_history", "arguments": {"client_id": "c-s-041"}}
+{"id": "t10", "task": "How many Connects do I have left?", "server": "marketplace", "tool": "get_connects_balance", "arguments": {}}
+{"id": "t11", "task": "Can I afford a proposal that costs 16 Connects? Check my balance.", "server": "marketplace", "tool": "get_connects_balance", "arguments": {}}
+{"id": "t12", "task": "Show the messages in thread t-p-22eead3e84.", "server": "marketplace", "tool": "list_messages", "arguments": {"thread_id": "t-p-22eead3e84"}}
+{"id": "t13", "task": "Any messages from clients? Show every thread.", "server": "marketplace", "tool": "list_messages", "arguments": {}}
+{"id": "t14", "task": "Read the conversation t-p-c9b5246298.", "server": "marketplace", "tool": "list_messages", "arguments": {"thread_id": "t-p-c9b5246298"}}
+{"id": "t15", "task": "What do ML jobs that need PyTorch and BERT usually pay?", "server": "marketplace", "tool": "get_market_stats", "arguments": {"category": "ml", "skills": ["pytorch", "bert"]}}
+{"id": "t16", "task": "Typical price range for web jobs with React and Stripe?", "server": "marketplace", "tool": "get_market_stats", "arguments": {"category": "web", "skills": ["react", "stripe"]}}
+{"id": "t17", "task": "Market rate for data jobs that use SQL and Looker Studio.", "server": "marketplace", "tool": "get_market_stats", "arguments": {"category": "data", "skills": ["sql", "looker studio"]}}
+{"id": "t18", "task": "What happened to my proposals: any views, replies or hires?", "server": "marketplace", "tool": "list_events", "arguments": {}}
+{"id": "t19", "task": "Show the marketplace events that came after event id 12.", "server": "marketplace", "tool": "list_events", "arguments": {"since_id": 12}}
+{"id": "t20", "task": "What are the platform's current rules on Connects and proposal length?", "server": "marketplace", "tool": "get_policy", "arguments": {}}
+{"id": "t21", "task": "Fetch the current marketplace policy.", "server": "marketplace", "tool": "get_policy", "arguments": {}}
+{"id": "t22", "task": "Do a dry run of a proposal for job s-006 at $1,199 with the cover letter 'I built a similar classifier.' Use idempotency key k-001.", "server": "marketplace", "tool": "create_proposal_draft", "arguments": {"job_id": "s-006", "amount": 1199, "dry_run": true, "idempotency_key": "k-001", "cover_letter~": "similar classifier"}}
+{"id": "t23", "task": "Create a proposal draft for job s-033 for 975 dollars. Cover letter: 'Happy to help with forecasting.' Idempotency key k-002.", "server": "marketplace", "tool": "create_proposal_draft", "arguments": {"job_id": "s-033", "amount": 975, "idempotency_key": "k-002", "cover_letter~": "forecasting"}}
+{"id": "t24", "task": "Submit draft p-898c599181 for job s-006. Idempotency key k-003.", "server": "marketplace", "tool": "submit_proposal", "arguments": {"draft_id": "p-898c599181", "job_id": "s-006", "idempotency_key": "k-003"}}
+{"id": "t25", "task": "Preview only, as a dry run: what would submitting draft p-11aa for job s-017 cost? Idempotency key k-004.", "server": "marketplace", "tool": "submit_proposal", "arguments": {"draft_id": "p-11aa", "job_id": "s-017", "dry_run": true, "idempotency_key": "k-004"}}
+{"id": "t26", "task": "Reply in thread t-p-22eead3e84 with 'Tuesday at 2pm works for me.' Idempotency key k-005.", "server": "marketplace", "tool": "send_message", "arguments": {"thread_id": "t-p-22eead3e84", "text~": "tuesday", "idempotency_key": "k-005"}}
+{"id": "t27", "task": "Send 'Thanks, I will share a plan tomorrow.' to thread t-p-3fc840a6d8. Idempotency key k-006.", "server": "marketplace", "tool": "send_message", "arguments": {"thread_id": "t-p-3fc840a6d8", "text~": "plan tomorrow", "idempotency_key": "k-006"}}
+{"id": "t28", "task": "Find portfolio evidence that I have built fraud detection models.", "server": "portfolio", "tool": "search_evidence", "arguments": {"requirement~": "fraud detection"}}
+{"id": "t29", "task": "Do I have proof of experience with Stripe checkout? Top 3 items only.", "server": "portfolio", "tool": "search_evidence", "arguments": {"requirement~": "stripe", "k": 3}}
+{"id": "t30", "task": "Search the ml persona's portfolio for work on semantic search.", "server": "portfolio", "tool": "search_evidence", "arguments": {"requirement~": "semantic search", "persona": "ml"}}
+{"id": "t31", "task": "Evidence of building dashboards in Looker Studio, from the data persona.", "server": "portfolio", "tool": "search_evidence", "arguments": {"requirement~": "looker studio", "persona": "data"}}
+{"id": "t32", "task": "Show the full case study ml:case:fraud-edtech.", "server": "portfolio", "tool": "get_case_study", "arguments": {"id": "ml:case:fraud-edtech"}}
+{"id": "t33", "task": "Open portfolio item web:case:checkout-retail.", "server": "portfolio", "tool": "get_case_study", "arguments": {"id": "web:case:checkout-retail"}}
+{"id": "t34", "task": "Which skills does the web persona's portfolio cover?", "server": "portfolio", "tool": "list_skills", "arguments": {"persona": "web"}}
+{"id": "t35", "task": "List the skills in my portfolio.", "server": "portfolio", "tool": "list_skills", "arguments": {}}
+{"id": "t36", "task": "When am I free for a 30 minute call in the 5 days from 2026-11-16?", "server": "workspace", "tool": "get_free_slots", "arguments": {"date_from": "2026-11-16", "days": 5, "duration_minutes": 30}}
+{"id": "t37", "task": "Find my free slots starting 2026-11-20.", "server": "workspace", "tool": "get_free_slots", "arguments": {"date_from": "2026-11-20"}}
+{"id": "t38", "task": "Put a tentative hold called 'Client call' on my calendar at 2026-11-16T14:00:00. Idempotency key k-007.", "server": "workspace", "tool": "create_interview_hold", "arguments": {"start": "2026-11-16T14:00:00", "title~": "client call", "idempotency_key": "k-007"}}
+{"id": "t39", "task": "Hold 2026-11-18T10:00:00 for 45 minutes, titled 'Intro call with fintech client'. Idempotency key k-008.", "server": "workspace", "tool": "create_interview_hold", "arguments": {"start": "2026-11-18T10:00:00", "duration_minutes": 45, "idempotency_key": "k-008", "title~": "intro call"}}
+{"id": "t40", "task": "Draft an email to sana@example.com with the subject 'Portfolio link' and the body 'Here is the case study we discussed.' Idempotency key k-009.", "server": "workspace", "tool": "create_email_draft", "arguments": {"to": "sana@example.com", "subject~": "portfolio link", "idempotency_key": "k-009"}}

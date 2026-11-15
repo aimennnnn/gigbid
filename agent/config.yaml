@@ -62,6 +62,7 @@ nodes:
   compliance:  {model: small,  timeout_s: 30, retries: 2}
   liaison:     {model: strong, timeout_s: 60, retries: 1}
   judge:       {model: strong, timeout_s: 60, retries: 1}   # evals only: scores finished proposals against a rubric
+  tool_picker: {model: small,  timeout_s: 30, retries: 1}   # evals only: R&D question A (evals/runners/tool_study.py)
 
 # Retrieval (Part B). The app uses rag.variant; `make eval` compares all of them.
 # Each variant is a list of steps. The code for each step is one file in rag/variants/.

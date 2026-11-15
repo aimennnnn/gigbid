@@ -66,3 +66,15 @@ def test_ab_test_counts_pairs_on_the_same_jobs():
     t = compare(a, b, "replied")
     assert t["paired"] == {"jobs": 3, "only_a": 1, "only_b": 1, "both": 1, "neither": 0, "mcnemar_exact_p": 1.0}
     assert t["difference_b_minus_a"] == 0 and t["significant_at_0.05"] is False
+
+
+def test_tool_study_grades_both_tool_sets_and_free_text_arguments():
+    from evals.runners.tool_study import ToolChoice, grade
+    task = {"server": "marketplace", "tool": "search_jobs", "arguments": {"query~": "fraud detection", "category": "ml", "limit": 5}}
+    good = {"query": "Fraud detection models", "category": "ML", "limit": "5"}
+    assert grade(task, ToolChoice(tool="search_jobs", arguments=good), "fine") == {"tool_ok": True, "args_ok": True, "wrong_arguments": []}
+    assert grade(task, ToolChoice(tool="marketplace", arguments={"action": "search_jobs", "params": good}), "coarse")["args_ok"]
+    missing = grade(task, ToolChoice(tool="search_jobs", arguments={"query": "fraud", "category": "ml"}), "fine")
+    assert missing["tool_ok"] and not missing["args_ok"] and missing["wrong_arguments"] == ["query", "limit"]
+    assert grade(task, ToolChoice(tool="get_job", arguments=good), "fine") == {"tool_ok": False, "args_ok": False, "wrong_arguments": []}
+    assert not grade(task, ToolChoice(tool="marketplace", arguments={"action": "get_job", "params": good}), "coarse")["tool_ok"]

@@ -124,3 +124,15 @@ def judge(v: dict) -> dict:
               "opening is not generic": not letter.lower().lstrip().startswith(("dear", "hello sir", "i am a passionate", "i hope")),
               "ends with a question": letter.rstrip().endswith("?")}
     return {"score": 1 + sum(checks.values()), "reasons": [name for name, ok in checks.items() if not ok] or ["meets every check"]}
+
+
+def tool_picker(v: dict) -> dict:
+    """Stand-in for the tool study: the tool whose name shares most words with the task, with no arguments."""
+    task = _words(v["task"])
+    names = [(t["name"], t) for t in v["tools"]]
+    best = max(names, key=lambda n: len(_words(n[0].replace("_", " ")) & task))[1]
+    actions = best["input"].get("properties", {}).get("action", {}).get("enum")
+    if actions:                                         # a coarse tool: pick the action the same way
+        action = max(actions, key=lambda a: len(_words(a.replace("_", " ")) & task))
+        return {"tool": best["name"], "arguments": {"action": action, "params": {}}}
+    return {"tool": best["name"], "arguments": {}}
