@@ -7,10 +7,11 @@ USER node
 ENV HOME=/home/node UV_LINK_MODE=copy NEXT_TELEMETRY_DISABLED=1
 WORKDIR /home/node
 # change this value to make the host fetch the newest commit instead of reusing its cached copy
-ARG CODE_VERSION=1
+ARG CODE_VERSION=2
 RUN git clone --depth 1 https://github.com/aimennnnn/gigbid.git app
 WORKDIR /home/node/app
-RUN uv sync --frozen --no-dev
+# Python 3.12 on purpose: left alone, uv takes the newest Python, and onnxruntime has no build for 3.15 yet
+RUN uv sync --frozen --no-dev --python 3.12
 RUN cd apps/web && npm ci && NEXT_PUBLIC_API_URL=same-origin GIGBID_API_PROXY=http://127.0.0.1:8000 npm run build
 # Stand-in models by default: it starts with no key. For the real open model set GROQ_API_KEY as a secret and
 # GIGBID_LLM=real (and GIGBID_RAG_MODELS=real) as variables in the host's settings.
