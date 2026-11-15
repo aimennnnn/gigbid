@@ -10,6 +10,7 @@
 | Claude | `evals/runners/ab_test.py`, `docs/EXTENSION.md`, `evals/runners/tool_study.py`, `evals/datasets/tool_tasks.jsonl`, `evals/kaggle_tool_study.ipynb`, `apps/web/tests/demo/record-demo.mjs`, `docs/demo/inbox-to-reply.mp4` | Drafted with Claude on 15 Nov. The A/B test reads the real proposals from my Kaggle run. The tool study ran on Kaggle from my account; its result file was copied out of the run log and its SHA-256 checked against the one the notebook printed. The demo video was recorded by a script against stand-in models. |
 | Claude | SQLite persistence in `apps/api/runtime.py`, `infra/docker-compose.yml`, `infra/docker/*.Dockerfile` | Drafted with Claude on 15 Nov. The restart test passes; the Docker files were never run (no Docker daemon available). |
 | Claude | `evals/runners/arch_study.py`, `agent/prompts/arch_*.md`, `evals/kaggle_arch_study.ipynb`, `tests/integration/test_arch_study.py`, `docs/ARCHITECTURE.md`, `docs/RUNBOOK.md` | Drafted with Claude on 15 Nov. The architecture study is tested with stand-in models; any real number comes from a Kaggle run on my account. |
+| Claude | `infra/space/Dockerfile`, `infra/space/start.sh`, the `/api` forwarding in `apps/web/next.config.mjs`, the Render service setup | Drafted and set up with Claude on 15 Nov, in my Render account, on the free plan. The live site runs stand-in models. |
 | Claude | `docs/report/GigBid_RnD_Report.docx` and `.pdf` | Drafted with Claude from the result files in `evals/results/`. Sections for work that was not done say so. I read it and am responsible for what it claims. |
 
 ## Things it got wrong that I caught
@@ -21,3 +22,5 @@
 - The Writer copied a planted code word from a job post into a proposal. The evaluation caught it; the fix is in `agent/guards.py` and was re-measured (`evals/results/injection_check.json`).
 - The compliance check treated `2026-11-15 10:00` in a client reply as a phone number and masked it. Seen while recording the demo; fixed in `mcp_servers/common.py` with a test.
 - It opened the SQLite memory store with Python's default transaction mode, so two jobs analysed at once failed with "cannot start a transaction within a transaction". The restart test caught it before anything was committed.
+- The first deployment build failed: the Dockerfile let uv pick the newest Python (3.15), which `onnxruntime` does not support yet. Pinned to 3.12.
+- Render's form pre-selected the $7 per month plan. It was switched to the free plan before the service was created.

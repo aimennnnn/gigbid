@@ -67,6 +67,14 @@ Updated 15 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
   p50 seconds 3.1 / 7.8 / 18.2. The hypothesis was right about accuracy and wrong about cost and speed (see the report).
 - CI: 4 runs so far. 28abd15 failed at lint (fixed). 30ee80d failed once in the browser tests with no code change,
   c80d555 and 881910d passed. Cause not found; `retries: 2` on CI was added to `apps/web/playwright.config.ts`.
+- DEPLOYED (15 Nov, about an hour before the deadline): https://gigbid-8h5x.onrender.com, a free Render web service
+  (512 MB) on the GitHub account's Render workspace, Docker runtime, `infra/space/Dockerfile`, branch main. One
+  container: uvicorn on 127.0.0.1:8000, Next.js on $PORT, `/api/*` forwarded by `next.config.mjs`. STAND-IN MODELS
+  (`GIGBID_LLM=fake`, `GIGBID_RAG_MODELS=fake` are the image defaults). To use the real open model: in Render ->
+  Environment add `GROQ_API_KEY`, `GIGBID_LLM=real` and `GIGBID_RAG_VARIANT=keyword` (no embedding model: it does not
+  fit in 512 MB). That has not been tried. The first build failed because uv picked Python 3.15 (pinned to 3.12).
+  Hugging Face Spaces was tried first and needs a paid plan for Docker Spaces on this account.
+  Render does not redeploy by itself for a public-repo service: Manual Deploy -> Deploy latest commit.
 - Found while recording the demo: the compliance check masked dates like `2026-11-15 10:00` as phone numbers. Fixed in
   `mcp_servers/common.py` with a unit test.
 
@@ -160,7 +168,7 @@ left out of the decision because the judge agrees poorly with the hand labels (k
 
 ## Report
 `docs/report/GigBid_RnD_Report.docx` (and a PDF made from it): 10 pages of main report plus Appendix A (Part B in
-detail). Section 7 is the X2 extension. Sections 3 and 5 are the tool study and the architecture comparison, with their real results. Sections 6 and 10 say plainly that the work was not done. Read it before submitting; it is written
+detail). Section 7 is the X2 extension. Sections 3 and 5 are the tool study and the architecture comparison, with their real results. Section 6 says plainly that the work was not done; section 10 that there are no hidden test results. Read it before submitting; it is written
 in the first person and you have to be able to defend every line in the viva.
 
 Found while writing it: 11 of the 60 real proposals were submitted with a literal `<text>` tag around the letter.

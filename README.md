@@ -7,6 +7,14 @@ leaves the system.
 
 AI-4016 R&D assignment, FAST-NUCES. Work in progress; results, live link and traces are added as they are measured.
 
+## Live
+
+**https://gigbid-8h5x.onrender.com** (reviewer login is in the private submission comment).
+A free Render instance: 512 MB, no GPU, one container built from `infra/space/Dockerfile` (the API sits behind
+the web app on one address). It runs on the **stand-in models**, not a real one: no model key is set there and the
+embedding model does not fit in 512 MB. It sleeps when idle, so the first page can take up to a minute, and its
+state resets when the instance restarts.
+
 ## Run the app
 
 Two terminals. The first is the API (FastAPI: GigSim, the MCP servers and both agent graphs in one process), the second is the web app.
@@ -33,8 +41,7 @@ http://localhost:3000. It starts on the stand-in models unless you set `GIGBID_L
 daemon, so only `docker compose config` (the file parses) is checked.
 
 What is not built: live Upwork (OAuth), portfolio upload, "regenerate one paragraph", the Redis worker, Postgres
-(SQLite instead), tracing in Langfuse (the run viewer shows the MCP audit trail by trace id instead) and a public
-deployment.
+(SQLite instead) and tracing in Langfuse (the run viewer shows the MCP audit trail by trace id instead).
 
 ## Run the tests
 
