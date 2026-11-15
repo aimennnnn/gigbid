@@ -76,6 +76,8 @@ async def test_approving_in_the_api_resumes_the_graph_and_submits_once(api):
     cards = (await api.get("/api/pipeline", headers=h)).json()["cards"]
     assert [c["stage"] for c in cards if c["thread_id"] == thread][0] in ("submitted", "viewed", "replied", "interview", "hired", "lost")
     assert (await api.get("/api/me", headers=h)).json()["connects_spent"] > 0
+    stats = (await api.get("/api/analytics", headers=h)).json()
+    assert stats["proposals"] == 1 and stats["connects_spent"] > 0
 
 
 async def test_reject_needs_a_reason_and_edit_needs_text(api):
@@ -122,6 +124,7 @@ async def test_a_client_reply_is_drafted_and_only_sent_after_approval(api):
     run = (await api.post(f"/api/messages/{t['thread_id']}/suggest", headers=h)).json()["thread_id"]
     await settled(api, h, run)
     again = next(x for x in (await api.get("/api/messages", headers=h)).json()["threads"] if x["thread_id"] == t["thread_id"])
+    assert again["title"] != t["thread_id"] and again["job_id"], "the thread is shown under its job's title"
     assert again["suggested"]["pending"] and again["suggested"]["draft"] and len(again["messages"]) == len(t["messages"]), "nothing sent yet"
     await api.post(f"/api/approvals/{run}", json={"action": "approve"}, headers=h)
     await settled(api, h, run)

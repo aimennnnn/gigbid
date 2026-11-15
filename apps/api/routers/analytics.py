@@ -47,7 +47,7 @@ async def analytics(user: str = Depends(current_user), rt: Runtime = Depends(run
             c["submitted"] += 1
             c["replied"] += "replied" in events.get(run.job_id, ())
             c["hired"] += "hired" in events.get(run.job_id, ())
-            spent += (v.get("submission") or {}).get("connects_spent", 0)
+            spent += (v.get("submission") or {}).get("connects_cost") or 0
     rows = [CategoryStats(category=k, **c, reply_rate=round(c["replied"] / c["submitted"], 3), hire_rate=round(c["hired"] / c["submitted"], 3))
             for k, c in sorted(cats.items())]
     return Analytics(by_category=rows, connects_spent=spent, proposals=sum(r.submitted for r in rows), replies=sum(r.replied for r in rows),

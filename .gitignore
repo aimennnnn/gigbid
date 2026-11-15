@@ -16,3 +16,6 @@ data/processed/
 evals/results/smoke/
 evals/results/*_progress.json
 evals/datasets/score_sheet.html
+
+# web app and API state
+data/processed/app*/

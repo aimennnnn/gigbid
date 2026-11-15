@@ -20,7 +20,7 @@ async def job_of(rt: Runtime, user: str, marketplace_thread: str) -> tuple[str, 
     for run in rt.runs.values():
         if run.user == user and run.kind == "bid":
             v = (await rt.state(run))["values"]
-            if (v.get("submission") or {}).get("proposal_id") == marketplace_thread.removeprefix("t-"):
+            if (v.get("submission") or {}).get("id") == marketplace_thread.removeprefix("t-"):
                 return run.job_id, v["job"]["title"]
     return "", marketplace_thread
 
