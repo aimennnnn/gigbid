@@ -1,0 +1,73 @@
+{
+ "meta": {
+  "date": "2026-11-15T08:39:43+00:00",
+  "git_commit": "bc34531",
+  "embeddings": "hash-512 (offline stand-in)",
+  "reranker": "word overlap (offline stand-in)",
+  "llm": "fake (rule-based stand-in, no model)",
+  "machine": "Linux x86_64, 2 CPU cores, x86_64"
+ },
+ "judge_scores_from": {
+  "date": "2026-11-14T23:13:41+00:00",
+  "git_commit": "2ba4e4d",
+  "embeddings": "nomic-ai/nomic-embed-text-v1.5",
+  "reranker": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "llm": "ollama: gpt-oss:20b / gpt-oss:20b",
+  "machine": "Linux x86_64, 4 CPU cores, x86_64"
+ },
+ "items": 30,
+ "kappa": 0.1429,
+ "weighted_kappa": 0.1892,
+ "kappa_pass_fail": 0.2157,
+ "exact_agreement": 0.5333,
+ "within_one_point": 0.8333,
+ "biggest_disagreements": [
+  {
+   "id": "v0_naive|dev-data-009",
+   "human": 1,
+   "judge": 4,
+   "judge_reasons": [
+    "Cites a specific past project that is fully supported by the evidence, directly addresses the client\u2019s logistics reporting need, and includes a measurable result (25 client accounts).",
+    "Lacks a clear next step or question to close the proposal."
+   ],
+   "proposal": "The client, a logistics company, wanted simple shareable reports for their clients. I designed and delivered a Looker Studio reporting suite using Looker Studio and Google Sheets. SQL covered the heavy lifting, and BigQuery tied it into the client's existing systems. I agreed the success measure with the client before writing code and reported against it weekly. The finished work rolled out to 25 client accounts from one template."
+  },
+  {
+   "id": "best|dev-data-009",
+   "human": 1,
+   "judge": 4,
+   "judge_reasons": [
+    "Cites a specific past project that is fully supported by the evidence, addresses the client\u2019s logistics reporting need, and includes a measurable result (25 client accounts).",
+    "Lacks a clear next step or question to close the proposal."
+   ],
+   "proposal": "The client, a logistics company, wanted simple shareable reports for their clients. I designed and delivered a Looker Studio reporting suite using Looker Studio and Google Sheets. SQL covered the heavy lifting, and BigQuery tied it into the client's existing systems. I agreed the success measure with the client before writing code and reported against it weekly. The finished work rolled out to 25 client accounts from one template."
+  },
+  {
+   "id": "best|dev-ml-015",
+   "human": 1,
+   "judge": 4,
+   "judge_reasons": [
+    "Cites specific past projects with measurable results that are supported by evidence, and addresses the client\u2019s fraud detection and OCR needs directly. However, it lacks a clear next step or question to close the proposal."
+   ],
+   "proposal": "<text>\nThe client wants a fraud detection model and an invoice OCR and extraction pipeline for a logistics company. I designed and delivered a fraud detection model using Python and XGBoost for an edtech company, catching 81% of fraudulent transactions with a 0.4% false\u2011positive rate. I also designed and delivered an invoice OCR and extraction pipeline using Tesseract and LayoutLM for a healthcare company, extracting line items with 97% field accuracy on 5,000 invoices. Both solutions used anomaly detection and Python for heavy lifting and were integrated into the client\u2019s existing systems. The fraud model identified suspicious transactions before they were processed, and the OCR pipeline accurately extracted numeric data from scanned invoices, meeting the success measures agreed with the client.\n</text>"
+  },
+  {
+   "id": "v0_naive|dev-web-018",
+   "human": 3,
+   "judge": 5,
+   "judge_reasons": [
+    "Cites specific past work that is fully backed by evidence, includes a measured result (45 minutes saved), explains approach and required inputs, and ends with a clear next step (availability)."
+   ],
+   "proposal": "We need a browser add\u2011on that saves our team clicks. I designed and delivered a Chrome extension using JavaScript and Chrome APIs. The finished work saved each recruiter about 45 minutes a day. I will build a cross\u2011browser extension (Chrome, Firefox, Edge) that records clicks, stores them in JSON, and provides a simple UI. I will explain the process in plain language, list the inputs needed (e.g., target URLs, click\u2011tracking rules), and deliver documentation for non\u2011technical users. I will use Git for version control and provide a maintenance plan for future updates. My availability over the next month is full, and I can start immediately."
+  },
+  {
+   "id": "best|dev-web-018",
+   "human": 3,
+   "judge": 5,
+   "judge_reasons": [
+    "Cites specific past work that is fully supported by evidence, includes a measured result (45 minutes saved), explains approach and required inputs, and ends with a clear next step (availability)."
+   ],
+   "proposal": "We need a browser add\u2011on that saves our team clicks. I designed and delivered a Chrome extension using JavaScript and Chrome APIs. The finished work saved each recruiter about 45 minutes a day. I will build a cross\u2011browser extension (Chrome, Firefox, Edge) that records clicks, stores them in JSON, and provides a simple UI. I will explain the process in plain language, list the inputs needed (e.g., target URLs, click\u2011tracking rules), and deliver documentation for non\u2011technical users. I will use Git for version control and provide a maintenance plan for future updates. My availability over the next month is full, and I can start immediately."
+  }
+ ]
+}
