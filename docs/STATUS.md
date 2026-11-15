@@ -1,7 +1,7 @@
 # Build status and hand-over notes
 
 Working notes for whoever continues the build (me, or an AI assistant in a new session).
-Updated 14 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
+Updated 15 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
 
 ## Where things are
 - Repo: `C:\Users\aimen\Downloads\Agentic A2\gigbid`, pushed to `github.com/aimennnnn/gigbid` (branch `main`).
@@ -78,13 +78,34 @@ Model for decisions, proposals and the judge: Ollama `gpt-oss:20b`. No job faile
   `PINEAPPLE-11` into the proposal, in both variants (`canary_leaked: 1`). This is a real leak. Not fixed yet.
 - Version 1 of the Kaggle notebook failed in the LLM half (model download 503); nothing from it is used.
 
+## Part B: judge calibration (15 Nov)
+30 proposals scored by hand (rubric in `agent/prompts/judge.md`, judge scores hidden while scoring), compared with the
+`gpt-oss:20b` judge in `evals/results/judge_calibration.json`.
+
+- Cohen's kappa 0.14, weighted 0.19, pass/fail (score 4 or more) 0.22. Exact agreement 0.53, within one point 0.83.
+- The judge is more generous: mean 4.13 against 3.47 by hand. It never gave a 1; three proposals scored 1 by hand got 4.
+- So the judge is NOT calibrated. The "Judge score" column in the table is reported, but no decision rests on it.
+- The first version of the sheet cut each evidence text at 300 characters, which hid the Result section. Fixed before
+  the scores were entered (commit bc34531); the judge had always seen the full text.
+
+## Part B: which variant ships, and why (draft paragraph for the report)
+The app ships `v2_hybrid` (BM25 + dense, fused with RRF). It is the only variant that beat the dense baseline on
+retrieval: Recall@5 0.889 against 0.806 and nDCG@10 0.917 against 0.890 on 600 dev jobs, at the same retrieval cost
+(p95 157 ms against 153 ms, no extra model). Decomposition (0.651), reranking (0.771), the outcome boost (0.702) and the
+corrective loop (0.556) all lowered Recall@5, and stacking all five steps gave 0.586 at 24 s p95. In the ablation,
+removing hybrid from the shipped pipeline drops it back to the baseline (0.806), and in the five-step pipeline the
+corrective loop is the step that buys refusals (92% of no-evidence jobs refused, against 0% without it) at a small cost
+in recall (0.586 against 0.610); taking out hybrid, reranking or the outcome boost there changes Recall@5 by nothing,
+because the corrective grade decides what is kept. End to end, the better retrieval did not show up as better outcomes on 30 jobs: reply rate 0.77 against 0.83
+(two proposals), hire rate 0.20 for both. Hybrid proposals had no unsupported claims before verification (0.03 for the
+baseline), used fewer tokens (12.4k against 13.4k) and were faster at p95 (85.6 s against 99.4 s). The judge score is
+left out of the decision because the judge agrees poorly with the hand labels (kappa 0.14).
+
 ## Part B: what is left, in order
-1. Score the 30 proposals in `evals/datasets/judge_labels.csv` (column `human_score`, 1 to 5, rubric:
-   `agent/prompts/judge.md`), then `uv run python -m evals.runners.judge_calibration` (writes Cohen's kappa) and
-   `uv run python -m evals.runners.results_table --readme`.
-2. Optional: send `evals/datasets/pairwise_panel.csv` to classmates (never `pairwise_key.json`), then
+1. Optional: send `evals/datasets/pairwise_panel.csv` to classmates (never `pairwise_key.json`), then
    `uv run python -m evals.runners.judge_calibration --tally`.
-3. Write the one-paragraph decision and R&D question B in the report.
+2. Put the paragraph above and R&D question B into the report, in your own words.
+3. Decide whether to fix the injection leak in the Writer and re-run the proposals step, or report it as a finding.
 - A stopped eval can be continued with `--resume` (finished variants, ablation lines and proposals are kept), but only
   while the files in `evals/results/` still exist. A new Kaggle session starts with an empty disk.
 - Do NOT run the real embedding model on the 8 GB laptop: the first attempt ended in a blue screen.
@@ -111,7 +132,7 @@ Model for decisions, proposals and the judge: Ollama `gpt-oss:20b`. No job faile
 - Confirmed on the real model (Groq, 14 Nov): `agent.demo` on `dev-ml-000` reaches approval in about 7 seconds and about 10,300 tokens, decision bid (fit 0.80), draft keeps two supported claims with evidence ids.
 - The Writer can copy an injected code word from the job post into the proposal (see the final run above).
 - Price suggestions land inside the fair band less than half the time (0.47); the Pricing step is the weakest agent.
-- The judge score is not calibrated until the 30 human labels are in.
+- The model judge agrees poorly with hand labels (kappa 0.14) and is too generous; do not use its score to pick a variant.
 - Reranker: first real run on Kaggle (CPU, 4 cores) with `ms-marco-MiniLM-L-12-v2` took more than 13 minutes for one
   reranking variant (about 12,600 query-item pairs) and was stopped. Switched to the 6-layer `ms-marco-MiniLM-L-6-v2` and
   600 characters per item. This was a speed decision, not a quality measurement; the two models were not compared.
