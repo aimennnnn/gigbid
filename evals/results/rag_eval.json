@@ -1,0 +1,1318 @@
+{
+ "meta": {
+  "date": "2026-11-14T21:35:40+00:00",
+  "git_commit": "2ba4e4d",
+  "embeddings": "nomic-ai/nomic-embed-text-v1.5",
+  "reranker": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "llm": "ollama: gpt-oss:20b / gpt-oss:20b",
+  "machine": "Linux x86_64, 4 CPU cores, x86_64"
+ },
+ "jobs": 600,
+ "timing_jobs": 30,
+ "variants": {
+  "keyword": {
+   "steps": [
+    "decompose",
+    "bm25"
+   ],
+   "overall": {
+    "jobs_with_evidence": 390,
+    "jobs_without_evidence": 210,
+    "recall_at_5": 0.5724,
+    "mrr": 0.9263,
+    "ndcg_at_10": 0.7045,
+    "refused_with_evidence": 0.0,
+    "refused_no_evidence": 0.0,
+    "p50_ms": 1.8,
+    "p95_ms": 2.7
+   },
+   "by_persona": {
+    "data": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5902,
+     "mrr": 0.9032,
+     "ndcg_at_10": 0.6939,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "ml": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5534,
+     "mrr": 0.9305,
+     "ndcg_at_10": 0.7139,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "web": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5736,
+     "mrr": 0.9451,
+     "ndcg_at_10": 0.7058,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   },
+   "by_kind": {
+    "fit": {
+     "jobs_with_evidence": 210,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6259,
+     "mrr": 0.9754,
+     "ndcg_at_10": 0.7537,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "injection": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.5889,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7346,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "lowball": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6111,
+     "mrr": 0.9667,
+     "ndcg_at_10": 0.7377,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "multi": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.2622,
+     "mrr": 0.6569,
+     "ndcg_at_10": 0.4591,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "no_evidence": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 90,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "other_domain": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 120,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "scam": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6678,
+     "mrr": 0.9667,
+     "ndcg_at_10": 0.7462,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    }
+   },
+   "by_style": {
+    "named_skills": {
+     "jobs_with_evidence": 282,
+     "jobs_without_evidence": 144,
+     "recall_at_5": 0.4104,
+     "mrr": 0.898,
+     "ndcg_at_10": 0.6475,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "vague_post": {
+     "jobs_with_evidence": 108,
+     "jobs_without_evidence": 66,
+     "recall_at_5": 0.9954,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8535,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   }
+  },
+  "v0_naive": {
+   "steps": [],
+   "overall": {
+    "jobs_with_evidence": 390,
+    "jobs_without_evidence": 210,
+    "recall_at_5": 0.8058,
+    "mrr": 0.9987,
+    "ndcg_at_10": 0.8899,
+    "refused_with_evidence": 0.0,
+    "refused_no_evidence": 0.0,
+    "p50_ms": 112.1,
+    "p95_ms": 153.4
+   },
+   "by_persona": {
+    "data": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.7867,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8727,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "ml": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.7992,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8992,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "web": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.8314,
+     "mrr": 0.9962,
+     "ndcg_at_10": 0.8977,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   },
+   "by_kind": {
+    "fit": {
+     "jobs_with_evidence": 210,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.8559,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9019,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "injection": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.8156,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8547,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "lowball": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.8667,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.901,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "multi": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.5581,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8872,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "no_evidence": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 90,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "other_domain": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 120,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "scam": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.8428,
+     "mrr": 0.9917,
+     "ndcg_at_10": 0.8626,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    }
+   },
+   "by_style": {
+    "named_skills": {
+     "jobs_with_evidence": 282,
+     "jobs_without_evidence": 144,
+     "recall_at_5": 0.744,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9256,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "vague_post": {
+     "jobs_with_evidence": 108,
+     "jobs_without_evidence": 66,
+     "recall_at_5": 0.967,
+     "mrr": 0.9954,
+     "ndcg_at_10": 0.7967,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   }
+  },
+  "v1_decompose": {
+   "steps": [
+    "decompose"
+   ],
+   "overall": {
+    "jobs_with_evidence": 390,
+    "jobs_without_evidence": 210,
+    "recall_at_5": 0.6507,
+    "mrr": 0.9293,
+    "ndcg_at_10": 0.7643,
+    "refused_with_evidence": 0.0,
+    "refused_no_evidence": 0.0,
+    "p50_ms": 150.6,
+    "p95_ms": 220.1
+   },
+   "by_persona": {
+    "data": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.6176,
+     "mrr": 0.8879,
+     "ndcg_at_10": 0.6958,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "ml": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.6504,
+     "mrr": 0.9528,
+     "ndcg_at_10": 0.817,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "web": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.6842,
+     "mrr": 0.947,
+     "ndcg_at_10": 0.7801,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   },
+   "by_kind": {
+    "fit": {
+     "jobs_with_evidence": 210,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6994,
+     "mrr": 0.9714,
+     "ndcg_at_10": 0.8072,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "injection": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6933,
+     "mrr": 0.9167,
+     "ndcg_at_10": 0.7533,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "lowball": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6944,
+     "mrr": 0.9611,
+     "ndcg_at_10": 0.7922,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "multi": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.3458,
+     "mrr": 0.7013,
+     "ndcg_at_10": 0.5507,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "no_evidence": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 90,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "other_domain": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 120,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "scam": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.7422,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8193,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    }
+   },
+   "by_style": {
+    "named_skills": {
+     "jobs_with_evidence": 282,
+     "jobs_without_evidence": 144,
+     "recall_at_5": 0.5245,
+     "mrr": 0.9022,
+     "ndcg_at_10": 0.7471,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "vague_post": {
+     "jobs_with_evidence": 108,
+     "jobs_without_evidence": 66,
+     "recall_at_5": 0.9802,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8092,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   }
+  },
+  "v2_hybrid": {
+   "steps": [
+    "hybrid"
+   ],
+   "overall": {
+    "jobs_with_evidence": 390,
+    "jobs_without_evidence": 210,
+    "recall_at_5": 0.8895,
+    "mrr": 1.0,
+    "ndcg_at_10": 0.9173,
+    "refused_with_evidence": 0.0,
+    "refused_no_evidence": 0.0,
+    "p50_ms": 115.6,
+    "p95_ms": 155.4
+   },
+   "by_persona": {
+    "data": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.8702,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9214,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "ml": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.8872,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9211,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "web": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.911,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9094,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   },
+   "by_kind": {
+    "fit": {
+     "jobs_with_evidence": 210,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.9342,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9181,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "injection": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.9111,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9005,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "lowball": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.9278,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9136,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "multi": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6351,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9433,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "no_evidence": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 90,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "other_domain": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 120,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "scam": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.9572,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8985,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    }
+   },
+   "by_style": {
+    "named_skills": {
+     "jobs_with_evidence": 282,
+     "jobs_without_evidence": 144,
+     "recall_at_5": 0.8514,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9646,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "vague_post": {
+     "jobs_with_evidence": 108,
+     "jobs_without_evidence": 66,
+     "recall_at_5": 0.9889,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7937,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   }
+  },
+  "v3_rerank": {
+   "steps": [
+    "rerank"
+   ],
+   "overall": {
+    "jobs_with_evidence": 390,
+    "jobs_without_evidence": 210,
+    "recall_at_5": 0.7711,
+    "mrr": 0.997,
+    "ndcg_at_10": 0.8766,
+    "refused_with_evidence": 0.0,
+    "refused_no_evidence": 0.0,
+    "p50_ms": 966.5,
+    "p95_ms": 1151.8
+   },
+   "by_persona": {
+    "data": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.7588,
+     "mrr": 0.9949,
+     "ndcg_at_10": 0.8728,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "ml": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.7951,
+     "mrr": 0.9962,
+     "ndcg_at_10": 0.8896,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "web": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.7594,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8675,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   },
+   "by_kind": {
+    "fit": {
+     "jobs_with_evidence": 210,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.8118,
+     "mrr": 0.9968,
+     "ndcg_at_10": 0.8806,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "injection": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.7861,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8588,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "lowball": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.7889,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8656,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "multi": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.5663,
+     "mrr": 0.9917,
+     "ndcg_at_10": 0.8774,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "no_evidence": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 90,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "other_domain": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 120,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "scam": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.8169,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8764,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    }
+   },
+   "by_style": {
+    "named_skills": {
+     "jobs_with_evidence": 282,
+     "jobs_without_evidence": 144,
+     "recall_at_5": 0.6877,
+     "mrr": 0.9959,
+     "ndcg_at_10": 0.9039,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "vague_post": {
+     "jobs_with_evidence": 108,
+     "jobs_without_evidence": 66,
+     "recall_at_5": 0.9889,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8055,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   }
+  },
+  "v4_outcome": {
+   "steps": [
+    "outcome"
+   ],
+   "overall": {
+    "jobs_with_evidence": 390,
+    "jobs_without_evidence": 210,
+    "recall_at_5": 0.7018,
+    "mrr": 0.9609,
+    "ndcg_at_10": 0.8217,
+    "refused_with_evidence": 0.0,
+    "refused_no_evidence": 0.0,
+    "p50_ms": 117.3,
+    "p95_ms": 153.9
+   },
+   "by_persona": {
+    "data": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.6912,
+     "mrr": 0.9699,
+     "ndcg_at_10": 0.8053,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "ml": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.7269,
+     "mrr": 0.9538,
+     "ndcg_at_10": 0.8512,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "web": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.6874,
+     "mrr": 0.959,
+     "ndcg_at_10": 0.8088,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   },
+   "by_kind": {
+    "fit": {
+     "jobs_with_evidence": 210,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.7291,
+     "mrr": 0.9619,
+     "ndcg_at_10": 0.8356,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "injection": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.7672,
+     "mrr": 0.9833,
+     "ndcg_at_10": 0.81,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "lowball": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.8028,
+     "mrr": 0.9778,
+     "ndcg_at_10": 0.8556,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "multi": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.5412,
+     "mrr": 0.95,
+     "ndcg_at_10": 0.8019,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "no_evidence": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 90,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "other_domain": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 120,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "scam": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6839,
+     "mrr": 0.9486,
+     "ndcg_at_10": 0.7821,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    }
+   },
+   "by_style": {
+    "named_skills": {
+     "jobs_with_evidence": 282,
+     "jobs_without_evidence": 144,
+     "recall_at_5": 0.6504,
+     "mrr": 0.9858,
+     "ndcg_at_10": 0.8719,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "vague_post": {
+     "jobs_with_evidence": 108,
+     "jobs_without_evidence": 66,
+     "recall_at_5": 0.8361,
+     "mrr": 0.8958,
+     "ndcg_at_10": 0.6908,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   }
+  },
+  "v8_corrective": {
+   "steps": [
+    "corrective"
+   ],
+   "overall": {
+    "jobs_with_evidence": 390,
+    "jobs_without_evidence": 210,
+    "recall_at_5": 0.5556,
+    "mrr": 0.9897,
+    "ndcg_at_10": 0.7093,
+    "refused_with_evidence": 0.0077,
+    "refused_no_evidence": 0.981,
+    "p50_ms": 1051.7,
+    "p95_ms": 3224.5
+   },
+   "by_persona": {
+    "data": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5438,
+     "mrr": 0.9692,
+     "ndcg_at_10": 0.6857,
+     "refused_with_evidence": 0.0231,
+     "refused_no_evidence": 0.9571
+    },
+    "ml": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5443,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7227,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.9857
+    },
+    "web": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5787,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7193,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 1.0
+    }
+   },
+   "by_kind": {
+    "fit": {
+     "jobs_with_evidence": 210,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.5887,
+     "mrr": 0.9857,
+     "ndcg_at_10": 0.7324,
+     "refused_with_evidence": 0.0095,
+     "refused_no_evidence": null
+    },
+    "injection": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.5722,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7013,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "lowball": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6111,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7449,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "multi": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.2884,
+     "mrr": 0.9833,
+     "ndcg_at_10": 0.5557,
+     "refused_with_evidence": 0.0167,
+     "refused_no_evidence": null
+    },
+    "no_evidence": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 90,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.9667
+    },
+    "other_domain": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 120,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.9917
+    },
+    "scam": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6706,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7681,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    }
+   },
+   "by_style": {
+    "named_skills": {
+     "jobs_with_evidence": 282,
+     "jobs_without_evidence": 144,
+     "recall_at_5": 0.3979,
+     "mrr": 0.9858,
+     "ndcg_at_10": 0.6746,
+     "refused_with_evidence": 0.0106,
+     "refused_no_evidence": 0.9722
+    },
+    "vague_post": {
+     "jobs_with_evidence": 108,
+     "jobs_without_evidence": 66,
+     "recall_at_5": 0.9673,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7997,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 1.0
+    }
+   }
+  },
+  "hybrid_corrective": {
+   "steps": [
+    "hybrid",
+    "corrective"
+   ],
+   "overall": {
+    "jobs_with_evidence": 390,
+    "jobs_without_evidence": 210,
+    "recall_at_5": 0.5574,
+    "mrr": 0.9897,
+    "ndcg_at_10": 0.7039,
+    "refused_with_evidence": 0.0077,
+    "refused_no_evidence": 0.981,
+    "p50_ms": 1011.7,
+    "p95_ms": 3126.1
+   },
+   "by_persona": {
+    "data": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5438,
+     "mrr": 0.9692,
+     "ndcg_at_10": 0.6822,
+     "refused_with_evidence": 0.0231,
+     "refused_no_evidence": 0.9571
+    },
+    "ml": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5481,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.721,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.9857
+    },
+    "web": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5802,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7085,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 1.0
+    }
+   },
+   "by_kind": {
+    "fit": {
+     "jobs_with_evidence": 210,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.5887,
+     "mrr": 0.9857,
+     "ndcg_at_10": 0.7235,
+     "refused_with_evidence": 0.0095,
+     "refused_no_evidence": null
+    },
+    "injection": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.5889,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7187,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "lowball": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6111,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7314,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "multi": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.2884,
+     "mrr": 0.9833,
+     "ndcg_at_10": 0.5562,
+     "refused_with_evidence": 0.0167,
+     "refused_no_evidence": null
+    },
+    "no_evidence": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 90,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.9667
+    },
+    "other_domain": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 120,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.9917
+    },
+    "scam": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6739,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7619,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    }
+   },
+   "by_style": {
+    "named_skills": {
+     "jobs_with_evidence": 282,
+     "jobs_without_evidence": 144,
+     "recall_at_5": 0.3979,
+     "mrr": 0.9858,
+     "ndcg_at_10": 0.6747,
+     "refused_with_evidence": 0.0106,
+     "refused_no_evidence": 0.9722
+    },
+    "vague_post": {
+     "jobs_with_evidence": 108,
+     "jobs_without_evidence": 66,
+     "recall_at_5": 0.9738,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.78,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 1.0
+    }
+   }
+  },
+  "all_steps": {
+   "steps": [
+    "decompose",
+    "hybrid",
+    "rerank",
+    "outcome",
+    "corrective"
+   ],
+   "overall": {
+    "jobs_with_evidence": 390,
+    "jobs_without_evidence": 210,
+    "recall_at_5": 0.5859,
+    "mrr": 0.9885,
+    "ndcg_at_10": 0.7286,
+    "refused_with_evidence": 0.0051,
+    "refused_no_evidence": 0.9238,
+    "p50_ms": 15890.3,
+    "p95_ms": 24200.5
+   },
+   "by_persona": {
+    "data": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5961,
+     "mrr": 0.9885,
+     "ndcg_at_10": 0.7363,
+     "refused_with_evidence": 0.0077,
+     "refused_no_evidence": 0.8857
+    },
+    "ml": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5868,
+     "mrr": 0.9846,
+     "ndcg_at_10": 0.7456,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.9
+    },
+    "web": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.5746,
+     "mrr": 0.9923,
+     "ndcg_at_10": 0.7039,
+     "refused_with_evidence": 0.0077,
+     "refused_no_evidence": 0.9857
+    }
+   },
+   "by_kind": {
+    "fit": {
+     "jobs_with_evidence": 210,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.626,
+     "mrr": 0.9929,
+     "ndcg_at_10": 0.7571,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "injection": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6222,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7584,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "lowball": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6556,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7617,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "multi": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.2982,
+     "mrr": 0.9583,
+     "ndcg_at_10": 0.5634,
+     "refused_with_evidence": 0.0333,
+     "refused_no_evidence": null
+    },
+    "no_evidence": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 90,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.8333
+    },
+    "other_domain": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 120,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.9917
+    },
+    "scam": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.68,
+     "mrr": 0.9917,
+     "ndcg_at_10": 0.7627,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    }
+   },
+   "by_style": {
+    "named_skills": {
+     "jobs_with_evidence": 282,
+     "jobs_without_evidence": 144,
+     "recall_at_5": 0.429,
+     "mrr": 0.984,
+     "ndcg_at_10": 0.6976,
+     "refused_with_evidence": 0.0071,
+     "refused_no_evidence": 0.9028
+    },
+    "vague_post": {
+     "jobs_with_evidence": 108,
+     "jobs_without_evidence": 66,
+     "recall_at_5": 0.9954,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8095,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.9697
+    }
+   }
+  },
+  "best": {
+   "steps": [
+    "hybrid"
+   ],
+   "overall": {
+    "jobs_with_evidence": 390,
+    "jobs_without_evidence": 210,
+    "recall_at_5": 0.8895,
+    "mrr": 1.0,
+    "ndcg_at_10": 0.9173,
+    "refused_with_evidence": 0.0,
+    "refused_no_evidence": 0.0,
+    "p50_ms": 115.0,
+    "p95_ms": 157.2
+   },
+   "by_persona": {
+    "data": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.8702,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9214,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "ml": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.8872,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9211,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "web": {
+     "jobs_with_evidence": 130,
+     "jobs_without_evidence": 70,
+     "recall_at_5": 0.911,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9094,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   },
+   "by_kind": {
+    "fit": {
+     "jobs_with_evidence": 210,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.9342,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9181,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "injection": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.9111,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9005,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "lowball": {
+     "jobs_with_evidence": 30,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.9278,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9136,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "multi": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.6351,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9433,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    },
+    "no_evidence": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 90,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "other_domain": {
+     "jobs_with_evidence": 0,
+     "jobs_without_evidence": 120,
+     "recall_at_5": null,
+     "mrr": null,
+     "ndcg_at_10": null,
+     "refused_with_evidence": null,
+     "refused_no_evidence": 0.0
+    },
+    "scam": {
+     "jobs_with_evidence": 60,
+     "jobs_without_evidence": 0,
+     "recall_at_5": 0.9572,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.8985,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": null
+    }
+   },
+   "by_style": {
+    "named_skills": {
+     "jobs_with_evidence": 282,
+     "jobs_without_evidence": 144,
+     "recall_at_5": 0.8514,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.9646,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    },
+    "vague_post": {
+     "jobs_with_evidence": 108,
+     "jobs_without_evidence": 66,
+     "recall_at_5": 0.9889,
+     "mrr": 1.0,
+     "ndcg_at_10": 0.7937,
+     "refused_with_evidence": 0.0,
+     "refused_no_evidence": 0.0
+    }
+   }
+  }
+ }
+}

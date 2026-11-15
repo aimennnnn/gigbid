@@ -1,0 +1,129 @@
+{
+ "meta": {
+  "date": "2026-11-14T21:40:05+00:00",
+  "git_commit": "2ba4e4d",
+  "embeddings": "nomic-ai/nomic-embed-text-v1.5",
+  "reranker": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "llm": "ollama: gpt-oss:20b / gpt-oss:20b",
+  "machine": "Linux x86_64, 4 CPU cores, x86_64"
+ },
+ "note": "V8 on the dev set for each min_score; suggested = highest recall_at_5 + refused_no_evidence",
+ "suggested_min_score": 0.6,
+ "in_config": 0.6,
+ "table": [
+  {
+   "min_score": 0.05,
+   "recall_at_5": 0.6408,
+   "refused_no_evidence": 0.6524,
+   "refused_with_evidence": 0.0
+  },
+  {
+   "min_score": 0.1,
+   "recall_at_5": 0.6224,
+   "refused_no_evidence": 0.7667,
+   "refused_with_evidence": 0.0
+  },
+  {
+   "min_score": 0.15,
+   "recall_at_5": 0.6111,
+   "refused_no_evidence": 0.8429,
+   "refused_with_evidence": 0.0
+  },
+  {
+   "min_score": 0.2,
+   "recall_at_5": 0.6034,
+   "refused_no_evidence": 0.8905,
+   "refused_with_evidence": 0.0
+  },
+  {
+   "min_score": 0.25,
+   "recall_at_5": 0.5981,
+   "refused_no_evidence": 0.9143,
+   "refused_with_evidence": 0.0
+  },
+  {
+   "min_score": 0.3,
+   "recall_at_5": 0.5896,
+   "refused_no_evidence": 0.9143,
+   "refused_with_evidence": 0.0
+  },
+  {
+   "min_score": 0.35,
+   "recall_at_5": 0.5843,
+   "refused_no_evidence": 0.9238,
+   "refused_with_evidence": 0.0
+  },
+  {
+   "min_score": 0.4,
+   "recall_at_5": 0.5771,
+   "refused_no_evidence": 0.9429,
+   "refused_with_evidence": 0.0
+  },
+  {
+   "min_score": 0.45,
+   "recall_at_5": 0.5689,
+   "refused_no_evidence": 0.9571,
+   "refused_with_evidence": 0.0
+  },
+  {
+   "min_score": 0.5,
+   "recall_at_5": 0.5643,
+   "refused_no_evidence": 0.9667,
+   "refused_with_evidence": 0.0026
+  },
+  {
+   "min_score": 0.55,
+   "recall_at_5": 0.5609,
+   "refused_no_evidence": 0.9714,
+   "refused_with_evidence": 0.0051
+  },
+  {
+   "min_score": 0.6,
+   "recall_at_5": 0.5556,
+   "refused_no_evidence": 0.981,
+   "refused_with_evidence": 0.0077
+  },
+  {
+   "min_score": 0.65,
+   "recall_at_5": 0.5482,
+   "refused_no_evidence": 0.981,
+   "refused_with_evidence": 0.0154
+  },
+  {
+   "min_score": 0.7,
+   "recall_at_5": 0.5383,
+   "refused_no_evidence": 0.9857,
+   "refused_with_evidence": 0.0256
+  },
+  {
+   "min_score": 0.75,
+   "recall_at_5": 0.5242,
+   "refused_no_evidence": 0.9857,
+   "refused_with_evidence": 0.0436
+  },
+  {
+   "min_score": 0.8,
+   "recall_at_5": 0.5106,
+   "refused_no_evidence": 0.9905,
+   "refused_with_evidence": 0.0615
+  },
+  {
+   "min_score": 0.85,
+   "recall_at_5": 0.4818,
+   "refused_no_evidence": 0.9905,
+   "refused_with_evidence": 0.0923
+  },
+  {
+   "min_score": 0.9,
+   "recall_at_5": 0.4441,
+   "refused_no_evidence": 0.9952,
+   "refused_with_evidence": 0.1487
+  },
+  {
+   "min_score": 0.95,
+   "recall_at_5": 0.329,
+   "refused_no_evidence": 1.0,
+   "refused_with_evidence": 0.3231
+  }
+ ]
+}
