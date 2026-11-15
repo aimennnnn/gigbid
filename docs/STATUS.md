@@ -61,6 +61,12 @@ Updated 15 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
   `evals/results/tool_study.json` (rebuilt from the Kaggle log; its SHA-256 matches the one the notebook printed:
   dd742016...). 17 fine tools vs 3 coarse tools on 40 tasks: right tool 39/40 vs 39/40; right arguments 35/40 vs 17/40;
   input tokens per task 4,119 vs 1,007. The hypothesis (written first, in `evals/runners/tool_study.py`) held.
+- R&D question C (one agent / supervisor / graph): DONE on the real model (Kaggle, 2 x T4, `gpt-oss:20b`, commit 881910d,
+  30 dev jobs). `evals/results/arch_study.json` (rebuilt from the Kaggle log; SHA-256 d87396e0... matches the one printed).
+  Bid-or-skip F1: single ReAct agent 0.48, langgraph-supervisor 0.67, graph 0.91. Tokens per job 2,863 / 5,559 / 3,930.
+  p50 seconds 3.1 / 7.8 / 18.2. The hypothesis was right about accuracy and wrong about cost and speed (see the report).
+- CI: 4 runs so far. 28abd15 failed at lint (fixed). 30ee80d failed once in the browser tests with no code change,
+  c80d555 and 881910d passed. Cause not found; `retries: 2` on CI was added to `apps/web/playwright.config.ts`.
 - Found while recording the demo: the compliance check masked dates like `2026-11-15 10:00` as phone numbers. Fixed in
   `mcp_servers/common.py` with a unit test.
 
@@ -154,7 +160,7 @@ left out of the decision because the judge agrees poorly with the hand labels (k
 
 ## Report
 `docs/report/GigBid_RnD_Report.docx` (and a PDF made from it): 10 pages of main report plus Appendix A (Part B in
-detail). Section 7 is the X2 extension. Section 3 is the tool study, with its real result. Sections 5, 6 and 10 say plainly that the work was not done. Read it before submitting; it is written
+detail). Section 7 is the X2 extension. Sections 3 and 5 are the tool study and the architecture comparison, with their real results. Sections 6 and 10 say plainly that the work was not done. Read it before submitting; it is written
 in the first person and you have to be able to defend every line in the viva.
 
 Found while writing it: 11 of the 60 real proposals were submitted with a literal `<text>` tag around the letter.
@@ -165,7 +171,7 @@ Fixed in the Writer (`strip_markup` in `agent/guards.py`), with a unit test, not
    the Docker Compose file once, tracing (Langfuse), deploy to a public host with a reviewer login. Without a live URL
    the hidden test run cannot reach the system.
 2. Part A leftovers: live Upwork adapter (`adapters/upwork_live.py`), GitHub MCP, MCP Inspector screenshots.
-3. Part C leftovers: single ReAct agent and `langgraph-supervisor` baselines (R&D question C), trace links.
+3. Part C leftovers: trace links.
 4. Part D leftovers: portfolio upload, regenerate one paragraph.
 5. The change request (never received). `docs/ARCHITECTURE.md` and `docs/RUNBOOK.md` were written on 15 Nov.
 

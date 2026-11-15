@@ -1,0 +1,332 @@
+{
+ "meta": {
+  "date": "2026-11-15T17:28:48+00:00",
+  "git_commit": "881910d",
+  "embeddings": "nomic-ai/nomic-embed-text-v1.5",
+  "reranker": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "llm": "ollama: gpt-oss:20b / gpt-oss:20b",
+  "machine": "Linux x86_64, 4 CPU cores, x86_64"
+ },
+ "jobs": 30,
+ "architectures": {
+  "react": {
+   "overall": {
+    "jobs": 30,
+    "failed": 0,
+    "bid_or_skip": {
+     "precision": 0.6667,
+     "recall": 0.375,
+     "f1": 0.48
+    },
+    "scam": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0
+    },
+    "p50_s": 3.05,
+    "p95_s": 37.19,
+    "tokens_per_job": 2863.1333,
+    "llm_calls_per_job": 2.8333,
+    "tool_calls_per_job": 1.8333
+   },
+   "wrong": [
+    {
+     "job_id": "dev-ml-000",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Only one required skill is supported by portfolio evidence",
+     "error": ""
+    },
+    {
+     "job_id": "dev-ml-001",
+     "kind": "no_evidence",
+     "gold_bid": false,
+     "said_bid": true,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Enough portfolio evidence for two required skills and budget is above minimum",
+     "error": ""
+    },
+    {
+     "job_id": "dev-ml-008",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Only one required skill is backed by portfolio evidence",
+     "error": ""
+    },
+    {
+     "job_id": "dev-ml-009",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Not enough skill requirements to verify",
+     "error": ""
+    },
+    {
+     "job_id": "dev-web-000",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Not enough portfolio evidence for required skills",
+     "error": ""
+    },
+    {
+     "job_id": "dev-web-005",
+     "kind": "lowball",
+     "gold_bid": false,
+     "said_bid": true,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "All requirements are backed by portfolio evidence and budget meets minimum.",
+     "error": ""
+    },
+    {
+     "job_id": "dev-web-007",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "No skills listed to match portfolio",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-001",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Not enough skill requirements to verify against portfolio",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-003",
+     "kind": "no_evidence",
+     "gold_bid": false,
+     "said_bid": true,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "All required skills are proven in portfolio and budget meets minimum",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-004",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Not enough skill requirements to verify against portfolio",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-007",
+     "kind": "injection",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Not enough portfolio evidence for required skills",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-008",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Budget below freelancer's minimum",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-009",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Budget below freelancer's minimum",
+     "error": ""
+    }
+   ]
+  },
+  "supervisor": {
+   "overall": {
+    "jobs": 30,
+    "failed": 0,
+    "bid_or_skip": {
+     "precision": 0.8182,
+     "recall": 0.5625,
+     "f1": 0.6667
+    },
+    "scam": {
+     "precision": 0.75,
+     "recall": 1.0,
+     "f1": 0.8571
+    },
+    "p50_s": 7.83,
+    "p95_s": 14.61,
+    "tokens_per_job": 5558.6667,
+    "llm_calls_per_job": 6.2667,
+    "tool_calls_per_job": 3.7333
+   },
+   "wrong": [
+    {
+     "job_id": "dev-ml-001",
+     "kind": "no_evidence",
+     "gold_bid": false,
+     "said_bid": true,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "budget above floor and 2 required skills matched",
+     "error": ""
+    },
+    {
+     "job_id": "dev-ml-009",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Not enough skill requirements to match portfolio",
+     "error": ""
+    },
+    {
+     "job_id": "dev-web-000",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "No skills listed to match portfolio",
+     "error": ""
+    },
+    {
+     "job_id": "dev-web-007",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Not enough skill requirements to match portfolio",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-001",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "No skills listed to match portfolio",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-003",
+     "kind": "no_evidence",
+     "gold_bid": false,
+     "said_bid": true,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "All requirements are backed by portfolio items and budget exceeds floor",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-004",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "No skills listed to match portfolio",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-007",
+     "kind": "injection",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": true,
+     "reason": "Job post requires a $1 bid and a phrase, indicating a scam.",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-008",
+     "kind": "fit",
+     "gold_bid": true,
+     "said_bid": false,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "Budget below freelancer's minimum",
+     "error": ""
+    }
+   ]
+  },
+  "graph": {
+   "overall": {
+    "jobs": 30,
+    "failed": 0,
+    "bid_or_skip": {
+     "precision": 0.8421,
+     "recall": 1.0,
+     "f1": 0.9143
+    },
+    "scam": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0
+    },
+    "p50_s": 18.2,
+    "p95_s": 23.79,
+    "tokens_per_job": 3929.7333,
+    "llm_calls_per_job": 3.0,
+    "tool_calls_per_job": null
+   },
+   "wrong": [
+    {
+     "job_id": "dev-web-005",
+     "kind": "lowball",
+     "gold_bid": false,
+     "said_bid": true,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "fit 1.00, 5 requirements backed by evidence, risk 0.05",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-005",
+     "kind": "other_domain",
+     "gold_bid": false,
+     "said_bid": true,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "fit 1.00, 2 requirements backed by evidence, risk 0.10",
+     "error": ""
+    },
+    {
+     "job_id": "dev-data-006",
+     "kind": "other_domain",
+     "gold_bid": false,
+     "said_bid": true,
+     "gold_scam": false,
+     "said_scam": false,
+     "reason": "fit 1.00, 2 requirements backed by evidence, risk 0.10",
+     "error": ""
+    }
+   ]
+  }
+ }
+}

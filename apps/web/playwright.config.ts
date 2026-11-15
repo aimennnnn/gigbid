@@ -5,6 +5,7 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests/e2e",
   timeout: 60_000,
+  retries: process.env.CI ? 2 : 0, // one CI run of three failed here with no code change; a retry tells flaky from broken
   workers: 1, // the degraded-mode test switches the shared simulator off for a moment
   reporter: [["list"], ["html", { open: "never" }]],
   use: { baseURL: "http://localhost:3000", channel: "chrome", trace: "retain-on-failure" },

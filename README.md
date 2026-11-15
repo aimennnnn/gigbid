@@ -96,3 +96,23 @@ c80d555). Numbers from `evals/results/tool_study.json`; the hypothesis is at the
 
 Dense-only against hybrid retrieval on the same 30 jobs: 25 against 23 replies, McNemar exact p = 0.73, not significant.
 See `docs/EXTENSION.md` and `evals/results/ab_test.json`.
+
+## Multi-agent comparison (R&D question C)
+
+The same 30 dev jobs (16 worth a bid), the same model and the same MCP tools, through three architectures. Each
+must say bid or skip, and whether the job is a scam. Real model (`gpt-oss:20b` on Kaggle, 2 x T4, commit 881910d).
+Numbers from `evals/results/arch_study.json`; the hypothesis is at the top of `evals/runners/arch_study.py`.
+
+| | One ReAct agent | Supervisor + 2 agents | Hand-built graph |
+|---|---|---|---|
+| Bid-or-skip F1 | 0.48 | 0.67 | 0.91 |
+| Precision / recall | 0.67 / 0.38 | 0.82 / 0.56 | 0.84 / 1.00 |
+| Scam precision / recall | 1.00 / 1.00 | 0.75 / 1.00 | 1.00 / 1.00 |
+| Tokens per job | 2,863 | 5,559 | 3,930 |
+| Model calls per job | 2.8 | 6.3 | 3.0 |
+| Seconds per job, p50 / p95 | 3.1 / 37.2 | 7.8 / 14.6 | 18.2 / 23.8 |
+
+The graph is the most accurate and the slowest. The single agent is the cheapest. Part of the hypothesis was wrong:
+I expected the graph to be the cheapest and the supervisor to be the slowest.
+
+More: `docs/ARCHITECTURE.md`, `docs/RUNBOOK.md`.
