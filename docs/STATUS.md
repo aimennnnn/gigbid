@@ -5,7 +5,7 @@ Updated 15 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
 
 ## Where things are
 - Repo: `C:\Users\aimen\Downloads\Agentic A2\gigbid`, pushed to `github.com/aimennnnn/gigbid` (branch `main`).
-- `uv run pytest -q` passes (70 tests). `uv run python -m agent.demo` runs one job on the real model to the approval step.
+- `uv run pytest -q` passes (84 tests). `cd apps/web && npm run build && npx playwright test` passes (5 UI tests, 7 runs). `uv run python -m agent.demo` runs one job on the real model to the approval step.
 - Keys live in `.env` (git-ignored): `GROQ_API_KEY`, `OPENROUTER_API_KEY`. Never commit or print them.
 
 ## Done
@@ -29,6 +29,23 @@ Updated 15 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
   - Evals in `evals/runners/`: `rag_eval`, `ablation`, `decision_eval`, `gigsim_outcomes`, `judge_calibration`,
     `results_table`, `run_all` (`make eval`). Kaggle notebook: `evals/kaggle_eval.ipynb`.
   - `GIGBID_RAG_MODELS=fake` (hash embeddings, word-overlap reranker) is for tests and CI only, like `GIGBID_LLM=fake`.
+
+## Parts D and E: built on 15 Nov (stand-in models only)
+- `apps/api` (FastAPI, single process): sign-up/sign-in, inbox, job detail, proposal studio, approvals for both graphs,
+  pipeline from marketplace events, messages with suggested replies, run viewer (SSE stream + MCP audit trace by trace
+  id), analytics, memory viewer. A request never runs a graph: it starts a background task and returns the thread id.
+- `apps/web` (Next.js, TypeScript): login, onboarding, inbox, jobs/[id], studio/[id], pipeline, messages, runs,
+  runs/[id], analytics, settings. The client types are generated from the API's OpenAPI schema (`make client`).
+- Tests: `tests/integration/test_api.py` (8) and `apps/web/tests/e2e/gigbid.spec.ts` (5 specs: onboarding, approve,
+  reject with a reason, edit, degraded banner; onboarding and degraded also at phone size).
+- CI: `.github/workflows/ci.yml` runs ruff, pytest, the 30-job smoke eval, `evals/runners/gate.py` on the smoke run and
+  on the committed real results, then the web build and Playwright. NOT yet seen green on GitHub: check the Actions tab
+  after pushing.
+- Run it: see "Run the app" in the README. On the 8 GB laptop use the stand-in models, or a real LLM with
+  `GIGBID_RAG_VARIANT=keyword` (no embedding model).
+- Honest limits: only ever run with stand-in models; in-memory checkpointer and store (a pending approval survives a
+  refresh, not an API restart); no worker/Redis, no Postgres, no Docker Compose, no deployment, no Langfuse; no live
+  Upwork/OAuth, no portfolio upload, no "regenerate one paragraph"; saved searches have no schedule.
 
 ## Part B: first real retrieval run (14 Nov, Kaggle CPU, commit 2f0cab8, 600 dev jobs)
 Read off the notebook output; the result files of that run were not kept. The committed numbers come from the final run below.
@@ -119,16 +136,13 @@ left out of the decision because the judge agrees poorly with the hand labels (k
   server (Part A leftover), V5/V6/V7/V9 (optional), the CI job that fails on eval thresholds (Part E).
 
 ## Not done, in priority order
-1. Part B: run the evaluations (steps above).
-2. Part D: FastAPI (`apps/api`: auth, jobs, proposals, approvals, messages, runs, analytics, SSE streaming) and
-   Next.js/React TypeScript web app (inbox, job detail, proposal studio with approval, pipeline, messages,
-   run viewer, analytics, settings with memory viewer), generated API client, 5 Playwright tests.
-3. Part E: Postgres checkpointer and store, Redis worker with scheduled scouting, Docker Compose, CI with eval
-   thresholds, tracing (Langfuse), deploy to a public host with a reviewer login.
-4. Part A leftovers: live Upwork adapter (`adapters/upwork_live.py`), GitHub MCP, MCP Inspector screenshots,
+1. Part E: Postgres checkpointer and store, Redis worker with scheduled scouting, Docker Compose, tracing (Langfuse),
+   deploy to a public host with a reviewer login. Without a live URL the hidden test run cannot reach the system.
+2. Part A leftovers: live Upwork adapter (`adapters/upwork_live.py`), GitHub MCP, MCP Inspector screenshots,
    tool-granularity study (R&D question A).
-5. Part C leftovers: single ReAct agent and `langgraph-supervisor` baselines (R&D question C), trace links.
-6. README, R&D report PDF, ARCHITECTURE.md, RUNBOOK.md, EXTENSION.md, demo video, write-up.
+3. Part C leftovers: single ReAct agent and `langgraph-supervisor` baselines (R&D question C), trace links.
+4. Part D leftovers: portfolio upload, regenerate one paragraph, the screen recording.
+5. ARCHITECTURE.md, RUNBOOK.md, EXTENSION.md (signature extension), demo video, the change request (never received).
 
 ## Known issues
 - Groq free tier allows 8,000 tokens per minute per model; one proposal is about 10,000 tokens. Real-model evals

@@ -6,8 +6,12 @@
 | Claude | `agent/llm.py`, `agent/fake_llm.py`, `agent/guards.py`, `agent/mcp_client.py`, `agent/nodes/`, `agent/graphs/bid_graph.py`, `agent/memory/`, `agent/prompts/`, `rag/verify.py`, `tests/integration/` | Drafted with Claude, reviewed and run by me. |
 | Claude | repo skeleton, `agent/config.yaml`, `agent/settings.py`, `agent/handoffs.py`, `agent/state.py`, `agent/marketplace_port.py`, `tests/unit/` | Drafted with Claude, reviewed and run by me. |
 | Claude | `rag/ingest/chunker.py`, `rag/index/embed.py`, `rag/index/vector.py`, `rag/variants/`, `rag/retriever.py`, `evals/runners/`, `evals/kaggle_eval.ipynb`, `agent/prompts/judge.md`, `tests/unit/test_rag.py`, `tests/unit/test_evals.py`, RAG section of `agent/config.yaml` | Drafted with Claude and tested with stand-in models only. Every evaluation number comes from runs I do myself. |
+| Claude | `apps/api/`, `apps/web/`, `tests/integration/test_api.py`, `apps/web/tests/e2e/`, `evals/runners/gate.py`, `.github/workflows/ci.yml`, the injection guard in `agent/guards.py` and `agent/nodes/writer.py` | Drafted with Claude on 15 Nov. Tested with stand-in models: the API tests, the five Playwright tests and the eval gates pass. The web app has not been run against a real model. |
 
 ## Things it got wrong that I caught
 
 - It first installed the MCP Python SDK 2.x. `langchain-mcp-adapters` 0.3.2 needs `mcp<2`, and 2.x renamed `FastMCP` to `MCPServer`, so the two could not work together. Pinned `mcp>=1.24,<2`.
 - Node functions typed `config: dict` were not given the run config by LangGraph, so the thread id was missing and the first graph test failed. Fixed by typing it as `RunnableConfig`.
+- The first scoring sheet for the judge calibration cut each evidence text at 300 characters, which hid the result numbers from me while the judge saw the full text. I noticed while scoring; it was fixed before my scores were entered.
+- During the first Kaggle run it told me the model was answering when every call was failing (the progress counter moves on failures too). The model download had failed; that run's decision and proposal numbers were thrown away.
+- The Writer copied a planted code word from a job post into a proposal. The evaluation caught it; the fix is in `agent/guards.py` and was re-measured (`evals/results/injection_check.json`).

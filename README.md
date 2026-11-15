@@ -7,12 +7,36 @@ leaves the system.
 
 AI-4016 R&D assignment, FAST-NUCES. Work in progress; results, live link and traces are added as they are measured.
 
+## Run the app
+
+Two terminals. The first is the API (FastAPI: GigSim, the MCP servers and both agent graphs in one process), the second is the web app.
+
+```
+uv run uvicorn apps.api.main:app --port 8000        # real model from .env
+cd apps/web && npm install && npm run dev            # http://localhost:3000
+```
+
+To try it with no API key and nothing heavy on the laptop, start the API with the stand-in models instead
+(PowerShell: `$env:GIGBID_LLM="fake"; $env:GIGBID_RAG_MODELS="fake"; uv run uvicorn apps.api.main:app --port 8000`).
+Sign in as `reviewer` / `reviewer` (ML persona preloaded), or create an account.
+
+![Job inbox](docs/images/ui/01-inbox.jpg)
+![Proposal studio: every claim shows its evidence on hover](docs/images/ui/03-studio.jpg)
+
+What is not built: live Upwork (OAuth), portfolio upload, "regenerate one paragraph", the Redis worker, Postgres
+(state is in memory, so a pending approval survives a page refresh but not an API restart), tracing in Langfuse
+(the run viewer shows the MCP audit trail by trace id instead), Docker Compose and a public deployment.
+
 ## Run the tests
 
 ```
 uv sync
-uv run pytest -q
+uv run pytest -q                               # 84 tests: units, MCP contracts, both graphs, the API
+cd apps/web && npm run build && npx playwright test   # 5 UI tests in Chrome, laptop and phone sizes
 ```
+
+CI (`.github/workflows/ci.yml`) runs both on every pull request, plus a 30-job smoke eval and the eval gates
+(`evals/runners/gate.py`, thresholds under `eval_gates` in `agent/config.yaml`).
 
 ## Run the evaluations
 
