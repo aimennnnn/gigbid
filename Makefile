@@ -32,6 +32,25 @@ gate:
 tune:
 	uv run python -m evals.runners.rag_eval --sweep
 
+# the web app: API on :8000 (real model from .env), web on :3000. Run each in its own terminal.
+api:
+	uv run uvicorn apps.api.main:app --port 8000
+
+# the same API with stand-in models: no key, no network, nothing heavy on the laptop
+api-demo:
+	GIGBID_LLM=fake GIGBID_RAG_MODELS=fake uv run uvicorn apps.api.main:app --port 8000
+
+web:
+	cd apps/web && npm install && npm run dev
+
+# rebuild the typed client after changing the API
+client:
+	uv run python -m apps.api.openapi
+	cd apps/web && npm run gen:api
+
+e2e:
+	cd apps/web && npm run build && npx playwright test
+
 seed:
 	uv run python -m data.synth.generate
 
@@ -44,4 +63,4 @@ gigsim:
 demo:
 	uv run python -m agent.demo
 
-.PHONY: dev test lint eval eval-rag eval-agent eval-smoke gate tune seed demo snapshot gigsim
+.PHONY: dev test lint eval eval-rag eval-agent eval-smoke gate tune api api-demo web client e2e seed demo snapshot gigsim

@@ -29,3 +29,34 @@ jobs:
         run: uv run python -m evals.runners.gate --smoke
       - name: Gate on the committed real-model results
         run: uv run python -m evals.runners.gate
+
+  web:
+    name: web build, type check, Playwright
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --frozen
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Install, type check and build the web app
+        working-directory: apps/web
+        run: |
+          npm ci
+          npm run typecheck
+          npm run build
+      - name: The committed TypeScript client matches the API
+        run: |
+          GIGBID_LLM=fake uv run python -m apps.api.openapi
+          cd apps/web && npm run gen:api && git diff --exit-code -- openapi.json src/lib/api/schema.d.ts
+      - name: End-to-end UI tests (Chrome; the config starts the API with stand-in models)
+        working-directory: apps/web
+        run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report
