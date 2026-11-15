@@ -167,7 +167,7 @@ Fixed in the Writer (`strip_markup` in `agent/guards.py`), with a unit test, not
 2. Part A leftovers: live Upwork adapter (`adapters/upwork_live.py`), GitHub MCP, MCP Inspector screenshots.
 3. Part C leftovers: single ReAct agent and `langgraph-supervisor` baselines (R&D question C), trace links.
 4. Part D leftovers: portfolio upload, regenerate one paragraph.
-5. ARCHITECTURE.md, RUNBOOK.md, the change request (never received).
+5. The change request (never received). `docs/ARCHITECTURE.md` and `docs/RUNBOOK.md` were written on 15 Nov.
 
 ## Known issues
 - Groq free tier allows 8,000 tokens per minute per model; one proposal is about 10,000 tokens. Real-model evals
