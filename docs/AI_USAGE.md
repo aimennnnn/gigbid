@@ -12,12 +12,15 @@
 | Claude | `evals/runners/arch_study.py`, `agent/prompts/arch_*.md`, `evals/kaggle_arch_study.ipynb`, `tests/integration/test_arch_study.py`, `docs/ARCHITECTURE.md`, `docs/RUNBOOK.md` | Drafted with Claude on 15 Nov. The architecture study is tested with stand-in models; any real number comes from a Kaggle run on my account. |
 | Claude | `infra/space/Dockerfile`, `infra/space/start.sh`, the `/api` forwarding in `apps/web/next.config.mjs`, the Render service setup | Drafted and set up with Claude on 15 Nov, in my Render account, on the free plan. The live site runs stand-in models. |
 | Claude | `docs/report/GigBid_RnD_Report.docx` and `.pdf` | Drafted with Claude from the result files in `evals/results/`. Sections for work that was not done say so. I read it and am responsible for what it claims. |
+| None (done by me) | the 30 human scores in `evals/datasets/judge_labels.csv` | I read each of the 30 proposals and scored it 1 to 5 by hand. These are the human side of the judge calibration, so they were not produced by a model. |
 
-## Things it got wrong that I caught
+## Things it got wrong
 
+The first one I caught myself. The others were caught by a test, by the evaluation, or while the work was being done; each line says how.
+
+- **Caught by me.** The first scoring sheet for the judge calibration cut each evidence text at 300 characters, which hid the result numbers from me while the judge saw the full text. I noticed while scoring; it was fixed before my scores were entered.
 - It first installed the MCP Python SDK 2.x. `langchain-mcp-adapters` 0.3.2 needs `mcp<2`, and 2.x renamed `FastMCP` to `MCPServer`, so the two could not work together. Pinned `mcp>=1.24,<2`.
 - Node functions typed `config: dict` were not given the run config by LangGraph, so the thread id was missing and the first graph test failed. Fixed by typing it as `RunnableConfig`.
-- The first scoring sheet for the judge calibration cut each evidence text at 300 characters, which hid the result numbers from me while the judge saw the full text. I noticed while scoring; it was fixed before my scores were entered.
 - During the first Kaggle run it told me the model was answering when every call was failing (the progress counter moves on failures too). The model download had failed; that run's decision and proposal numbers were thrown away.
 - The Writer copied a planted code word from a job post into a proposal. The evaluation caught it; the fix is in `agent/guards.py` and was re-measured (`evals/results/injection_check.json`).
 - The compliance check treated `2026-11-15 10:00` in a client reply as a phone number and masked it. Seen while recording the demo; fixed in `mcp_servers/common.py` with a test.
