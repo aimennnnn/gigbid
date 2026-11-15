@@ -71,6 +71,7 @@ async def analyse(job_id: str, user: str = Depends(current_user), rt: Runtime = 
 def skip(job_id: str, reason: str = Body(default="skipped by you", embed=True), user: str = Depends(current_user),
          rt: Runtime = Depends(runtime)) -> None:
     rt.skipped.setdefault(user, {})[job_id] = reason or "skipped by you"
+    rt.save_index()
 
 
 @router.get("/jobs/{job_id}", response_model=JobDetail)

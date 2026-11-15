@@ -25,14 +25,16 @@ DEFAULT_PROFILE = {"persona": None, "min_budget": 400, "weekly_connects_budget":
 
 class Users:
     def __init__(self, path: Path):
-        self.path, self.sessions = path, {}
+        self.path = path
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.users: dict[str, dict] = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+        saved = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+        self.sessions: dict[str, str] = saved.pop("_sessions", {})         # sha256(token) -> user, so a restart keeps people signed in
+        self.users: dict[str, dict] = saved
         if "reviewer" not in self.users:
             self.add("reviewer", os.getenv("REVIEWER_PASSWORD", "reviewer"), persona="ml")
 
     def _save(self) -> None:
-        self.path.write_text(json.dumps(self.users, indent=1), encoding="utf-8")
+        self.path.write_text(json.dumps(self.users | {"_sessions": self.sessions}, indent=1), encoding="utf-8")
 
     @staticmethod
     def _hash(password: str, salt: str) -> str:
@@ -54,7 +56,8 @@ class Users:
         if not u or not secrets.compare_digest(u["hash"], self._hash(password, u["salt"])):
             raise HTTPException(401, "wrong user name or password")
         token = secrets.token_urlsafe(24)
-        self.sessions[token] = name
+        self.sessions[hashlib.sha256(token.encode()).hexdigest()] = name      # only the hash is stored
+        self._save()
         return token
 
     def profile(self, name: str) -> dict:
@@ -84,7 +87,7 @@ def reset_users() -> None:
 
 def current_user(authorization: str = Header(default="")) -> str:
     """FastAPI dependency: Bearer session token -> user name. Every query below is scoped by this name."""
-    user = users().sessions.get(authorization.removeprefix("Bearer ").strip())
+    user = users().sessions.get(hashlib.sha256(authorization.removeprefix("Bearer ").strip().encode()).hexdigest())
     if not user:
         raise HTTPException(401, "sign in first")
     return user

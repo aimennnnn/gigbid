@@ -5,9 +5,10 @@ returns its thread id; the run's node-by-node progress is kept here and streamed
 (apps/api/streaming.py). A paused run (waiting for approval) lives in the LangGraph checkpointer,
 so a page refresh, or another browser, finds the same pending approval.
 
-Limits of this single-process mode: the checkpointer and the store are in memory (the Postgres
-versions and the Redis worker of Part E are not built), so pending approvals do not survive an
-API restart here.
+State is kept on disk in SQLite files under data/processed/app/ (set GIGBID_PERSIST=0 for memory only):
+graph checkpoints, long-term memory, GigSim's world and the list of runs. So an API restart loses
+nothing: a pending approval is still pending, and a run that was cut off mid-way is picked up from
+its last checkpoint. (Postgres and a Redis worker, the Part E versions of this, are not built.)
 """
 from __future__ import annotations
 
@@ -18,10 +19,13 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import aiosqlite
 import httpx
 from fastapi.encoders import jsonable_encoder
 from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 from langgraph.store.memory import InMemoryStore
+from langgraph.store.sqlite.aio import AsyncSqliteStore
 from langgraph.types import Command
 
 import gigsim.app as gigsim
@@ -57,23 +61,67 @@ class Run:
                 "started": self.started, "running": self.running, "steps": len(self.events)}
 
 
+def persistent() -> bool:
+    return os.getenv("GIGBID_PERSIST", "1") == "1"
+
+
 class Runtime:
-    def __init__(self) -> None:
+    @classmethod
+    async def create(cls) -> Runtime:
+        """Open the stores (on disk unless GIGBID_PERSIST=0), build the system, and pick up where the last process stopped."""
+        STATE_DIR.mkdir(parents=True, exist_ok=True)
+        if not persistent():
+            return cls(InMemorySaver(), InMemoryStore())
+        os.environ.setdefault("GIGSIM_DB", str(STATE_DIR / "gigsim.db"))    # read by GigSim when its world is first built
+        saver = AsyncSqliteSaver(await aiosqlite.connect(STATE_DIR / "graphs.db"))
+        store = AsyncSqliteStore(await aiosqlite.connect(STATE_DIR / "memory.db", isolation_level=None))   # the store opens its own transactions
+        await saver.setup()
+        await store.setup()
+        rt = cls(saver, store)
+        rt.connections = [saver.conn, store.conn]
+        await rt.recover()
+        return rt
+
+    def __init__(self, saver, store) -> None:
         os.environ.setdefault("GIGSIM_RATE_LIMIT", "600")           # the UI polls; GigSim's default limit is for one agent
         STATE_DIR.mkdir(parents=True, exist_ok=True)
+        self.index = STATE_DIR / "runs.json"
+        self.connections: list = []                                 # SQLite files to close on shutdown
         self.audit = {name: STATE_DIR / "audit" / f"{name}.jsonl" for name in ("marketplace", "portfolio", "workspace")}
         self.ports: dict[str, GigSimAdapter] = {}
         self.deps = Deps(ToolBox({
             "marketplace": market(self.port_for, audit_path=str(self.audit["marketplace"])),
             "portfolio": portfolio(audit_path=str(self.audit["portfolio"])),
             "workspace": workspace(store_path=str(STATE_DIR / "workspace.json"), audit_path=str(self.audit["workspace"]))}),
-            InMemoryStore())
-        saver = InMemorySaver()
+            store)
         self.graphs = {"bid": build_bid_graph(self.deps, saver), "talk": build_conversation_graph(self.deps, saver)}
         self.runs: dict[str, Run] = {}
         self.skipped: dict[str, dict[str, str]] = {}                # user -> job_id -> reason (skipped by hand in the inbox)
         self.seen_events: dict[str, set[int]] = {}                  # user -> marketplace event ids already counted
         self.tasks: set[asyncio.Task] = set()
+
+    # ---- surviving a restart -----------------------------------------------
+    def save_index(self) -> None:
+        """Which runs exist, and their steps so far. The graph state itself is in the checkpointer."""
+        if persistent():
+            runs = [{"thread_id": r.thread_id, "user": r.user, "kind": r.kind, "job_id": r.job_id, "persona": r.persona,
+                     "started": r.started, "marketplace_thread": r.marketplace_thread, "events": r.events} for r in self.runs.values()]
+            self.index.write_text(json.dumps({"runs": runs, "skipped": self.skipped,
+                                              "seen_events": {u: sorted(ids) for u, ids in self.seen_events.items()}}), encoding="utf-8")
+
+    async def recover(self) -> None:
+        """After a restart: reload the runs, and continue any run that was cut off between two nodes."""
+        if not self.index.exists():
+            return
+        saved = json.loads(self.index.read_text(encoding="utf-8"))
+        self.skipped = saved.get("skipped", {})
+        self.seen_events = {u: set(ids) for u, ids in saved.get("seen_events", {}).items()}
+        for r in saved.get("runs", []):
+            run = self.runs[r["thread_id"]] = Run(r["thread_id"], r["user"], r["kind"], r["job_id"], r["persona"], started=r["started"],
+                                                  events=r["events"], marketplace_thread=r.get("marketplace_thread", ""))
+            snap = await self.graphs[run.kind].aget_state(self.cfg(run))
+            if snap.next and snap.next != ("approval",):           # stopped mid-way: carry on from the last checkpoint
+                self._go(run, None)
 
     # ---- marketplace -------------------------------------------------------
     def port_for(self, user: str) -> GigSimAdapter:
@@ -139,6 +187,7 @@ class Runtime:
         async with run.changed:
             run.events.append({"seq": len(run.events) + 1, "at": round(time.time(), 2), **event})
             run.changed.notify_all()
+        self.save_index()
 
     async def state(self, run: Run) -> dict:
         """The run's graph state as plain JSON, plus the pending approval payload if it is paused."""
@@ -172,21 +221,27 @@ class Runtime:
                 if run and e["type"] in ("replied", "hired"):
                     values = (await self.state(run))["values"]
                     await record_outcome(self.deps.store, user, values.get("job", {}).get("category", "other"), e["type"])
+                    self.save_index()
         return events
 
 
 _runtime: Runtime | None = None
 
 
-def runtime() -> Runtime:
+async def runtime() -> Runtime:
+    """FastAPI dependency: the one system of this process, built on first use."""
     global _runtime
     if _runtime is None:
-        _runtime = Runtime()
+        _runtime = await Runtime.create()
     return _runtime
 
 
-def reset_runtime() -> None:
-    """Tests only: a fresh world and a fresh system."""
+async def close_runtime() -> None:
+    """Shut the system down: close the SQLite files and forget GigSim's world. What is on disk stays, so the
+    next runtime() call is the same as a process restart (the restart test uses exactly this)."""
     global _runtime
+    if _runtime is not None:
+        for conn in _runtime.connections:
+            await conn.close()
     gigsim.reset_world()
     _runtime = None

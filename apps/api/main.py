@@ -9,6 +9,7 @@ Interactive docs at /docs; the typed client in apps/web/src/lib/api is generated
 from __future__ import annotations
 
 import os
+from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
@@ -20,11 +21,20 @@ load_dotenv()
 from agent.marketplace_port import MarketplaceRejected, MarketplaceUnavailable  # noqa: E402
 from agent.settings import get_settings  # noqa: E402
 from apps.api.routers import analytics, approvals, auth, jobs, messages, proposals, runs  # noqa: E402
+from apps.api.runtime import close_runtime  # noqa: E402
 
 if get_settings()["autonomy"]["auto_send"]:
     raise SystemExit("autonomy.auto_send must stay false: GigBid never sends without a human approval")
 
-app = FastAPI(title="GigBid API", version="0.1.0",
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+    await close_runtime()            # close the SQLite files cleanly when the server stops
+
+
+app = FastAPI(title="GigBid API", version="0.1.0", lifespan=lifespan,
               description="Freelancer copilot: job inbox, grounded proposals, approvals that resume the agent graph.")
 app.add_middleware(CORSMiddleware, allow_origins=os.getenv("GIGBID_WEB_ORIGIN", "http://localhost:3000,http://127.0.0.1:3000").split(","),
                    allow_methods=["*"], allow_headers=["*"])

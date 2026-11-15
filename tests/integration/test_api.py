@@ -10,20 +10,22 @@ pytestmark = pytest.mark.asyncio
 
 
 @pytest_asyncio.fixture
-async def api(monkeypatch, tmp_path):
+async def api(monkeypatch, tmp_path, request):
     monkeypatch.setenv("GIGBID_LLM", "fake")
     monkeypatch.setenv("GIGBID_RAG_MODELS", "fake")
     monkeypatch.setenv("GIGSIM_ERROR_RATE", "0")
     monkeypatch.setenv("GIGBID_STATE_DIR", str(tmp_path))
+    monkeypatch.setenv("GIGBID_PERSIST", "1" if request.node.get_closest_marker("persist") else "0")
+    monkeypatch.setenv("GIGSIM_DB", str(tmp_path / "gigsim.db") if request.node.get_closest_marker("persist") else ":memory:")
     import apps.api.runtime as runtime
     from apps.api.auth.users import reset_users
     monkeypatch.setattr(runtime, "STATE_DIR", tmp_path)
-    runtime.reset_runtime()
+    await runtime.close_runtime()
     reset_users()
     from apps.api.main import app
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://api") as client:
         yield client
-    runtime.reset_runtime()
+    await runtime.close_runtime()
     reset_users()
 
 
@@ -153,3 +155,23 @@ async def test_users_cannot_see_each_others_runs_and_must_onboard_first(api):
     assert (await api.get(f"/api/runs/{thread}", headers=other)).status_code == 404
     assert (await api.get(f"/api/proposals/{thread}", headers=other)).status_code == 404
     assert (await api.get("/api/runs", headers=other)).json() == []
+
+
+@pytest.mark.persist
+async def test_a_pending_approval_survives_an_api_restart(api):
+    """State is on disk: drop the whole system, build it again, and the draft is still waiting. Approving it submits once."""
+    import apps.api.runtime as runtime
+    from apps.api.auth.users import reset_users
+    h = await sign_in(api)
+    thread = await a_draft(api, h)
+    draft = (await api.get(f"/api/proposals/{thread}", headers=h)).json()["draft"]
+    await runtime.close_runtime()    # what a process restart does: memory gone, files stay
+    reset_users()
+    assert (await api.get("/api/jobs", headers=h)).status_code == 200, "still signed in after the restart"
+    studio = (await api.get(f"/api/proposals/{thread}", headers=h)).json()
+    assert studio["pending"] and studio["draft"] == draft
+    steps = (await api.get(f"/api/runs/{thread}", headers=h)).json()["events"]
+    assert steps and steps[0]["node"] == "load_job", "the run's steps are kept too"
+    assert (await api.post(f"/api/approvals/{thread}", json={"action": "approve"}, headers=h)).status_code == 200
+    assert (await settled(api, h, thread))["status"] == "submitted"
+    assert len([c for c in (await api.get("/api/pipeline", headers=h)).json()["cards"] if c["thread_id"] == thread]) == 1

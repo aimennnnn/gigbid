@@ -19,7 +19,7 @@ export default defineConfig({
       url: "http://localhost:8000/docs",
       reuseExistingServer: true,
       timeout: 120_000,
-      env: { GIGBID_LLM: "fake", GIGBID_RAG_MODELS: "fake", GIGSIM_ERROR_RATE: "0", GIGBID_STATE_DIR: "data/processed/app-e2e" },
+      env: { GIGBID_LLM: "fake", GIGBID_RAG_MODELS: "fake", GIGSIM_ERROR_RATE: "0", GIGBID_STATE_DIR: "data/processed/app-e2e", GIGBID_PERSIST: "0" },
     },
     { command: "npm run start", url: "http://localhost:3000/login", reuseExistingServer: true, timeout: 120_000 },
   ],
