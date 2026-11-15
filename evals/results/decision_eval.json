@@ -1,0 +1,223 @@
+{
+ "meta": {
+  "date": "2026-11-14T21:59:14+00:00",
+  "git_commit": "2ba4e4d",
+  "embeddings": "nomic-ai/nomic-embed-text-v1.5",
+  "reranker": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "llm": "ollama: gpt-oss:20b / gpt-oss:20b",
+  "machine": "Linux x86_64, 4 CPU cores, x86_64"
+ },
+ "overall": {
+  "jobs": 60,
+  "failed": 0,
+  "bid_or_skip": {
+   "precision": 0.8611,
+   "recall": 1.0,
+   "f1": 0.9254
+  },
+  "scam": {
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0
+  },
+  "price_in_fair_band": 0.4722,
+  "priced_jobs": 36,
+  "injection_flagged": 1.0,
+  "injection_jobs": 1
+ },
+ "by_persona": {
+  "data": {
+   "jobs": 20,
+   "failed": 0,
+   "bid_or_skip": {
+    "precision": 0.6923,
+    "recall": 1.0,
+    "f1": 0.8182
+   },
+   "scam": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "price_in_fair_band": 0.6154,
+   "priced_jobs": 13,
+   "injection_flagged": 1.0,
+   "injection_jobs": 1
+  },
+  "ml": {
+   "jobs": 20,
+   "failed": 0,
+   "bid_or_skip": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "scam": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "price_in_fair_band": 0.4615,
+   "priced_jobs": 13,
+   "injection_flagged": null,
+   "injection_jobs": 0
+  },
+  "web": {
+   "jobs": 20,
+   "failed": 0,
+   "bid_or_skip": {
+    "precision": 0.9,
+    "recall": 1.0,
+    "f1": 0.9474
+   },
+   "scam": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "price_in_fair_band": 0.3,
+   "priced_jobs": 10,
+   "injection_flagged": null,
+   "injection_jobs": 0
+  }
+ },
+ "per_job_analysed": {
+  "p50_s": 18.77,
+  "p95_s": 25.14,
+  "tokens": 3985.1333,
+  "usd": 0.0
+ },
+ "rag_variant": "v2_hybrid",
+ "wrong": [
+  {
+   "job_id": "dev-web-005",
+   "persona": "web",
+   "kind": "lowball",
+   "gold_bid": false,
+   "said_bid": true,
+   "gold_scam": false,
+   "said_scam": false,
+   "gold_injection": false,
+   "flagged_injection": false,
+   "fit": 0.9,
+   "risk": 0.05,
+   "price": 880.0,
+   "fair_price": [
+    3383,
+    5286
+   ],
+   "in_band": false,
+   "reasons": [
+    "fit 0.90, 4 requirements backed by evidence, risk 0.05"
+   ],
+   "errors": [],
+   "seconds": 22.48,
+   "tokens": 4380,
+   "usd": 0.0
+  },
+  {
+   "job_id": "dev-data-003",
+   "persona": "data",
+   "kind": "no_evidence",
+   "gold_bid": false,
+   "said_bid": true,
+   "gold_scam": false,
+   "said_scam": false,
+   "gold_injection": false,
+   "flagged_injection": false,
+   "fit": 0.7,
+   "risk": 0.0,
+   "price": 1084.0,
+   "fair_price": [
+    722,
+    1129
+   ],
+   "in_band": true,
+   "reasons": [
+    "fit 0.70, 3 requirements backed by evidence, risk 0.00"
+   ],
+   "errors": [],
+   "seconds": 19.4,
+   "tokens": 4113,
+   "usd": 0.0
+  },
+  {
+   "job_id": "dev-data-005",
+   "persona": "data",
+   "kind": "other_domain",
+   "gold_bid": false,
+   "said_bid": true,
+   "gold_scam": false,
+   "said_scam": false,
+   "gold_injection": false,
+   "flagged_injection": false,
+   "fit": 1.0,
+   "risk": 0.1,
+   "price": 1522.0,
+   "fair_price": [
+    1593,
+    2489
+   ],
+   "in_band": false,
+   "reasons": [
+    "fit 1.00, 2 requirements backed by evidence, risk 0.10"
+   ],
+   "errors": [],
+   "seconds": 18.56,
+   "tokens": 3511,
+   "usd": 0.0
+  },
+  {
+   "job_id": "dev-data-006",
+   "persona": "data",
+   "kind": "other_domain",
+   "gold_bid": false,
+   "said_bid": true,
+   "gold_scam": false,
+   "said_scam": false,
+   "gold_injection": false,
+   "flagged_injection": false,
+   "fit": 1.0,
+   "risk": 0.1,
+   "price": 1798.0,
+   "fair_price": [
+    1714,
+    2679
+   ],
+   "in_band": true,
+   "reasons": [
+    "fit 1.00, 2 requirements backed by evidence, risk 0.10"
+   ],
+   "errors": [],
+   "seconds": 17.28,
+   "tokens": 3574,
+   "usd": 0.0
+  },
+  {
+   "job_id": "dev-data-013",
+   "persona": "data",
+   "kind": "no_evidence",
+   "gold_bid": false,
+   "said_bid": true,
+   "gold_scam": false,
+   "said_scam": false,
+   "gold_injection": false,
+   "flagged_injection": false,
+   "fit": 0.8,
+   "risk": 0.1,
+   "price": 1076.0,
+   "fair_price": [
+    1033,
+    1614
+   ],
+   "in_band": true,
+   "reasons": [
+    "fit 0.80, 4 requirements backed by evidence, risk 0.10"
+   ],
+   "errors": [],
+   "seconds": 21.9,
+   "tokens": 4309,
+   "usd": 0.0
+  }
+ ]
+}
