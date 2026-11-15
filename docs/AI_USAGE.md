@@ -7,6 +7,7 @@
 | Claude | repo skeleton, `agent/config.yaml`, `agent/settings.py`, `agent/handoffs.py`, `agent/state.py`, `agent/marketplace_port.py`, `tests/unit/` | Drafted with Claude, reviewed and run by me. |
 | Claude | `rag/ingest/chunker.py`, `rag/index/embed.py`, `rag/index/vector.py`, `rag/variants/`, `rag/retriever.py`, `evals/runners/`, `evals/kaggle_eval.ipynb`, `agent/prompts/judge.md`, `tests/unit/test_rag.py`, `tests/unit/test_evals.py`, RAG section of `agent/config.yaml` | Drafted with Claude and tested with stand-in models only. Every evaluation number comes from runs I do myself. |
 | Claude | `apps/api/`, `apps/web/`, `tests/integration/test_api.py`, `apps/web/tests/e2e/`, `evals/runners/gate.py`, `.github/workflows/ci.yml`, the injection guard in `agent/guards.py` and `agent/nodes/writer.py` | Drafted with Claude on 15 Nov. Tested with stand-in models: the API tests, the five Playwright tests and the eval gates pass. The web app has not been run against a real model. |
+| Claude | `docs/report/GigBid_RnD_Report.docx` and `.pdf` | Drafted with Claude from the result files in `evals/results/`. Sections for work that was not done say so. I read it and am responsible for what it claims. |
 
 ## Things it got wrong that I caught
 

@@ -135,6 +135,14 @@ left out of the decision because the judge agrees poorly with the hand labels (k
 - Not built in Part B: a PDF loader for CVs (the synthetic CVs are Markdown), repo ingestion through the GitHub MCP
   server (Part A leftover), V5/V6/V7/V9 (optional), the CI job that fails on eval thresholds (Part E).
 
+## Report
+`docs/report/GigBid_RnD_Report.docx` (and a PDF made from it): 10 pages of main report plus Appendix A (Part B in
+detail). Sections 3, 5, 6, 7 and 10 say plainly that the work was not done. Read it before submitting; it is written
+in the first person and you have to be able to defend every line in the viva.
+
+Found while writing it: 11 of the 60 real proposals were submitted with a literal `<text>` tag around the letter.
+Fixed in the Writer (`strip_markup` in `agent/guards.py`), with a unit test, not re-measured on the real model.
+
 ## Not done, in priority order
 1. Part E: Postgres checkpointer and store, Redis worker with scheduled scouting, Docker Compose, tracing (Langfuse),
    deploy to a public host with a reviewer login. Without a live URL the hidden test run cannot reach the system.
