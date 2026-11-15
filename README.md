@@ -78,3 +78,21 @@ Regenerate with `make eval`.
 
 Retrieval: 600 dev jobs, embeddings `nomic-ai/nomic-embed-text-v1.5`, reranker `Xenova/ms-marco-MiniLM-L-6-v2`, commit 2ba4e4d (`evals/results/rag_eval.json`). Proposals: 30 fixed dev jobs per variant, model `ollama: gpt-oss:20b / gpt-oss:20b`, on Linux x86_64, 4 CPU cores, x86_64 (`evals/results/gigsim_outcomes.json`). Cost is the provider's list price; free tiers and local models cost 0.
 <!-- results:end -->
+
+## Tool granularity (R&D question A)
+
+40 tasks with a known correct tool and arguments, given to the model twice: with the 17 fine-grained MCP tools, and with
+3 coarse tools (one per server, an `action` name and free `params`). Real model (`gpt-oss:20b` on Kaggle, 2 x T4, commit
+c80d555). Numbers from `evals/results/tool_study.json`; the hypothesis is at the top of `evals/runners/tool_study.py`.
+
+| | 17 fine tools | 3 coarse tools |
+|---|---|---|
+| Right tool chosen | 39 of 40 | 39 of 40 |
+| Right tool and right arguments | 35 of 40 | 17 of 40 |
+| Input tokens per task | 4,119 | 1,007 |
+| Seconds per task | 4.6 | 2.1 |
+
+## Proposal experiment (signature extension X2)
+
+Dense-only against hybrid retrieval on the same 30 jobs: 25 against 23 replies, McNemar exact p = 0.73, not significant.
+See `docs/EXTENSION.md` and `evals/results/ab_test.json`.

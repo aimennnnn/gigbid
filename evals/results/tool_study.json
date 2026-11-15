@@ -1,0 +1,672 @@
+{
+ "meta": {
+  "date": "2026-11-15T16:25:39+00:00",
+  "git_commit": "c80d555",
+  "embeddings": "nomic-ai/nomic-embed-text-v1.5",
+  "reranker": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "llm": "ollama: gpt-oss:20b / gpt-oss:20b",
+  "machine": "Linux x86_64, 4 CPU cores, x86_64"
+ },
+ "tasks": 40,
+ "sets": {
+  "fine": {
+   "tools_shown": 17,
+   "overall": {
+    "tasks": 40,
+    "failed_calls": 0,
+    "tool_selection_accuracy": 0.975,
+    "argument_accuracy": 0.875,
+    "tokens_per_task": 4166.825,
+    "tokens_in_per_task": 4119.025,
+    "seconds_per_task": 4.6458
+   },
+   "by_server": {
+    "marketplace": {
+     "tasks": 27,
+     "failed_calls": 0,
+     "tool_selection_accuracy": 0.963,
+     "argument_accuracy": 0.9259,
+     "tokens_per_task": 4214.5556,
+     "tokens_in_per_task": 4167.5926,
+     "seconds_per_task": 4.6033
+    },
+    "portfolio": {
+     "tasks": 8,
+     "failed_calls": 0,
+     "tool_selection_accuracy": 1.0,
+     "argument_accuracy": 0.625,
+     "tokens_per_task": 4056.0,
+     "tokens_in_per_task": 4011.875,
+     "seconds_per_task": 4.615
+    },
+    "workspace": {
+     "tasks": 5,
+     "failed_calls": 0,
+     "tool_selection_accuracy": 1.0,
+     "argument_accuracy": 1.0,
+     "tokens_per_task": 4086.4,
+     "tokens_in_per_task": 4028.2,
+     "seconds_per_task": 4.924
+    }
+   },
+   "wrong": [
+    {
+     "id": "t02",
+     "expected": "marketplace.search_jobs",
+     "chose": "search_jobs",
+     "given": {
+      "query": "Stripe payments",
+      "limit": 5
+     },
+     "error": "",
+     "seconds": 4.18,
+     "tokens_in": 4015,
+     "tokens": 4058,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "category"
+     ]
+    },
+    {
+     "id": "t25",
+     "expected": "marketplace.submit_proposal",
+     "chose": "create_proposal_draft",
+     "given": {
+      "job_id": "s-017",
+      "cover_letter": "Cover",
+      "amount": 1,
+      "idempotency_key": "k-004",
+      "dry_run": true
+     },
+     "error": "",
+     "seconds": 6.17,
+     "tokens_in": 4031,
+     "tokens": 4150,
+     "tool_ok": false,
+     "args_ok": false,
+     "wrong_arguments": []
+    },
+    {
+     "id": "t30",
+     "expected": "portfolio.search_evidence",
+     "chose": "search_evidence",
+     "given": {
+      "requirement": "semantic search",
+      "k": 5,
+      "filters": null,
+      "persona": null
+     },
+     "error": "",
+     "seconds": 4.68,
+     "tokens_in": 4012,
+     "tokens": 4059,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "persona"
+     ]
+    },
+    {
+     "id": "t31",
+     "expected": "portfolio.search_evidence",
+     "chose": "search_evidence",
+     "given": {
+      "requirement": "building dashboards in Looker Studio",
+      "k": 5,
+      "filters": null,
+      "persona": "data persona"
+     },
+     "error": "",
+     "seconds": 4.87,
+     "tokens_in": 4014,
+     "tokens": 4071,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "persona"
+     ]
+    },
+    {
+     "id": "t34",
+     "expected": "portfolio.list_skills",
+     "chose": "list_skills",
+     "given": {},
+     "error": "",
+     "seconds": 4.3,
+     "tokens_in": 4010,
+     "tokens": 4039,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "persona"
+     ]
+    }
+   ]
+  },
+  "coarse": {
+   "tools_shown": 3,
+   "overall": {
+    "tasks": 40,
+    "failed_calls": 0,
+    "tool_selection_accuracy": 0.975,
+    "argument_accuracy": 0.425,
+    "tokens_per_task": 1058.625,
+    "tokens_in_per_task": 1007.025,
+    "seconds_per_task": 2.0543
+   },
+   "by_server": {
+    "marketplace": {
+     "tasks": 27,
+     "failed_calls": 0,
+     "tool_selection_accuracy": 0.963,
+     "argument_accuracy": 0.4815,
+     "tokens_per_task": 1055.8148,
+     "tokens_in_per_task": 1006.4815,
+     "seconds_per_task": 1.9985
+    },
+    "portfolio": {
+     "tasks": 8,
+     "failed_calls": 0,
+     "tool_selection_accuracy": 1.0,
+     "argument_accuracy": 0.375,
+     "tokens_per_task": 1051.25,
+     "tokens_in_per_task": 1001.875,
+     "seconds_per_task": 2.0425
+    },
+    "workspace": {
+     "tasks": 5,
+     "failed_calls": 0,
+     "tool_selection_accuracy": 1.0,
+     "argument_accuracy": 0.2,
+     "tokens_per_task": 1085.6,
+     "tokens_in_per_task": 1018.2,
+     "seconds_per_task": 2.374
+    }
+   },
+   "wrong": [
+    {
+     "id": "t01",
+     "expected": "marketplace.search_jobs",
+     "chose": "marketplace",
+     "given": {
+      "action": "search_jobs",
+      "params": {
+       "query": "fraud detection ML"
+      }
+     },
+     "error": "",
+     "seconds": 2.04,
+     "tokens_in": 1001,
+     "tokens": 1040,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "category"
+     ]
+    },
+    {
+     "id": "t02",
+     "expected": "marketplace.search_jobs",
+     "chose": "marketplace",
+     "given": {
+      "action": "search_jobs",
+      "params": {
+       "query": "Stripe payments",
+       "limit": 5
+      }
+     },
+     "error": "",
+     "seconds": 1.89,
+     "tokens_in": 1005,
+     "tokens": 1049,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "category"
+     ]
+    },
+    {
+     "id": "t03",
+     "expected": "marketplace.search_jobs",
+     "chose": "marketplace",
+     "given": {
+      "action": "search_jobs",
+      "params": {
+       "category": "data",
+       "title": "dashboard"
+      }
+     },
+     "error": "",
+     "seconds": 1.9,
+     "tokens_in": 1001,
+     "tokens": 1046,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "query"
+     ]
+    },
+    {
+     "id": "t04",
+     "expected": "marketplace.search_jobs",
+     "chose": "marketplace",
+     "given": {
+      "action": "search_jobs",
+      "params": {
+       "keywords": "Next.js",
+       "category": "Web"
+      }
+     },
+     "error": "",
+     "seconds": 2.05,
+     "tokens_in": 1003,
+     "tokens": 1056,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "query"
+     ]
+    },
+    {
+     "id": "t05",
+     "expected": "marketplace.get_job",
+     "chose": "marketplace",
+     "given": {
+      "action": "get_job",
+      "params": {
+       "id": "s-006"
+      }
+     },
+     "error": "",
+     "seconds": 1.82,
+     "tokens_in": 1000,
+     "tokens": 1041,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "job_id"
+     ]
+    },
+    {
+     "id": "t14",
+     "expected": "marketplace.list_messages",
+     "chose": "marketplace",
+     "given": {
+      "action": "list_messages",
+      "params": {
+       "conversation_id": "t-p-c9b5246298"
+      }
+     },
+     "error": "",
+     "seconds": 2.33,
+     "tokens_in": 1002,
+     "tokens": 1069,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "thread_id"
+     ]
+    },
+    {
+     "id": "t15",
+     "expected": "marketplace.get_market_stats",
+     "chose": "marketplace",
+     "given": {
+      "action": "get_market_stats",
+      "params": {}
+     },
+     "error": "",
+     "seconds": 1.72,
+     "tokens_in": 1004,
+     "tokens": 1040,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "category",
+      "skills"
+     ]
+    },
+    {
+     "id": "t16",
+     "expected": "marketplace.get_market_stats",
+     "chose": "marketplace",
+     "given": {
+      "action": "get_market_stats",
+      "params": {
+       "job_title": "React and Stripe"
+      }
+     },
+     "error": "",
+     "seconds": 1.73,
+     "tokens_in": 1001,
+     "tokens": 1039,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "category",
+      "skills"
+     ]
+    },
+    {
+     "id": "t17",
+     "expected": "marketplace.get_market_stats",
+     "chose": "marketplace",
+     "given": {
+      "action": "get_market_stats",
+      "params": {
+       "job_title": "Data Jobs",
+       "skills": [
+        "SQL",
+        "Looker Studio"
+       ]
+      }
+     },
+     "error": "",
+     "seconds": 1.97,
+     "tokens_in": 1003,
+     "tokens": 1052,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "category"
+     ]
+    },
+    {
+     "id": "t19",
+     "expected": "marketplace.list_events",
+     "chose": "marketplace",
+     "given": {
+      "action": "list_events",
+      "params": {
+       "after_id": 12
+      }
+     },
+     "error": "",
+     "seconds": 2.12,
+     "tokens_in": 1002,
+     "tokens": 1058,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "since_id"
+     ]
+    },
+    {
+     "id": "t22",
+     "expected": "marketplace.create_proposal_draft",
+     "chose": "marketplace",
+     "given": {
+      "action": "create_proposal_draft",
+      "params": {
+       "job_id": "s-006",
+       "price": 1199,
+       "cover_letter": "I built a similar classifier.",
+       "idempotency_key": "k-001"
+      }
+     },
+     "error": "",
+     "seconds": 2.8,
+     "tokens_in": 1027,
+     "tokens": 1117,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "amount",
+      "dry_run"
+     ]
+    },
+    {
+     "id": "t25",
+     "expected": "marketplace.submit_proposal",
+     "chose": "marketplace",
+     "given": {
+      "action": "get_job",
+      "params": {
+       "job_id": "s-017"
+      }
+     },
+     "error": "",
+     "seconds": 1.88,
+     "tokens_in": 1021,
+     "tokens": 1064,
+     "tool_ok": false,
+     "args_ok": false,
+     "wrong_arguments": []
+    },
+    {
+     "id": "t26",
+     "expected": "marketplace.send_message",
+     "chose": "marketplace",
+     "given": {
+      "action": "send_message",
+      "params": {
+       "thread_id": "t-p-22eead3e84",
+       "message": "Tuesday at 2pm works for me.",
+       "idempotency_key": "k-005"
+      }
+     },
+     "error": "",
+     "seconds": 2.62,
+     "tokens_in": 1021,
+     "tokens": 1101,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "text"
+     ]
+    },
+    {
+     "id": "t27",
+     "expected": "marketplace.send_message",
+     "chose": "marketplace",
+     "given": {
+      "action": "send_message",
+      "params": {
+       "thread_id": "t-p-3fc840a6d8",
+       "message": "Thanks, I will share a plan tomorrow.",
+       "idempotency_key": "k-006"
+      }
+     },
+     "error": "",
+     "seconds": 2.3,
+     "tokens_in": 1022,
+     "tokens": 1086,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "text"
+     ]
+    },
+    {
+     "id": "t29",
+     "expected": "portfolio.search_evidence",
+     "chose": "portfolio",
+     "given": {
+      "action": "search_evidence",
+      "params": {
+       "evidence_type": "Stripe checkout"
+      }
+     },
+     "error": "",
+     "seconds": 1.86,
+     "tokens_in": 1006,
+     "tokens": 1048,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "requirement",
+      "k"
+     ]
+    },
+    {
+     "id": "t30",
+     "expected": "portfolio.search_evidence",
+     "chose": "portfolio",
+     "given": {
+      "action": "search_evidence",
+      "params": {
+       "evidence_type": "semantic search"
+      }
+     },
+     "error": "",
+     "seconds": 1.83,
+     "tokens_in": 1002,
+     "tokens": 1043,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "requirement",
+      "persona"
+     ]
+    },
+    {
+     "id": "t31",
+     "expected": "portfolio.search_evidence",
+     "chose": "portfolio",
+     "given": {
+      "action": "search_evidence",
+      "params": {
+       "requirement": "building dashboards in Looker Studio"
+      }
+     },
+     "error": "",
+     "seconds": 2.14,
+     "tokens_in": 1004,
+     "tokens": 1059,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "persona"
+     ]
+    },
+    {
+     "id": "t32",
+     "expected": "portfolio.get_case_study",
+     "chose": "portfolio",
+     "given": {
+      "action": "get_case_study",
+      "params": {
+       "evidence_id": "ml:case:fraud-edtech"
+      }
+     },
+     "error": "",
+     "seconds": 2.18,
+     "tokens_in": 1004,
+     "tokens": 1061,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "id"
+     ]
+    },
+    {
+     "id": "t34",
+     "expected": "portfolio.list_skills",
+     "chose": "portfolio",
+     "given": {
+      "action": "list_skills"
+     },
+     "error": "",
+     "seconds": 1.64,
+     "tokens_in": 1000,
+     "tokens": 1031,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "persona"
+     ]
+    },
+    {
+     "id": "t36",
+     "expected": "workspace.get_free_slots",
+     "chose": "workspace",
+     "given": {
+      "action": "get_free_slots",
+      "params": {
+       "start_date": "2026-11-16",
+       "end_date": "2026-11-20"
+      }
+     },
+     "error": "",
+     "seconds": 2.11,
+     "tokens_in": 1014,
+     "tokens": 1068,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "date_from",
+      "days",
+      "duration_minutes"
+     ]
+    },
+    {
+     "id": "t37",
+     "expected": "workspace.get_free_slots",
+     "chose": "workspace",
+     "given": {
+      "action": "get_free_slots",
+      "params": {
+       "start_date": "2026-11-20"
+      }
+     },
+     "error": "",
+     "seconds": 1.9,
+     "tokens_in": 1003,
+     "tokens": 1047,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "date_from"
+     ]
+    },
+    {
+     "id": "t38",
+     "expected": "workspace.create_interview_hold",
+     "chose": "workspace",
+     "given": {
+      "action": "create_interview_hold",
+      "params": {
+       "name": "Client call",
+       "start_time": "2026-11-16T14:00:00",
+       "idempotency_key": "k-007"
+      }
+     },
+     "error": "",
+     "seconds": 2.48,
+     "tokens_in": 1025,
+     "tokens": 1097,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "start",
+      "title"
+     ]
+    },
+    {
+     "id": "t39",
+     "expected": "workspace.create_interview_hold",
+     "chose": "workspace",
+     "given": {
+      "action": "create_interview_hold",
+      "params": {
+       "start": "2026-11-18T10:00:00",
+       "duration": "45",
+       "title": "Intro call with fintech client",
+       "idempotency_key": "k-008"
+      }
+     },
+     "error": "",
+     "seconds": 2.66,
+     "tokens_in": 1025,
+     "tokens": 1107,
+     "tool_ok": true,
+     "args_ok": false,
+     "wrong_arguments": [
+      "duration_minutes"
+     ]
+    }
+   ]
+  }
+ }
+}

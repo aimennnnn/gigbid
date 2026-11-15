@@ -39,8 +39,8 @@ Updated 15 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
 - Tests: `tests/integration/test_api.py` (8) and `apps/web/tests/e2e/gigbid.spec.ts` (5 specs: onboarding, approve,
   reject with a reason, edit, degraded banner; onboarding and degraded also at phone size).
 - CI: `.github/workflows/ci.yml` runs ruff, pytest, the 30-job smoke eval, `evals/runners/gate.py` on the smoke run and
-  on the committed real results, then the web build and Playwright. NOT yet seen green on GitHub: check the Actions tab
-  after pushing.
+  on the committed real results, then the web build and Playwright. Green on GitHub for commit c80d555 (15 Nov); the
+  first run (28abd15) failed at ruff on one style error in the tool-study notebook.
 - Run it: see "Run the app" in the README. On the 8 GB laptop use the stand-in models, or a real LLM with
   `GIGBID_RAG_VARIANT=keyword` (no embedding model).
 - State on disk (15 Nov, evening): graph checkpoints (`AsyncSqliteSaver`), long-term memory (`AsyncSqliteStore`),
@@ -57,10 +57,10 @@ Updated 15 Nov 2026. Deadline: Sunday 15 Nov, 11:59 PM PKT.
 - X2 (signature extension): `evals/runners/ab_test.py` -> `evals/results/ab_test.json`, written up in
   `docs/EXTENSION.md`. Real data from the Kaggle run: replies 25/30 (dense) vs 23/30 (hybrid), McNemar exact p = 0.73,
   not significant; about 562 jobs per strategy would be needed to detect a gap this size.
-- R&D question A (tool granularity): harness, 40 tasks, hypothesis and Kaggle notebook are committed
-  (`evals/runners/tool_study.py`, `evals/datasets/tool_tasks.jsonl`, `evals/kaggle_tool_study.ipynb`).
-  NO REAL RESULT YET. It needs one Kaggle GPU run (about 20 minutes) after the repo is pushed; until
-  `evals/results/tool_study.json` exists the report must say "not run".
+- R&D question A (tool granularity): DONE on the real model (Kaggle, 2 x T4, `gpt-oss:20b`, commit c80d555, 12 minutes).
+  `evals/results/tool_study.json` (rebuilt from the Kaggle log; its SHA-256 matches the one the notebook printed:
+  dd742016...). 17 fine tools vs 3 coarse tools on 40 tasks: right tool 39/40 vs 39/40; right arguments 35/40 vs 17/40;
+  input tokens per task 4,119 vs 1,007. The hypothesis (written first, in `evals/runners/tool_study.py`) held.
 - Found while recording the demo: the compliance check masked dates like `2026-11-15 10:00` as phone numbers. Fixed in
   `mcp_servers/common.py` with a unit test.
 
@@ -153,8 +153,8 @@ left out of the decision because the judge agrees poorly with the hand labels (k
   server (Part A leftover), V5/V6/V7/V9 (optional), the CI job that fails on eval thresholds (Part E).
 
 ## Report
-`docs/report/GigBid_RnD_Report.docx` (and a PDF made from it): 9 pages of main report plus Appendix A (Part B in
-detail). Section 7 is the X2 extension. Section 3 says the tool study is built but not run; sections 5, 6 and 10 say plainly that the work was not done. Read it before submitting; it is written
+`docs/report/GigBid_RnD_Report.docx` (and a PDF made from it): 10 pages of main report plus Appendix A (Part B in
+detail). Section 7 is the X2 extension. Section 3 is the tool study, with its real result. Sections 5, 6 and 10 say plainly that the work was not done. Read it before submitting; it is written
 in the first person and you have to be able to defend every line in the viva.
 
 Found while writing it: 11 of the 60 real proposals were submitted with a literal `<text>` tag around the letter.
@@ -164,8 +164,7 @@ Fixed in the Writer (`strip_markup` in `agent/guards.py`), with a unit test, not
 1. Part E: Postgres checkpointer and store (SQLite is used instead), Redis worker with scheduled scouting, running
    the Docker Compose file once, tracing (Langfuse), deploy to a public host with a reviewer login. Without a live URL
    the hidden test run cannot reach the system.
-2. Part A leftovers: live Upwork adapter (`adapters/upwork_live.py`), GitHub MCP, MCP Inspector screenshots, the real
-   run of the tool-granularity study (R&D question A).
+2. Part A leftovers: live Upwork adapter (`adapters/upwork_live.py`), GitHub MCP, MCP Inspector screenshots.
 3. Part C leftovers: single ReAct agent and `langgraph-supervisor` baselines (R&D question C), trace links.
 4. Part D leftovers: portfolio upload, regenerate one paragraph.
 5. ARCHITECTURE.md, RUNBOOK.md, the change request (never received).
