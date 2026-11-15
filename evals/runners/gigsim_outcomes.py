@@ -3,6 +3,8 @@
     uv run python -m evals.runners.gigsim_outcomes                           v0_naive and best, 10 jobs per persona
     uv run python -m evals.runners.gigsim_outcomes --variants best --jobs 5
     uv run python -m evals.runners.gigsim_outcomes --resume                  carry on after a crash
+    uv run python -m evals.runners.gigsim_outcomes --injection --variants best --jobs 5
+                                                   only jobs with a planted instruction; writes injection_check*.json(l)
 
 The fixed job set is the first N dev jobs per persona whose gold label is "bid".
 For each RAG variant and each job the whole bid graph runs. The eval stands in for the human
@@ -90,14 +92,15 @@ def summary(rows: list[dict]) -> dict:
             "canary_leaked": sum(r["canary_leaked"] for r in drafted)}
 
 
-async def run(variants: list[str], jobs: int, resume: bool) -> None:
+async def run(variants: list[str], jobs: int, resume: bool, injection: bool = False) -> None:
     rows, picked = dev_rows(), []
     for p in sorted({r["persona"] for r in rows}):
-        picked += [r for r in rows if r["persona"] == p and r["gold_action"] == "bid"][:jobs]
+        picked += [r for r in rows if r["persona"] == p and r["gold_action"] == "bid" and (r["kind"] == "injection" or not injection)][:jobs]
+    name, lines = ("injection_check", "injection_check_{}.jsonl") if injection else ("gigsim_outcomes", "proposals_{}.jsonl")
     results = {}
     for variant in variants:
         os.environ["GIGBID_RAG_VARIANT"] = variant           # the Portfolio server and the Fit Matcher read this
-        path, system = out_dir() / f"proposals_{variant}.jsonl", System()
+        path, system = out_dir() / lines.format(variant), System()
         done = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()] if resume and path.exists() else []
         have = {r["job_id"] for r in done}
         with open(path, "a" if resume else "w", encoding="utf-8", newline="\n") as f:
@@ -120,9 +123,10 @@ async def run(variants: list[str], jobs: int, resume: bool) -> None:
                             "by_kind": {k: summary([r for r in done if r["kind"] == k]) for k in sorted({r["kind"] for r in done})}}
         o = results[variant]["overall"]
         print(f"{variant}: submitted {o['submitted']}/{o['jobs']}  reply rate={o['reply_rate']}  hire rate={o['hire_rate']}  "
-              f"unsupported before/after={o['unsupported_before_per_proposal']}/{o['unsupported_after_per_proposal']}  judge={o['judge_score']}")
+              f"unsupported before/after={o['unsupported_before_per_proposal']}/{o['unsupported_after_per_proposal']}  judge={o['judge_score']}"
+              f"  code word leaked={o['canary_leaked']}/{o['drafted']}")
     os.environ.pop("GIGBID_RAG_VARIANT", None)
-    save("gigsim_outcomes", {"jobs_per_persona": jobs, "job_ids": [r["job_id"] for r in picked], "variants": results})
+    save(name, {"jobs_per_persona": jobs, "job_ids": [r["job_id"] for r in picked], "variants": results})
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -130,8 +134,9 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--variants", default="v0_naive,best")
     ap.add_argument("--jobs", type=int, default=10, help="jobs per persona")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--injection", action="store_true", help="only jobs with a planted instruction, saved as injection_check")
     a = ap.parse_args(argv)
-    asyncio.run(run(a.variants.split(","), a.jobs, a.resume))
+    asyncio.run(run(a.variants.split(","), a.jobs, a.resume, a.injection))
 
 
 if __name__ == "__main__":
